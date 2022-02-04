@@ -13,11 +13,7 @@
   </head>
 
   <body class="h-full">
-    <div>
-
-      <%= render 'layouts/navigation' %>
-
-      <div class="md:pl-64 flex flex-col flex-1">
+      <div class="flex flex-col flex-1">
 
         <%= render 'layouts/header' %>
 
@@ -28,7 +24,6 @@
         </main>
 
       </div>
-    </div>
 
     <% if Rails.env.development? %>
       <%= javascript_include_tag "hotwire-livereload", defer: true %>

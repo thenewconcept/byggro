@@ -3,11 +3,12 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ['element']
 
-  switch() {
-    if (this.elementTarget.classList.contains('hidden')) {
-      this.elementTarget.classList.remove('hidden')
+  switch(event) {
+    const el = document.getElementById(event.params.id)
+    if (el.classList.contains('hidden')) {
+      el.classList.remove('hidden')
     } else {
-      this.elementTarget.classList.add('hidden')
+      el.classList.add('hidden')
     }
   }
 }

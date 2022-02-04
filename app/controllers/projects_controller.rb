@@ -1,4 +1,4 @@
-class ProjectsController < ApplicationController
+class ProjectsController < ProtectedController 
   before_action :set_project, only: %i[ show edit update destroy ]
 
   # GET /projects or /projects.json

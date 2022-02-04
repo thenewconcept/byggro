@@ -1,11 +1,17 @@
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+<div class="mx-auto">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
+
+  <%= render @project %>
+</div>
+
+
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 xl:max-w-5xl xl:grid xl:grid-cols-3">
+  <div class="inline-block mt-4">
+    <%= button_to project_path(@project), method: :delete, class: "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" do %>
+      <%= heroicon('trash', options: { class: '-ml-1 mr-2 h-5 w-5'}) %>
+      Ta bort
     <% end %>
-
-    <%= render @project %>
-
-    <div class="inline-block ml-2">
-      <%= button_to 'Destroy this project', project_path(@project), method: :delete, class: "mt-2 rounded-lg py-2 px-5 bg-red-600 text-white" %>
-    </div>
   </div>
+</div>
