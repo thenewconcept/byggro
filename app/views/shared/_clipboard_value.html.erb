@@ -1,0 +1,8 @@
+<div data-controller="clipboard">
+  <span data-clipboard-target="source" data-value="<%= amount %>">
+    <%= number_to_currency amount %>
+  </span>
+  <button data-action="clipboard#copy">
+    <%= heroicon('duplicate', variant: :outline, options: {class: 'text-gray-400 hover:text-gray-600 h-4 w-4'}) %>
+  </button>
+</div>

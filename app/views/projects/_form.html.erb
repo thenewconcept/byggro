@@ -12,27 +12,34 @@
   <% end %>
 
   <div class="my-5">
-    <%= form.label :title %>
-    <%= form.text_field :title, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
     <%= form.label :adress %>
     <%= form.text_field :adress, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="my-5">
-    <%= form.label :work_amount %>
+    <%= form.label :title, 'Projektnamn' %>
+    <%= form.text_field :title, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    <div class="m-1 ml-3 text-sm text-gray-400">Om annat än adressen?</div>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :description, 'Information' %>
+    <%= form.rich_text_area :description, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 w-full" %>
+  </div>
+
+
+  <div class="my-5">
+    <%= form.label :work_amount, 'Arbetskostnader' %>
     <%= form.number_field :work_amount, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="my-5">
-    <%= form.label :material_amount %>
+    <%= form.label :material_amount, 'Materialkostnader' %>
     <%= form.text_field :material_amount, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="my-5">
-    <%= form.label :misc_amount %>
+    <%= form.label :misc_amount, 'Övriga kostnader' %>
     <%= form.text_field :misc_amount, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
