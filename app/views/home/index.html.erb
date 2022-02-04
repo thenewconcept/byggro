@@ -1,0 +1,15 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+  <h1 class="text-2xl font-semibold text-gray-900">
+    Dashboard
+  </h1>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+  <% @projects.each do |project| %>
+   <%= link_to project.title, project_path(project) %> 
+  <% end %>
+</div>
+
+<p>
+  <%= link_to 'New Project', new_project_path %>
+</p>
