@@ -13,15 +13,18 @@ class ProjectsController < ProtectedController
   # GET /projects/new
   def new
     @project = Project.new
+    authorize @project
   end
 
   # GET /projects/1/edit
   def edit
+    authorize @project
   end
 
   # POST /projects or /projects.json
   def create
     @project = Project.new(project_params)
+    authorize @project
 
     respond_to do |format|
       if @project.save
@@ -49,6 +52,7 @@ class ProjectsController < ProtectedController
 
   # DELETE /projects/1 or /projects/1.json
   def destroy
+    authorize @project
     @project.destroy
 
     respond_to do |format|

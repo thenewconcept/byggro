@@ -13,12 +13,14 @@
         </div>
 
         <div>
+        <% if policy(project).update? %>
           <div class="mt-4 flex space-x-3 md:mt-0">
             <%= link_to edit_project_path(project), class: "inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900" do %>
               <%= heroicon("pencil", options: { class: "-ml-1 mr-2 text-gray-400" }) %>
               <span>Ändra</span>
             <% end %>
           </div>
+        <% end %>
 
           <div class="mt-4 flex space-x-3 md:mt-0">
             <%= link_to "https://www.google.com/maps?saddr=My+Location&daddr=#{project.adress}", class: "inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900", target: :new do %>

@@ -2,13 +2,13 @@
   _class.destroy_all
 end
 
-User.create!(
-  email: 'jane@doe.com',
-  password: 'kallekalle',
-)
+admin   = User.create!( email: 'jane@doe.com', password: 'kallekalle', is_admin: true )
+manager = User.create!( email: 'mia@doe.com', password: 'kallekalle', is_manager: true )
+worker  = User.create!( email: 'john@doe.com', password: 'kallekalle' )
 
+# Creates two checklists after save.
 project1 = Project.create!(
-  title: "Askims 12", 
+  title: "Askims Paradis", 
   adress: "Askims Kyrkåsväg 12",
   description: "En beskrivning av projektet.",
   work_amount: 134700, 
@@ -17,6 +17,7 @@ project1 = Project.create!(
   is_rot: true
 )
 
+# Creates two checklists after save.
 project2 = Project.create!(
   title: "Nätverkscentrum", 
   adress: "Elesbobacken 1",
@@ -27,8 +28,8 @@ project2 = Project.create!(
   is_rot: false
 )
 
-project1.checklists.first.todos.create!(description: 'Kläder')
-project1.checklists.first.todos.create!(description: 'Mat')
+project1.checklists.first.todos.create!(description: 'Måla om köket, första strykning.')
+project1.checklists.first.todos.create!(description: 'Måla om köket, andra strykning.')
 
-project1.checklists.last.todos.create!(description: 'Kläder')
-project1.checklists.last.todos.create!(description: 'Mat')
+project1.checklists.last.todos.create!(description: 'Måla fönster.')
+project1.checklists.last.todos.create!(description: 'Måla dörrar.')
