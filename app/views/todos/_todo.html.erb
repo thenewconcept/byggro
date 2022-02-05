@@ -1,11 +1,26 @@
-<div id="<%= dom_id(todo) %>" class="relative flex items-start hover:bg-gray-100 p-2">
+<div id="<%= dom_id(todo) %>" 
+  class="relative flex items-start hover:bg-gray-100 p-2"
+  data-controller="todo"
+  >
+
   <div class="flex items-center h-6">
-    <input id="<%= dom_id(todo) %>" name="todo" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+    <%= check_box_tag( 
+      'todo[completed]', 
+      todo.id,
+      todo.completed?, 
+      options = { class: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" }) 
+    %>
   </div>
+
   <div class="ml-3">
-    <label id="todo-description" for="<%= dom_id(todo) %>" class="text-sm text-gray-700">
+    <label 
+      id="todo-description" 
+      for="<%= dom_id(todo) %>" 
+      data-todo-target="description"
+      class="text-sm text-gray-700 <%= class_names("line-through text-gray-400": todo.completed?) %>">
       <%= todo.description %>
     </label>
   </div>
+  
   <%= button_to "Delete", [todo.checklist.project, todo.checklist, todo], method: :delete %>
 </div>
