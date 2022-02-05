@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :projects
-  root "home#index"
+  root "projects#index"
 
     # SESSIONS & USERS
     get   'signup', to: 'registrations#new'
