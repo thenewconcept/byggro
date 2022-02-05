@@ -1,5 +1,9 @@
 class Project < ApplicationRecord
+  after_save :generate_checklists
+
   has_rich_text :description
+  has_many :checklists, dependent: :destroy
+  has_many :todos, through: :checklist
 
   def total
     [work_amount, material_amount, misc_amount].sum
@@ -35,5 +39,11 @@ class Project < ApplicationRecord
 
   def inc_vat(amount)
     amount + vat(amount)
+  end
+
+  private
+  def generate_checklists
+    self.checklists.create(title: 'Arbetsorder')
+    self.checklists.create(title: 'ÄTA')
   end
 end

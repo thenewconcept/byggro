@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_05_000157) do
+ActiveRecord::Schema.define(version: 2022_02_05_120049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,14 @@ ActiveRecord::Schema.define(version: 2022_02_05_000157) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "checklists", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_checklists_on_project_id"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string "title"
     t.string "adress"
@@ -65,6 +73,15 @@ ActiveRecord::Schema.define(version: 2022_02_05_000157) do
     t.boolean "is_rot", default: true, null: false
   end
 
+  create_table "todos", force: :cascade do |t|
+    t.bigint "checklist_id", null: false
+    t.boolean "completed"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["checklist_id"], name: "index_todos_on_checklist_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "password_digest"
@@ -74,4 +91,6 @@ ActiveRecord::Schema.define(version: 2022_02_05_000157) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "checklists", "projects"
+  add_foreign_key "todos", "checklists"
 end
