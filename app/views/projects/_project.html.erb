@@ -43,19 +43,9 @@
 <fieldset class="my-8">
   <legend class="text-lg"><%= list.title %></legend>
 
-  <% list.todos.each do |todo| %>
-    <div class="relative flex items-start hover:bg-gray-100 p-2">
-      <div class="flex items-center h-6">
-        <input id="<%= dom_id(todo) %>" name="todo" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-      </div>
-      <div class="ml-3">
-        <label id="todo-description" for="<%= dom_id(todo) %>" class="text-sm text-gray-700">
-          <%= todo.description %>
-        </label>
-      </div>
-    </div>
-  <% end %>
+  <%= render list.todos %>
 
+  <%= link_to 'Ny todo', new_project_checklist_todo_path(project, list)  %>
 </fieldset>
   <% end %>
 

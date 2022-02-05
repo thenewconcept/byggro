@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
-  resources :projects
+
+  resources :projects do
+    resources :checklists do
+      resources :todos
+    end
+  end
+
   root "projects#index"
 
     # SESSIONS & USERS
