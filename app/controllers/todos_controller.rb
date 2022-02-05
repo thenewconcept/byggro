@@ -1,15 +1,15 @@
 class TodosController < ProtectedController
   def new
-    @project = Project.includes(checklists: :todos).find(params[:project_id])
-    @checklist = @project.checklists.find(params[:checklist_id])
+    @checklist = Checklist.find(params[:checklist_id])
     @todo = @checklist.todos.new
   end
 
   def create
-    checklist = Checklist.find(params[:checklist_id])
-    @todo = checklist.todos.new(todo_params)
+    @checklist = Checklist.find(params[:checklist_id])
+    @todo      = @checklist.todos.new(todo_params)
+
     if @todo.save!
-      redirect_to project_path(checklist.project)
+      redirect_to project_url(@checklist.project)
     else
       render :new
     end
@@ -17,7 +17,7 @@ class TodosController < ProtectedController
 
   def destroy
     @todo = Todo.find(params[:id]).destroy!
-    redirect_to project_path(@todo.checklist.project)
+    redirect_to project_url(@todo.checklist.project)
   end
 
   private
