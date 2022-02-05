@@ -1,4 +1,4 @@
-<turbo-frame id="<%= dom_id project %>" class="flex-1">
+<div id="<%= dom_id project %>" class="flex-1">
   <div class="
     max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 
     xl:max-w-5xl xl:grid xl:grid-cols-2">
@@ -36,15 +36,19 @@
     
 
     <% project.checklists.each do |list| %>
-      <fieldset id="<%= dom_id list %>" class="my-8">
+      <turbo-frame id="<%= dom_id list %>">
+      <fieldset class="my-8">
         <legend class="text-lg"><%= list.title %></legend>
 
-        <%= render list.todos %>
+        <%= list.todos.present? \
+          ? render(list.todos.order(:id)) \
+          : content_tag(:div, 'Inget här just nu …', class: 'my-5 text-sm italic text-gray-400') %>
 
         <%= turbo_frame_tag "new_todo" do %>
-          <%= link_to 'Ny todo', new_project_checklist_todo_path(project, list) %>
+          <%= link_to 'Ny uppgift', new_project_checklist_todo_path(project, list), class: "mt-4 inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
         <% end %>
       </fieldset>
+      </turbo-frame>
     <% end %>
 
 
@@ -160,4 +164,4 @@
     <% end %>
 
   </div>
-</turbo-frame>
+</div>
