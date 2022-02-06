@@ -1,16 +1,22 @@
-<turbo-frame id="<%= dom_id(todo) %>" class="relative flex items-start hover:bg-gray-100 p-2">
-  <div class="flex items-center h-6">
-    <%= form_with(model: [todo.project, todo.checklist, todo], data: { 'turbo-frame': dom_id(todo) }) do |f| %>
-      <%= f.check_box :completed, onchange: "this.form.requestSubmit()", class: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" %>
-    <% end %>
-  </div>
+<turbo-frame id="<%= dom_id(todo) %>">
 
-  <div class="ml-3">
-    <%= link_to todo.description, edit_project_checklist_todo_path(todo.project, todo.checklist, todo), class: "text-sm text-gray-700 #{class_names("line-through text-gray-400": todo.completed?)}" %>
+  <div class="flex items-start rounded-md hover:bg-gray-100 p-2">
+    <div class="h-6">
+      <%= form_with(model: [todo.project, todo.checklist, todo], data: { 'turbo-frame': dom_id(todo) }) do |f| %>
+        <%= f.check_box :completed, onchange: "this.form.requestSubmit()", class: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" %>
+      <% end %>
+    </div>
+
+    <div class="ml-3">
+      <%= link_to todo.description, edit_project_checklist_todo_path(todo.project, todo.checklist, todo), class: "text-sm text-gray-700 #{class_names("line-through text-gray-400": todo.completed?)}" %>
+    </div>
+
+    <%= button_to heroicon('trash', options: { class: "h-4 w-4 text-gray-400 hover:text-gray-500" }),
+      [todo.checklist.project, todo.checklist, todo], 
+      method: :delete, 
+      data: { 'turbo-frame': dom_id(todo.checklist) } if policy(todo).destroy?
+    %>
   </div>
   
-  <%= button_to "Delete", 
-    [todo.checklist.project, todo.checklist, todo], 
-    method: :delete, 
-    data: { 'turbo-frame': dom_id(todo.checklist) } %>
+
 </turbo-frame>
