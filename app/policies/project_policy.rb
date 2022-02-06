@@ -6,11 +6,11 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def create?
-    user.is_admin?
+    user.is_manager?
   end
 
   def update?
-    user.is_admin?
+    user.is_manager?
   end
 
   def destroy?
