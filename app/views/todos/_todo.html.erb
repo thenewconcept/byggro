@@ -1,4 +1,4 @@
-<div id="<%= dom_id(todo) %>" class="relative flex items-start hover:bg-gray-100 p-2">
+<turbo-frame id="<%= dom_id(todo) %>" class="relative flex items-start hover:bg-gray-100 p-2">
   <div class="flex items-center h-6">
     <%= form_with(model: [todo.project, todo.checklist, todo], data: { 'turbo-frame': dom_id(todo) }) do |f| %>
       <%= f.check_box :completed, 
@@ -8,10 +8,11 @@
   </div>
 
   <div class="ml-3">
-    <%= turbo_frame_tag 'edit_todo' do %>
-      <%= link_to todo.description, edit_project_checklist_todo_path(todo.project, todo.checklist, todo), class: "text-sm text-gray-700 #{class_names("line-through text-gray-400": todo.completed?)}" %>
-    <% end %>
+    <%= link_to todo.description, edit_project_checklist_todo_path(todo.project, todo.checklist, todo), class: "text-sm text-gray-700 #{class_names("line-through text-gray-400": todo.completed?)}" %>
   </div>
   
-  <%= button_to "Delete", [todo.checklist.project, todo.checklist, todo], method: :delete %>
-</div>
+  <%= button_to "Delete", 
+    [todo.checklist.project, todo.checklist, todo], 
+    method: :delete, 
+    data: { 'turbo-frame': dom_id(todo.checklist) } %>
+</turbo-frame>

@@ -1,7 +1,7 @@
 <div class="mx-auto md:w-2/3 w-full">
   <h1 class="font-bold text-2xl">Uppdatera uppgift</h1>
 
-  <%= turbo_frame_tag "edit_todo" do %>
-    <%= render "form", todo: @todo %>
+  <%= turbo_frame_tag dom_id(@todo) do %>
+    <%= render partial: "form", locals: { todo: @todo, turbo_target: dom_id(@todo) } %>
   <% end %>
 </div>
