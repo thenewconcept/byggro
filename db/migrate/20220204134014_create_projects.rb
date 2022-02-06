@@ -5,9 +5,9 @@ class CreateProjects < ActiveRecord::Migration[7.0]
       t.string :adress
       t.text :description
 
-      t.integer :work_amount
-      t.integer :material_amount
-      t.integer :misc_amount
+      t.integer :work_amount, default: 0
+      t.integer :material_amount, default: 0
+      t.integer :misc_amount, default: 0
 
       t.timestamps
     end

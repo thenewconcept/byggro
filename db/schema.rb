@@ -65,9 +65,9 @@ ActiveRecord::Schema.define(version: 2022_02_05_201735) do
     t.string "title"
     t.string "adress"
     t.string "description"
-    t.integer "work_amount"
-    t.integer "material_amount"
-    t.integer "misc_amount"
+    t.integer "work_amount", default: 0, null: false 
+    t.integer "material_amount", default: 0, null: false
+    t.integer "misc_amount", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "is_rot", default: true, null: false
