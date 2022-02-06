@@ -1,63 +1,63 @@
 <div id="<%= dom_id project %>" class="flex-1">
-  <div class="
-    max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 
-    xl:max-w-5xl xl:grid xl:grid-cols-2">
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 xl:max-w-5xl xl:grid xl:grid-cols-2">
     <div class="xl:col-span-2 xl:pr-8">
 
-      <div class="md:flex md:items-center md:justify-between md:space-x-4 xl:border-b xl:pb-6">
-        <div>
-          <h1 class="text-2xl font-bold text-gray-900"><%= project.title %></h1>
-          <p class="mt-2 text-sm">
-            <%= heroicon('map') %> <%= link_to project.adress, "https://www.google.com/maps?saddr=My+Location&daddr=#{project.adress}", target: :new %>
-          </p>
-        </div>
+      <div class="bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200">
 
-        <div>
-        <% if policy(project).update? %>
-          <div class="mt-4 flex space-x-3 md:mt-0">
-            <%= link_to edit_project_path(project), class: "inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900" do %>
-              <%= heroicon("pencil", options: { class: "-ml-1 mr-2 text-gray-400" }) %>
-              <span>Ändra</span>
-            <% end %>
+        <div class="px-4 py-5 sm:px-6">
+          <div class="md:flex md:items-center md:justify-between md:space-x-4">
+            <div>
+              <h1 class="text-2xl font-bold text-gray-900"><%= project.title %></h1>
+              <p class="mt-2 text-sm">
+                <%= heroicon('map') %> <%= link_to project.adress, "https://www.google.com/maps?saddr=My+Location&daddr=#{project.adress}", target: :new %>
+              </p>
+            </div>
+
+            <div>
+              <div class="mt-4 flex space-x-3 md:mt-0">
+                <%= link_to edit_project_path(project), class: "inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900" do %>
+                  <%= heroicon("pencil", options: { class: "-ml-1 mr-2 text-gray-400" }) %>
+                  <span>Ändra</span>
+                <% end if policy(project).update? %>
+
+                <%= link_to "https://www.google.com/maps?saddr=My+Location&daddr=#{project.adress}", class: "inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900", target: :new do %>
+                  <%= heroicon("map", options: { class: "-ml-1 mr-2 text-gray-400" }) %>
+                  <span>Vägbeskrivning</span>
+                <% end %>
+              </div>
+            </div>
           </div>
-        <% end %>
-
-          <div class="mt-4 flex space-x-3 md:mt-0">
-            <%= link_to "https://www.google.com/maps?saddr=My+Location&daddr=#{project.adress}", class: "inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900", target: :new do %>
-              <%= heroicon("map", options: { class: "-ml-1 mr-2 text-gray-400" }) %>
-              <span>Vägbeskrivning</span>
-            <% end %>
-          </div>
         </div>
-      </div>
 
-      <div class="text-gray-700 my-5 py-3 xl:pt-2 xl:pb-5">
-        <h2 class="sr-only">Description</h2>
-        <%= project.description %>
-      </div>
-    
+        <div class="px-4 py-5 sm:p-6">
+            <h2 class="sr-only">Description</h2>
+            <%= project.description %>
 
-    <% project.checklists.each do |list| %>
-      <turbo-frame id="<%= dom_id list %>">
-        <fieldset class="mt-8">
-          <legend class="text-lg"><%= list.title %></legend>
+          <% project.checklists.each do |list| %>
+            <turbo-frame id="<%= dom_id list %>">
+              <fieldset class="mt-8">
+                <legend class="text-lg"><%= list.title %></legend>
 
-        <div class="my-2">
-          <%= list.todos.present? \
-            ? render(list.todos.order(:id)) \
-            : content_tag(:div, 'Inget här just nu …', class: 'my-3 text-sm italic text-gray-400') %>
-        </div>
-        </fieldset>
+              <div class="my-2">
+                <%= list.todos.present? \
+                  ? render(list.todos.order(:id)) \
+                  : content_tag(:div, 'Inget här just nu …', class: 'my-3 text-sm italic text-gray-400') %>
+              </div>
+              </fieldset>
 
-        <% if policy(:todo).create? %>
-        <div class="p-3 bg-gray-100 rounded-md">
-          <%= turbo_frame_tag "new_todo" do %>
-            <%= link_to "Ny #{list.title}", new_project_checklist_todo_path(project, list), class: "inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+              <% if policy(:todo).create? %>
+              <div class="p-3 bg-gray-100 rounded-md">
+                <%= turbo_frame_tag "new_todo" do %>
+                  <%= link_to "Ny #{list.title}", new_project_checklist_todo_path(project, list), class: "inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+                <% end %>
+              </div>
+              <% end %>
+            </turbo-frame>
           <% end %>
         </div>
-        <% end %>
-      </turbo-frame>
-    <% end %>
+
+      </div>
 
     <div class="bg-white shadow overflow-hidden sm:rounded-lg my-4">
       <div class="px-4 py-5 sm:px-6">
