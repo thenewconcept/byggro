@@ -43,7 +43,10 @@ class Project < ApplicationRecord
 
   private
   def generate_checklists
-    self.checklists.create(title: 'Arbetsorder')
+    work_order = self.checklists.create(title: 'Arbetsorder')
+    work_order.todos.create(description: 'Städning och undanröjning.')
+    work_order.todos.create(description: 'Kvaliteskontroll med Arbetsledare & Kund.')
+
     self.checklists.create(title: 'ÄTA')
   end
 end
