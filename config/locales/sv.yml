@@ -1,6 +1,10 @@
 ---
 sv:
   activerecord:
+    models:
+      project: Projekt
+      checklist: Lista
+      todo: Uppgift
     errors:
       messages:
         record_invalid: 'Ett fel uppstod: %{errors}'
@@ -144,7 +148,7 @@ sv:
     submit:
       create: Skapa %{model}
       submit: Spara %{model}
-      update: Ändra %{model}
+      update: Spara %{model}
   number:
     currency:
       format:
