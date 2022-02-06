@@ -31,17 +31,6 @@ class TodosController < ProtectedController
     end
   end
 
-  def create
-    @checklist = Checklist.find(params[:checklist_id])
-    @todo      = @checklist.todos.new(todo_params)
-
-    if @todo.save!
-      redirect_to project_url(@checklist.project)
-    else
-      render :new
-    end
-  end
-
   def destroy
     @todo = Todo.find(params[:id]).destroy!
     redirect_to project_url(@todo.checklist.project)
