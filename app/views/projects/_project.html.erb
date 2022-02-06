@@ -44,10 +44,10 @@
 
           <%= list.todos.present? \
             ? render(list.todos.order(:id)) \
-            : content_tag(:div, 'Inget här just nu …', class: 'my-5 text-sm italic text-gray-400') %>
+            : content_tag(:div, 'Inget här just nu …', class: 'my-3 text-sm italic text-gray-400') %>
 
           <%= turbo_frame_tag "new_todo" do %>
-            <%= link_to 'Ny uppgift', new_project_checklist_todo_path(project, list), class: "mt-4 inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+            <%= link_to "Ny #{list.title}", new_project_checklist_todo_path(project, list), class: "mt-4 inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
           <% end %>
         </fieldset>
       </turbo-frame>
