@@ -1,9 +1,7 @@
 <turbo-frame id="<%= dom_id(todo) %>" class="relative flex items-start hover:bg-gray-100 p-2">
   <div class="flex items-center h-6">
     <%= form_with(model: [todo.project, todo.checklist, todo], data: { 'turbo-frame': dom_id(todo) }) do |f| %>
-      <%= f.check_box :completed, 
-        onchange: "this.form.requestSubmit()",
-        class: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" %>
+      <%= f.check_box :completed, onchange: "this.form.requestSubmit()", class: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" %>
     <% end %>
   </div>
 
