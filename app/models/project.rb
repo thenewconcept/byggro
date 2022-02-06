@@ -1,4 +1,6 @@
 class Project < ApplicationRecord
+  validates :work_amount, :material_amount, :misc_amount, numericality: true
+
   after_save :generate_checklists
 
   has_rich_text :description
