@@ -1,11 +1,16 @@
 <div data-controller="toggle">
-  <nav class="bg-gray-800">
+  <nav class="bg-red-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16">
         <div class="flex">
+
           <!-- Mobile menu button -->
           <div class="-ml-2 mr-2 flex items-center md:hidden">
-            <button data-action="click->toggle#switch" data-toggle-id-param="mobile-menu" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+            <button data-action="click->toggle#switch" 
+              data-toggle-id-param="mobile-menu" 
+              type="button" 
+              class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+
               <span class="sr-only">Open main menu</span>
               <!--
                 Icon when menu is closed.
@@ -28,14 +33,14 @@
 
           <div class="flex-shrink-0 flex items-center">
             <%= link_to root_url do %>
-              <img class="block lg:hidden h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
-              <img class="hidden lg:block h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow">
+              <%= image_tag 'bullerby-b-white.svg', class: 'block lg:hidden h-8 w-auto' %>
+              <%= image_tag 'bullerby-wordmark-white.svg', class: 'hidden lg:block h-8 w-auto' %>
             <% end %>
           </div>
 
           <div class="hidden md:ml-6 md:flex md:items-center md:space-x-4">
-            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <%= link_to 'Start', root_path, class: 'bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium' %>
+            <!--  Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+            <%= link_to 'Start', root_path, class: 'bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium' %>
           </div>
         </div>
 
@@ -83,13 +88,7 @@
     <div class="hidden md:hidden" id="mobile-menu">
       <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-        <%= link_to 'Start', root_path, class: 'bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium' %>
-      </div>
-      <div class="pt-4 pb-3 border-t border-gray-700">
-        <div class="flex justify-between mt-3 px-2 space-y-1 sm:px-3">
-          <span class="text-gray-500 py-3"> <%= Current.user.email %> </span>
-          <%= link_to 'Logga ut', signout_path, data: { 'turbo-method': :delete }, class: 'block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700' %>
-        </div>
+        <%= link_to 'Start', root_path, class: 'text-white block px-3 py-2 text-base font-medium' %>
       </div>
     </div>
   </nav>
