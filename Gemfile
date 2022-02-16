@@ -43,3 +43,5 @@ group :test do
 end
 
 gem "pundit", "~> 2.1"
+
+gem "acts_as_list", "~> 1.0"

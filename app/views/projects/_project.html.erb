@@ -40,9 +40,15 @@
                 <legend class="text-lg"><%= list.title %></legend>
 
               <div class="my-2">
+                <ul 
+                  data-controller="sortable" 
+                  data-sortable-animation-value="150"
+                  data-sortable-param-name-value="todo[position]"
+                  >
                 <%= list.todos.present? \
-                  ? render(list.todos.order(:id)) \
-                  : content_tag(:div, 'Inget här just nu …', class: 'my-3 text-sm italic text-gray-400') %>
+                  ? render(list.todos) \
+                  : content_tag(:li, 'Inget här just nu …', class: 'my-3 text-sm italic text-gray-400') %>
+                </ul>
               </div>
               </fieldset>
 

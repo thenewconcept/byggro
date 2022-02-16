@@ -44,6 +44,6 @@ class TodosController < ProtectedController
 
   private
     def todo_params
-      params.require(:todo).permit(:description, :completed)
+      params.require(:todo).permit(:description, :completed, :position)
     end
 end
