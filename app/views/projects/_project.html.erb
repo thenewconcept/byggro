@@ -1,4 +1,4 @@
-<div id="<%= dom_id project %>" class="flex-1">
+<div id="<%= dom_id project %>">
 
   <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 xl:max-w-5xl xl:grid xl:grid-cols-2">
     <div class="xl:col-span-2 xl:pr-8">
@@ -16,7 +16,7 @@
 
             <div>
               <div class="mt-4 flex space-x-3 md:mt-0">
-                <%= link_to edit_project_path(project), class: "inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900" do %>
+                <%= link_to edit_project_path(project), class: " inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900" do %>
                   <%= heroicon("pencil", options: { class: "-ml-1 mr-2 text-gray-400" }) %>
                   <span>Ändra</span>
                 <% end if policy(project).update? %>
@@ -25,165 +25,194 @@
                   <%= heroicon("map", options: { class: "-ml-1 mr-2 text-gray-400" }) %>
                   <span>Vägbeskrivning</span>
                 <% end %>
+
+
+                <% if policy(@project).destroy? %>
+                  <%= button_to project_path(@project), method: :delete, class: "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" do %>
+                    <%= heroicon('trash', options: { class: '-ml-1 mr-2 h-5 w-5'}) %>
+                    Ta bort
+                  <% end %>
+                <% end %>
+
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="px-5">
+          <div class="sm:hidden">
+            <label for="tabs" class="sr-only">Select a tab</label>
+            <select id="tabs" name="tabs" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+              <option>My Account</option>
+              <option>Company</option>
+              <option selected>Team Members</option>
+              <option>Billing</option>
+            </select>
+          </div>
+
+          <div class="hidden sm:block">
+            <div class="">
+              <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                <%= link_to 'Uppdrag', project_path(project), class: tab_classes(params[:tab].blank?) %>
+                <%= link_to 'Arbetsorder', project_path(project, tab: 'checklist'), class: tab_classes(params[:tab] == 'checklist') %>
+                <%= link_to 'Admin', project_path(project, tab: 'internal'), class: tab_classes(params[:tab] == 'internal') %>
+              </nav>
             </div>
           </div>
         </div>
 
         <div class="px-4 py-5 sm:p-6">
+
+          <% if params[:tab].blank? %>
             <h2 class="sr-only">Description</h2>
-            <%= project.description %>
+            <p class="px-2"> <%= project.description %> </p>
+            <p class="mt-5 text-sm text-gray-900 sm:mt-4 bg-gray-100 p-2 rounded-lg">
+              <b class="pr-4">Projektlön</b> <%= number_to_currency project.salaries %>
+            </p>
+          <% end %>
 
-          <% project.checklists.each do |list| %>
-            <turbo-frame id="<%= dom_id list %>">
-              <fieldset class="mt-8">
-                <legend class="text-lg"><%= list.title %></legend>
+          <% if params[:tab] == 'checklist' %>
+            <% project.checklists.each do |list| %>
+              <turbo-frame id="<%= dom_id list %>">
+                <fieldset class="mb-8">
+                  <legend class="text-lg"><%= list.title %></legend>
 
-              <div class="my-2">
-                <%= list.todos.present? \
-                  ? render(list.todos.order(:id)) \
-                  : content_tag(:div, 'Inget här just nu …', class: 'my-3 text-sm italic text-gray-400') %>
+                  <div class="my-2">
+                    <ul
+                      data-controller="sortable"
+                      data-sortable-animation-value="250"
+                      data-sortable-param-name-value="todo[position]"
+                      >
+                    <%= list.todos.present? \
+                      ? render(list.todos) \
+                      : content_tag(:li, 'Inget här just nu …', class: 'my-3 text-sm italic text-gray-400') %>
+                    </ul>
+                  </div>
+
+                  <% if policy(:todo).create? %>
+                  <div class="p-3 bg-gray-100 rounded-md">
+                    <%= turbo_frame_tag "new_todo" do %>
+                      <%= link_to "Ny #{list.title}", new_project_checklist_todo_path(project, list), class: "inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+                    <% end %>
+                  </div>
+                  <% end %>
+                </fieldset>
+              </turbo-frame>
+            <% end %>
+          <% end %>
+
+          <% if params[:tab] == 'internal' && Current.user.is_manager? %>
+    
+            <hr class="my-5">
+
+            <div class="bg-white shadow overflow-hidden rounded-lg my-4">
+              <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Belopp</h3>
               </div>
-              </fieldset>
-
-              <% if policy(:todo).create? %>
-              <div class="p-3 bg-gray-100 rounded-md">
-                <%= turbo_frame_tag "new_todo" do %>
-                  <%= link_to "Ny #{list.title}", new_project_checklist_todo_path(project, list), class: "inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
-                <% end %>
+              <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                <dl class="text-sm sm:divide-y sm:divide-gray-200">
+                  <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class=" font-medium text-gray-500">Arbetskostnader</dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency project.work_amount %></dd>
+                  </div>
+                  <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class=" font-medium text-gray-500">Materialkostnader</dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency project.material_amount %></dd>
+                  </div>
+                  <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class=" font-medium text-gray-500">Övriga kostnader</dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency project.misc_amount %></dd>
+                  </div>
+                  <div class="text-gray-800 font-bold py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="">Summa</dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency project.total %></dd>
+                  </div>
+                </dl>
               </div>
-              <% end %>
-            </turbo-frame>
+            </div>
+
+            <div class="bg-white shadow overflow-hidden rounded-lg my-4">
+              <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Kostnader</h3>
+              </div>
+              <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                <dl class="text-sm sm:divide-y sm:divide-gray-200">
+                  <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class=" font-medium text-gray-500">Löner (cirka)</dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">-<%= number_to_currency project.salaries %></dd>
+                  </div>
+                  <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class=" font-medium text-gray-500">Materialkostnader (cirka)</dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">-<%= number_to_currency project.expenses %></dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+
+            <% if project.is_rot? %>
+            <div class="bg-white shadow overflow-hidden rounded-lg">
+              <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">ROT</h3>
+              </div>
+              <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                <dl class="text-sm sm:divide-y sm:divide-gray-200">
+                  <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class=" font-medium text-gray-500">Timmar</dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+
+                      <div data-controller="clipboard">
+                        <span data-clipboard-target="source" data-value="<%= project.hours %>">
+                          ca <%= project.hours %> timmar
+                        </span>
+                        <button data-action="clipboard#copy">
+                          <%= heroicon('duplicate', variant: :outline, options: {class: 'text-gray-400 hover:text-gray-600 h-4 w-4'}) %>
+                        </button>
+                      </div>
+
+                    </dd>
+                  </div>
+
+                  <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class=" font-medium text-gray-500">Material inkl. moms</dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                      <%= render partial: 'shared/clipboard_value', locals: { amount: project.inc_vat(project.material_amount) } %>
+                    </dd>
+                  </div>
+
+                  <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class=" font-medium text-gray-500">Övrigt inkl. moms</dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                      <%= render partial: 'shared/clipboard_value', locals: { amount: project.inc_vat(project.misc_amount) } %>
+                    </dd>
+                  </div>
+
+                  <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class=" font-medium text-gray-500">Arbetskostnad Kund</dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                      <%= render partial: 'shared/clipboard_value', locals: { amount: project.client_costs } %>
+                    </dd>
+                  </div>
+
+                  <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class=" font-medium text-gray-500">Inbetalt Kund</dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                      <%= render partial: 'shared/clipboard_value', locals: { amount: project.client_payed } %>
+                    </dd>
+                  </div>
+
+                  <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class=" font-medium text-gray-500">ROT</dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                      <%= render partial: 'shared/clipboard_value', locals: { amount: project.rot } %>
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+            <% end %>
+
           <% end %>
         </div>
-
       </div>
-
-    <div class="bg-white shadow overflow-hidden rounded-lg my-4">
-      <div class="px-4 py-5 sm:px-6">
-        <h3 class="text-lg leading-6 font-medium text-gray-900">Arvode</h3>
-      </div>
-      <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-        <dl class="text-sm sm:divide-y sm:divide-gray-200">
-          <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class=" font-medium text-gray-500">Projektlön</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency project.salaries %></dd>
-          </div>
-        </dl>
-      </div>
-    </div>
-
-    <% if Current.user.is_manager? %>
-    
-      <hr class="my-5">
-
-      <div class="bg-white shadow overflow-hidden rounded-lg my-4">
-        <div class="px-4 py-5 sm:px-6">
-          <h3 class="text-lg leading-6 font-medium text-gray-900">Belopp</h3>
-        </div>
-        <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-          <dl class="text-sm sm:divide-y sm:divide-gray-200">
-            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class=" font-medium text-gray-500">Arbetskostnader</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency project.work_amount %></dd>
-            </div>
-            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class=" font-medium text-gray-500">Materialkostnader</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency project.material_amount %></dd>
-            </div>
-            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class=" font-medium text-gray-500">Övriga kostnader</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency project.misc_amount %></dd>
-            </div>
-            <div class="text-gray-800 font-bold py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class="">Summa</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency project.total %></dd>
-            </div>
-          </dl>
-        </div>
-      </div>
-
-      <div class="bg-white shadow overflow-hidden rounded-lg my-4">
-        <div class="px-4 py-5 sm:px-6">
-          <h3 class="text-lg leading-6 font-medium text-gray-900">Kostnader</h3>
-        </div>
-        <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-          <dl class="text-sm sm:divide-y sm:divide-gray-200">
-            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class=" font-medium text-gray-500">Löner (cirka)</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">-<%= number_to_currency project.salaries %></dd>
-            </div>
-            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class=" font-medium text-gray-500">Materialkostnader (cirka)</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">-<%= number_to_currency project.expenses %></dd>
-            </div>
-          </dl>
-        </div>
-      </div>
-
-      <% if project.is_rot? %>
-      <div class="bg-white shadow overflow-hidden rounded-lg">
-        <div class="px-4 py-5 sm:px-6">
-          <h3 class="text-lg leading-6 font-medium text-gray-900">ROT</h3>
-        </div>
-        <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-          <dl class="text-sm sm:divide-y sm:divide-gray-200">
-            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class=" font-medium text-gray-500">Timmar</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-
-                <div data-controller="clipboard">
-                  <span data-clipboard-target="source" data-value="<%= project.hours %>">
-                    ca <%= project.hours %> timmar
-                  </span>
-                  <button data-action="clipboard#copy">
-                    <%= heroicon('duplicate', variant: :outline, options: {class: 'text-gray-400 hover:text-gray-600 h-4 w-4'}) %>
-                  </button>
-                </div>
-
-              </dd>
-            </div>
-
-            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class=" font-medium text-gray-500">Material inkl. moms</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <%= render partial: 'shared/clipboard_value', locals: { amount: project.inc_vat(project.material_amount) } %>
-              </dd>
-            </div>
-
-            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class=" font-medium text-gray-500">Övrigt inkl. moms</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <%= render partial: 'shared/clipboard_value', locals: { amount: project.inc_vat(project.misc_amount) } %>
-              </dd>
-            </div>
-
-            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class=" font-medium text-gray-500">Arbetskostnad Kund</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <%= render partial: 'shared/clipboard_value', locals: { amount: project.client_costs } %>
-              </dd>
-            </div>
-
-            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class=" font-medium text-gray-500">Inbetalt Kund</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <%= render partial: 'shared/clipboard_value', locals: { amount: project.client_payed } %>
-              </dd>
-            </div>
-
-            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class=" font-medium text-gray-500">ROT</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <%= render partial: 'shared/clipboard_value', locals: { amount: project.rot } %>
-              </dd>
-            </div>
-          </dl>
-        </div>
-      </div>
-      <% end %>
-
-    <% end %>
-
   </div>
 </div>
