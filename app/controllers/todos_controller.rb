@@ -17,7 +17,7 @@ class TodosController < ProtectedController
     authorize(@todo)
 
     if @todo.save!
-      redirect_to project_url(@checklist.project)
+      redirect_to project_url(@checklist.project, tab: 'checklist')
     else
       render :new
     end
@@ -29,7 +29,7 @@ class TodosController < ProtectedController
     authorize(@todo)
 
     if @todo.update!(todo_params)
-      redirect_to project_url(@checklist.project), status: 303
+      redirect_to project_url(@checklist.project, tab: 'checklist', status: 303)
     else
       render :edit
     end
@@ -39,7 +39,7 @@ class TodosController < ProtectedController
     @todo = Todo.find(params[:id])
     authorize(@todo)
     @todo.destroy!
-    redirect_to project_url(@todo.checklist.project)
+    redirect_to project_url(@checklist.project, tab: 'checklist')
   end
 
   private
