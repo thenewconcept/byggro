@@ -29,7 +29,7 @@ class TodosController < ProtectedController
     authorize(@todo)
 
     if @todo.update!(todo_params)
-      redirect_to project_url(@checklist.project)
+      redirect_to project_url(@checklist.project), status: 303
     else
       render :edit
     end
