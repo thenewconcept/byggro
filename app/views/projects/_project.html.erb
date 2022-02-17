@@ -40,25 +40,11 @@
         </div>
 
         <div class="px-5">
-          <div class="sm:hidden">
-            <label for="tabs" class="sr-only">Select a tab</label>
-            <select id="tabs" name="tabs" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-              <option>My Account</option>
-              <option>Company</option>
-              <option selected>Team Members</option>
-              <option>Billing</option>
-            </select>
-          </div>
-
-          <div class="hidden sm:block">
-            <div class="">
-              <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-                <%= link_to 'Uppdrag', project_path(project), class: tab_classes(params[:tab].blank?) %>
-                <%= link_to 'Arbetsorder', project_path(project, tab: 'checklist'), class: tab_classes(params[:tab] == 'checklist') %>
-                <%= link_to 'Admin', project_path(project, tab: 'internal'), class: tab_classes(params[:tab] == 'internal') %>
-              </nav>
-            </div>
-          </div>
+          <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+            <%= link_to 'Uppdrag', project_path(project), class: tab_classes(params[:tab].blank?) %>
+            <%= link_to 'Arbetsorder', project_path(project, tab: 'checklist'), class: tab_classes(params[:tab] == 'checklist') %>
+            <%= link_to 'Admin', project_path(project, tab: 'internal'), class: tab_classes(params[:tab] == 'internal') %>
+          </nav>
         </div>
 
         <div class="px-4 py-5 sm:p-6">
