@@ -1,0 +1,25 @@
+<turbo-frame id="<%= dom_id checklist %>">
+  <fieldset class="mb-8">
+    <legend class="text-lg"><%= checklist.title %></legend>
+
+    <div class="my-2">
+      <ul
+        data-controller="sortable"
+        data-sortable-animation-value="250"
+        data-sortable-param-name-value="todo[position]"
+        >
+      <%= checklist.todos.present? \
+        ? render(checklist.todos) \
+        : content_tag(:li, 'Inget här just nu …', class: 'my-3 text-sm italic text-gray-400') %>
+      </ul>
+    </div>
+
+    <% if policy(:todo).create? %>
+    <div class="p-3 bg-gray-100 rounded-md">
+      <%= turbo_frame_tag "new_todo" do %>
+        <%= link_to "Ny #{checklist.title}", new_project_checklist_todo_path(checklist.project, checklist), class: "inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+      <% end %>
+    </div>
+    <% end %>
+  </fieldset>
+</turbo-frame>
