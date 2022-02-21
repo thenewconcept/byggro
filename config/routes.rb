@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get :harvest, to: 'harvest#index'
+
   resources :projects do
     resources :checklists do
       resources :todos
@@ -7,7 +9,6 @@ Rails.application.routes.draw do
   end
 
   root "projects#index"
-
     # SESSIONS & USERS
     get   'signup', to: 'registrations#new'
     post  'signup', to: 'registrations#create'
