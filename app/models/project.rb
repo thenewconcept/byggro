@@ -1,7 +1,7 @@
 class Project < ApplicationRecord
   validates :work_amount, :material_amount, :misc_amount, numericality: true
 
-  after_save :generate_checklists
+  after_create :generate_checklists
 
   has_rich_text :description
   has_many :checklists, dependent: :destroy
@@ -45,10 +45,7 @@ class Project < ApplicationRecord
 
   private
   def generate_checklists
-    work_order = self.checklists.create(title: 'Arbetsorder')
-    work_order.todos.create(description: 'Städning och undanröjning.')
-    work_order.todos.create(description: 'Kvaliteskontroll med Arbetsledare & Kund.')
-
+    self.checklists.create(title: 'Arbetsorder')
     self.checklists.create(title: 'ÄTA')
   end
 end
