@@ -1,4 +1,6 @@
 class Project < ApplicationRecord
+  BASESALARY = 180
+  BASEHOUR = 500
   validates :work_amount, :material_amount, :misc_amount, numericality: true
 
   after_create :generate_checklists
@@ -7,8 +9,28 @@ class Project < ApplicationRecord
   has_many :checklists, dependent: :destroy
   has_many :todos, through: :checklist
 
+  def target
+    hours * BASESALARY
+  end
+
   def total
     [work_amount, material_amount, misc_amount].sum
+  end
+
+  def hourly_salary(_hours)
+    BASESALARY * ( 1+bonus_percent(_hours) )
+  end
+
+  def bonus_percent(actual_hours)
+    1 - (actual_hours / hours)
+  end
+
+  def bonus_amount(_hours)
+    target * bonus_percent(_hours)
+  end
+
+  def base_salary(hours)
+    hours * Project::BASESALARY
   end
 
   def salaries
@@ -24,7 +46,7 @@ class Project < ApplicationRecord
   end
 
   def hours
-    work_amount / 500
+    work_amount / BASEHOUR
   end
 
   def client_costs
