@@ -10,19 +10,6 @@
         <dt class=" font-medium text-gray-500">Arbetskostnader</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency project.work_amount %></dd>
       </div>
-
-
-      Hours: <%= project.hours %><br/>
-      Project Target: <%= project.target %><br/>
-      5 Hours: <%= project.base_salary(5) %><br/>
-      Project Margin: <%= project.target - project.base_salary(5) %><br/>
-      Project Bonus(%): <%= project.bonus_percent(5.0) * 100  %> %<br/>
-      Project Bonus(SEK): <%= project.bonus_amount(5.0) %> kr <br/>
-      Project Salary: <%= project.hourly_salary(5.0) %> kr
-
-      <br/>
-      <br/>
-
       <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class=" font-medium text-gray-500">Materialkostnader</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency project.material_amount %></dd>
@@ -69,8 +56,8 @@
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
 
           <div data-controller="clipboard">
-            <span data-clipboard-target="source" data-value="<%= project.hours %>">
-              ca <%= project.hours %> timmar
+            <span data-clipboard-target="source" data-value="<%= project.target_hours %>">
+              ca <%= project.target_hours %> timmar
             </span>
             <button data-action="clipboard#copy">
               <%= heroicon('duplicate', variant: :outline, options: {class: 'text-gray-400 hover:text-gray-600 h-4 w-4'}) %>

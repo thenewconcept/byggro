@@ -5,6 +5,7 @@ end
 admin   = User.create!( email: 'jane@doe.com', password: 'kallekalle', is_admin: true )
 manager = User.create!( email: 'mia@doe.com', password: 'kallekalle', is_manager: true )
 worker  = User.create!( email: 'john@doe.com', password: 'kallekalle' )
+          Worker.create!( user: worker, salary: 160, title: 'Junior' )
 
 # Creates two checklists after save.
 project1 = Project.create!(
