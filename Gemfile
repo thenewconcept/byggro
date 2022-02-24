@@ -31,6 +31,7 @@ gem "bootsnap", require: false
 
 group :development, :test do
   gem 'byebug'
+  gem 'pry'
 
   gem 'faker'
   gem 'factory_bot_rails'
