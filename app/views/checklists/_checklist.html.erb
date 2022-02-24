@@ -1,6 +1,9 @@
 <turbo-frame id="<%= dom_id checklist %>">
   <fieldset class="mb-8">
-    <legend class="text-lg"><%= checklist.title %></legend>
+    <legend class="text-lg">
+      <%= checklist.title %>
+      <%= button_to 'Ta bort', [checklist.project, checklist], method: :delete, class: "text-sm h-4 w-4 text-gray-400 hover:text-gray-500" %>
+    </legend>
 
     <div class="my-2">
       <ul
@@ -17,7 +20,7 @@
     <% if policy(:todo).create? %>
     <div class="p-3 bg-gray-100 rounded-md">
       <%= turbo_frame_tag "new_todo" do %>
-        <%= link_to "Ny #{checklist.title}", new_project_checklist_todo_path(checklist.project, checklist), class: "inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+        <%= link_to "Ny uppgift", new_project_checklist_todo_path(checklist.project, checklist), class: "inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
       <% end %>
     </div>
     <% end %>
