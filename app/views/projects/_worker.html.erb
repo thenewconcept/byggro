@@ -1,0 +1,26 @@
+<div class="mt-5 text-sm text-gray-900 sm:mt-4 bg-green-100 p-2 rounded-md">
+  <b class="pr-4">Estimerad</b> 
+  <%= project.target_hours %> timmar
+</div>
+
+<div class="mt-5 text-sm text-gray-900 sm:mt-4 bg-gray-100 p-2 rounded-md">
+  <p class="my-2">
+    <b class="pr-4">Rapporterade</b> 
+    <%= project.reported_hours %> timmar
+  </p>
+
+  <p class="my-2">
+    <b class="pr-4">Bonus i procent</b> 
+    <%= number_to_percentage project.bonus_percent(project.reported_hours) * 100 %><br/>
+  </p>
+
+  <p class="my-2">
+    <b class="pr-4">Din bonus per timma</b> 
+    <%= number_to_currency project.bonus_salary_hourly(worker.salary, project.reported_hours) %><br/>
+  </p>
+</div>
+
+<div class="mt-5 text-sm text-gray-900 sm:mt-4 bg-gray-100 p-2 rounded-md">
+  <b class="pr-4">Din bonus totalt</b> 
+  <%= number_to_currency project.bonus_salary_total(worker.salary, project.reported_hours) %><br/>
+</div>

@@ -39,7 +39,12 @@ class TodosController < ProtectedController
     @todo = Todo.find(params[:id])
     authorize(@todo)
     @todo.destroy!
-    redirect_to project_url(@checklist.project, tab: 'checklist')
+
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(@todo) }
+      format.html {  redirect_to project_url(@checklist.project, tab: 'checklist') }
+    end
+    
   end
 
   private

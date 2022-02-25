@@ -56,8 +56,8 @@
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
 
           <div data-controller="clipboard">
-            <span data-clipboard-target="source" data-value="<%= project.hours %>">
-              ca <%= project.hours %> timmar
+            <span data-clipboard-target="source" data-value="<%= project.target_hours %>">
+              ca <%= project.target_hours %> timmar
             </span>
             <button data-action="clipboard#copy">
               <%= heroicon('duplicate', variant: :outline, options: {class: 'text-gray-400 hover:text-gray-600 h-4 w-4'}) %>
