@@ -23,7 +23,7 @@ class ChecklistsController < ProtectedController
     authorize(@checklist)
 
     if @checklist.update!(checklist_params)
-      redirect_to project_url(@project, tab: 'checklists', status: 303)
+      redirect_to project_url(@project, tab: 'checklist', status: 303)
     else
       render :edit
     end

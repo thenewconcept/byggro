@@ -1,0 +1,3 @@
+<%= form_with(model: [checklist.project, checklist], class: "contents", data: { 'turbo-frame': turbo_target }) do |f| %>
+  <%= f.text_field :title, required: true, class: 'mt-2 mx-4 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
+<% end %>
