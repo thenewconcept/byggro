@@ -9,12 +9,20 @@ class Project < ApplicationRecord
   has_many :checklists, dependent: :destroy
   has_many :todos, through: :checklist
 
-  def target_hours
+  def estimated_hours
     work_amount / BASEHOUR
   end
 
+  def estimated_salaries
+    estimated_hours * 160 * 1.33
+  end
+
+  def reported_salaries
+    reported_hours * 160 * 1.33
+  end
+
   def bonus_percent(hours)
-    1 - (hours / target_hours)
+    1 - (hours / estimated_hours)
   end
 
   def bonus_salary_hourly(salary, hours)
@@ -35,10 +43,6 @@ class Project < ApplicationRecord
 
   def total
     [work_amount, material_amount, misc_amount].sum
-  end
-
-  def salaries
-    work_amount * 0.35
   end
 
   def expenses
