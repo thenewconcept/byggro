@@ -1,6 +1,4 @@
 class Project < ApplicationRecord
-  BASEHOUR = 500
-
   enum bonus: [ :none, :hourly, :fixed ], _prefix: true
   validates :work_amount, :material_amount, :misc_amount, numericality: true
 
@@ -12,11 +10,7 @@ class Project < ApplicationRecord
   has_many :todos, through: :checklist
 
   def estimated_hours
-    work_amount / BASEHOUR
-  end
-
-  def fixed_salaries
-    work_amount * 0.35
+    work_amount / hourly_rate
   end
 
   def estimated_salaries
@@ -25,6 +19,10 @@ class Project < ApplicationRecord
 
   def reported_salaries
     reported_hours * 160 * 1.33
+  end
+
+  def bonus_fixed
+    work_amount * 0.35
   end
 
   def bonus_percent(hours)

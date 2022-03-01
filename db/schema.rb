@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_01_094229) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_01_112804) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -72,6 +72,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_01_094229) do
     t.boolean "is_rot", default: true, null: false
     t.float "reported_hours", default: 0.0, null: false
     t.integer "bonus", default: 0
+    t.float "hourly_rate", default: 0.0, null: false
   end
 
   create_table "todos", force: :cascade do |t|
