@@ -14,27 +14,25 @@
               </p>
             </div>
 
-            <div>
-              <div class="mt-4 flex space-x-3 md:mt-0">
-                <%= link_to edit_project_path(project), class: " inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900" do %>
-                  <%= heroicon("pencil", options: { class: "-ml-1 mr-2 text-gray-400" }) %>
-                  <span>Ändra</span>
-                <% end if policy(project).update? %>
+            <div class="mt-4 flex space-x-3 md:mt-0">
+              <%= link_to edit_project_path(project), class: " inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900" do %>
+                <%= heroicon("pencil", options: { class: "-ml-1 mr-2 text-gray-400" }) %>
+                <span>Ändra</span>
+              <% end if policy(project).update? %>
 
-                <%= link_to "https://www.google.com/maps?saddr=My+Location&daddr=#{project.adress}", class: "inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900", target: :new do %>
-                  <%= heroicon("map", options: { class: "-ml-1 mr-2 text-gray-400" }) %>
-                  <span>Vägbeskrivning</span>
+              <%= link_to "https://www.google.com/maps?saddr=My+Location&daddr=#{project.adress}", class: "inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900", target: :new do %>
+                <%= heroicon("map", options: { class: "-ml-1 mr-2 text-gray-400" }) %>
+                <span>Vägbeskrivning</span>
+              <% end %>
+
+
+              <% if policy(@project).destroy? %>
+                <%= button_to project_path(@project), method: :delete, class: "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" do %>
+                  <%= heroicon('trash', options: { class: '-ml-1 mr-2 h-5 w-5'}) %>
+                  Ta bort
                 <% end %>
+              <% end %>
 
-
-                <% if policy(@project).destroy? %>
-                  <%= button_to project_path(@project), method: :delete, class: "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" do %>
-                    <%= heroicon('trash', options: { class: '-ml-1 mr-2 h-5 w-5'}) %>
-                    Ta bort
-                  <% end %>
-                <% end %>
-
-              </div>
             </div>
           </div>
         </div>
