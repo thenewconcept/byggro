@@ -1,5 +1,7 @@
 class Project < ApplicationRecord
   BASEHOUR = 500
+
+  enum bonus: [ :none, :hourly, :fixed ], _prefix: true
   validates :work_amount, :material_amount, :misc_amount, numericality: true
 
   after_create :generate_checklists

@@ -1,0 +1,12 @@
+<div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+  <dl class="text-sm sm:divide-y sm:divide-gray-200">
+    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+      <dt class=" font-medium text-gray-500">Timmar (rapporterade)</dt>
+      <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= project.reported_hours %> timmar</dd>
+    </div>
+    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+      <dt class=" font-medium text-gray-500">Löner (cirka)</dt>
+      <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">-<%= number_to_currency project.fixed_salaries %></dd>
+    </div>
+  </dl>
+</div>

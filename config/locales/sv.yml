@@ -1,5 +1,8 @@
 ---
 sv:
+  none: Ingen
+  hourly: Timmar
+  fixed: Fast
   activerecord:
     models:
       project: Projekt
