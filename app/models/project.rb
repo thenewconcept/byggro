@@ -15,6 +15,10 @@ class Project < ApplicationRecord
     work_amount / BASEHOUR
   end
 
+  def fixed_salaries
+    work_amount * 0.35
+  end
+
   def estimated_salaries
     estimated_hours * 160 * 1.33
   end
