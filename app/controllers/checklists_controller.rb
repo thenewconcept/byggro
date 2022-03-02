@@ -43,6 +43,6 @@ class ChecklistsController < ProtectedController
 
   private
     def checklist_params
-      params.require(:checklist).permit(:title)
+      params.require(:checklist).permit(:title, :amount)
     end
 end

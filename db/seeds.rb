@@ -12,7 +12,6 @@ project1 = Project.create!(
   title: "Askims Paradis", 
   adress: "Askims Kyrkåsväg 12",
   description: "En beskrivning av projektet.",
-  work_amount: 134700, 
   material_amount: 32000, 
   misc_amount: 500, 
   is_rot: true
@@ -23,14 +22,13 @@ project2 = Project.create!(
   title: "Nätverkscentrum", 
   adress: "Elesbobacken 1",
   description: "En beskrivning av projektet.",
-  work_amount: 32000, 
   material_amount: 800, 
   misc_amount: 500, 
   is_rot: false
 )
 
-project1.checklists.first.todos.create!(description: 'Måla om köket, första strykning.')
-project1.checklists.first.todos.create!(description: 'Måla om köket, andra strykning.')
+project1.checklists.first.todos.create!(description: 'Måla om köket, första strykning.', amount: 6000)
+project1.checklists.first.todos.create!(description: 'Måla om köket, andra strykning.', amount: 4000)
 
-project1.checklists.last.todos.create!(description: 'Måla fönster.')
-project1.checklists.last.todos.create!(description: 'Måla dörrar.')
+project1.checklists.last.todos.create!(description: 'Måla fönster.', amount: 400)
+project1.checklists.last.todos.create!(description: 'Måla dörrar.', amount: 600)

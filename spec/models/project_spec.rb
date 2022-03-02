@@ -1,15 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Project, type: :model do
+
   before do
     @project = Project.create!(
       title: "Askims 12", 
       adress: "Askims Kyrkåsväg 12",
       description: "En beskrivning av projektet.",
-      work_amount: 134700, 
       material_amount: 32000, 
       misc_amount: 500, 
     )
+    @project.checklists.create!(title: 'Work', amount: 134700)
   end
 
   it 'proper calculations' do

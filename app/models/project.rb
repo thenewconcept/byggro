@@ -1,6 +1,8 @@
 class Project < ApplicationRecord
+  include Budgetable
+
   enum bonus: [ :none, :hourly, :fixed ], _prefix: true
-  validates :work_amount, :material_amount, :misc_amount, numericality: true
+  validates :material_amount, :misc_amount, numericality: true
 
   after_create :generate_checklists
 
@@ -9,8 +11,8 @@ class Project < ApplicationRecord
   has_many :checklists, dependent: :destroy
   has_many :todos, through: :checklist
 
-  def estimated_hours
-    work_amount / hourly_rate
+  def amount
+    checklists.sum(&:amount)
   end
 
   def estimated_salaries
@@ -22,7 +24,7 @@ class Project < ApplicationRecord
   end
 
   def bonus_fixed
-    work_amount * 0.35
+    amount * 0.35
   end
 
   def bonus_percent(hours)
@@ -46,7 +48,7 @@ class Project < ApplicationRecord
   end
 
   def total
-    [work_amount, material_amount, misc_amount].sum
+    [amount, material_amount, misc_amount].sum
   end
 
   def expenses
@@ -54,7 +56,7 @@ class Project < ApplicationRecord
   end
 
   def rot
-    inc_vat(work_amount) * 0.3
+    inc_vat(amount) * 0.3
   end
 
 
