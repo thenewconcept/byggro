@@ -1,56 +1,53 @@
 <div id="<%= dom_id project %>">
+  <div class="xl:col-span-2 xl:pr-8">
 
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 xl:max-w-5xl xl:grid xl:grid-cols-2">
-    <div class="xl:col-span-2 xl:pr-8">
+    <div class="bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200">
 
-      <div class="bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200">
+      <div class="px-4 py-5 sm:px-6">
+        <div class="md:flex md:items-center md:justify-between md:space-x-4">
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900"><%= project.title %></h1>
+            <p class="mt-2 text-sm">
+              <%= heroicon('map') %> <%= link_to project.adress, "https://www.google.com/maps?saddr=My+Location&daddr=#{project.adress}", target: :new %>
+            </p>
+          </div>
 
-        <div class="px-4 py-5 sm:px-6">
-          <div class="md:flex md:items-center md:justify-between md:space-x-4">
-            <div>
-              <h1 class="text-2xl font-bold text-gray-900"><%= project.title %></h1>
-              <p class="mt-2 text-sm">
-                <%= heroicon('map') %> <%= link_to project.adress, "https://www.google.com/maps?saddr=My+Location&daddr=#{project.adress}", target: :new %>
-              </p>
-            </div>
+          <div class="mt-4 flex space-x-3 md:mt-0">
+            <%= link_to edit_project_path(project), class: " inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900" do %>
+              <%= heroicon("pencil", options: { class: "-ml-1 mr-2 text-gray-400" }) %>
+              <span>Ändra</span>
+            <% end if policy(project).update? %>
 
-            <div class="mt-4 flex space-x-3 md:mt-0">
-              <%= link_to edit_project_path(project), class: " inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900" do %>
-                <%= heroicon("pencil", options: { class: "-ml-1 mr-2 text-gray-400" }) %>
-                <span>Ändra</span>
-              <% end if policy(project).update? %>
+            <%= link_to "https://www.google.com/maps?saddr=My+Location&daddr=#{project.adress}", class: "inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900", target: :new do %>
+              <%= heroicon("map", options: { class: "-ml-1 mr-2 text-gray-400" }) %>
+              <span>Vägbeskrivning</span>
+            <% end %>
 
-              <%= link_to "https://www.google.com/maps?saddr=My+Location&daddr=#{project.adress}", class: "inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900", target: :new do %>
-                <%= heroicon("map", options: { class: "-ml-1 mr-2 text-gray-400" }) %>
-                <span>Vägbeskrivning</span>
+
+            <% if policy(@project).destroy? %>
+              <%= button_to project_path(@project), method: :delete, class: "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" do %>
+                <%= heroicon('trash', options: { class: '-ml-1 mr-2 h-5 w-5'}) %>
+                Ta bort
               <% end %>
+            <% end %>
 
-
-              <% if policy(@project).destroy? %>
-                <%= button_to project_path(@project), method: :delete, class: "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" do %>
-                  <%= heroicon('trash', options: { class: '-ml-1 mr-2 h-5 w-5'}) %>
-                  Ta bort
-                <% end %>
-              <% end %>
-
-            </div>
           </div>
         </div>
-
-        <div class="px-5">
-          <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-            <%= link_to 'Uppdrag', project_path(project), class: tab_classes(params[:tab].blank?) %>
-            <%= link_to 'Arbetsorder', project_path(project, tab: 'checklist'), class: tab_classes(params[:tab] == 'checklist') %>
-            <%= link_to 'Arbetsrapport', project_path(project, tab: 'worker'), class: tab_classes(params[:tab] == 'worker') if Current.user.is_worker? %>
-            <%= link_to 'Admin', project_path(project, tab: 'internal'), class: tab_classes(params[:tab] == 'internal') if Current.user.is_manager? %>
-          </nav>
-        </div>
-
-        <div class="px-4 py-5 sm:p-6">
-          <%= render 'checklists', project: project if params[:tab] == 'checklist' %>
-          <%= render 'worker', project: project, worker: Current.user.worker if params[:tab] == 'worker' && Current.user.is_worker? %>
-          <%= render 'admin', project: project if params[:tab] == 'internal' && policy(:project).edit? %>
-        </div>
       </div>
-  </div>
+
+      <div class="px-5">
+        <nav class="-mb-px flex space-x-6 overflow-y-auto" aria-label="Tabs">
+          <%= link_to 'Uppdrag', project_path(project), class: tab_classes(params[:tab].blank?) %>
+          <%= link_to 'Arbetsorder', project_path(project, tab: 'checklist'), class: tab_classes(params[:tab] == 'checklist') %>
+          <%= link_to 'Arbetsrapport', project_path(project, tab: 'worker'), class: tab_classes(params[:tab] == 'worker') if Current.user.is_worker? %>
+          <%= link_to 'Admin', project_path(project, tab: 'internal'), class: tab_classes(params[:tab] == 'internal') if Current.user.is_manager? %>
+        </nav>
+      </div>
+
+      <div class="px-4 py-5 sm:p-6">
+        <%= render 'checklists', project: project if params[:tab] == 'checklist' %>
+        <%= render 'worker', project: project, worker: Current.user.worker if params[:tab] == 'worker' && Current.user.is_worker? %>
+        <%= render 'admin', project: project if params[:tab] == 'internal' && policy(:project).edit? %>
+      </div>
+    </div>
 </div>
