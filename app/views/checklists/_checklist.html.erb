@@ -5,8 +5,12 @@
       <h6 class="block"><%= link_to checklist.title, edit_project_checklist_path(checklist.project, checklist) %></h6>
       <p class="py-1.5 text-xs">
 
+        <%= tag.span(class: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800') do %>
+          <%= heroicon('document-report', variant: :outline, options: { class: 'h-3 w-3 mr-1' }) %> <%= checklist.estimated_hours %> timmar 
+        <% end %>
+
         <%= tag.span(class: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800') do %>
-          <%= heroicon('clock', variant: :outline, options: { class: 'h-3 w-3 mr-1' }) %> <%= checklist.estimated_hours %> timmar 
+          <%= heroicon('clock', variant: :outline, options: { class: 'h-3 w-3 mr-1' }) %> <%= checklist.reports.sum(&:time_in_minutes) / 60 %> timmar 
         <% end %>
 
         <%= tag.span(class: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800') do %>
@@ -27,13 +31,14 @@
       </ul>
     </div>
 
-    <% if policy(:todo).create? %>
-      <div class="p-3 bg-gray-100 rounded-md">
-        <%= turbo_frame_tag "new_todo" do %>
-          <%= link_to "Ny uppgift", new_project_checklist_todo_path(checklist.project, checklist), class: "inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
-        <% end %>
-      </div>
-    <% end %>
+    <div class="p-3 bg-gray-100 rounded-md">
+      <%= turbo_frame_tag "new_report" do %>
+        <%= link_to heroicon('plus-circle', options: { class: 'h-4 w-4 mr-1'}) + "Tidrapport", new_project_checklist_report_path(checklist.project, checklist), class: "inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" if policy(:report).create? %>
+      <% end %>
+      <%= turbo_frame_tag "new_todo" do %>
+        <%= link_to "Ny uppgift", new_project_checklist_todo_path(checklist.project, checklist), class: "inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" if policy(:todo).create? %>
+      <% end %>
+    </div>
 
   </turbo-frame>
 </div>

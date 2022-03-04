@@ -39,7 +39,7 @@
         <nav class="-mb-px flex space-x-6 overflow-y-auto" aria-label="Tabs">
           <%= link_to 'Uppdrag', project_path(project), class: tab_classes(params[:tab].blank?) %>
           <%= link_to 'Arbetsorder', project_path(project, tab: 'checklist'), class: tab_classes(params[:tab] == 'checklist') %>
-          <%= link_to 'Arbetsrapport', project_path(project, tab: 'worker'), class: tab_classes(params[:tab] == 'worker') if Current.user.is_worker? %>
+          <%= link_to 'Bonusrapport', project_path(project, tab: 'worker'), class: tab_classes(params[:tab] == 'worker') if Current.user.is_worker? %>
           <%= link_to 'Admin', project_path(project, tab: 'internal'), class: tab_classes(params[:tab] == 'internal') if Current.user.is_manager? %>
         </nav>
       </div>
