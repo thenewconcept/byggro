@@ -70,6 +70,20 @@
   <%= render partial: "projects/bonus/#{project.bonus}", locals: { project: project } %>
 </div>
 
+<div class="bg-slate-50 shadow overflow-hidden rounded-lg my-4">
+  <div class="px-4 py-5 sm:px-6">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">
+      Rapporter
+    </h3>
+    <ul class="list-disc ml-4 my-2 text-sm">
+      <% project.reports.each do |report| %>
+      <li class="py-1"> <%= l report.date  %> | <%= report.worker.user.email  %> – <%= report.time_in_minutes / 60 %> timmar </li>
+      <% end %>
+    </ul>
+  </div>
+
+</div>
+
 <% if project.is_rot? %>
 <div class="bg-white shadow overflow-hidden rounded-lg">
   <div class="px-4 py-5 sm:px-6">

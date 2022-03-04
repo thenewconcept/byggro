@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_01_141847) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_03_144104) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -70,9 +70,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_01_141847) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_rot", default: true, null: false
-    t.float "reported_hours", default: 0.0, null: false
     t.integer "bonus", default: 0
     t.float "hourly_rate", default: 0.0, null: false
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.bigint "worker_id", null: false
+    t.bigint "checklist_id", null: false
+    t.date "date"
+    t.integer "time_in_minutes"
+    t.string "note"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["checklist_id"], name: "index_reports_on_checklist_id"
+    t.index ["worker_id"], name: "index_reports_on_worker_id"
   end
 
   create_table "todos", force: :cascade do |t|
@@ -106,6 +117,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_01_141847) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "checklists", "projects"
+  add_foreign_key "reports", "checklists"
+  add_foreign_key "reports", "workers"
   add_foreign_key "todos", "checklists"
   add_foreign_key "workers", "users"
 end

@@ -1,4 +1,4 @@
-[Project, User].each do |_class|
+[Project, Worker, User, Report].each do |_class|
   _class.destroy_all
 end
 
@@ -9,11 +9,13 @@ worker  = User.create!( email: 'john@doe.com', password: 'kallekalle' )
 
 # Creates two checklists after save.
 project1 = Project.create!(
-  title: "Askims Paradis", 
-  adress: "Askims Kyrkåsväg 12",
+  title: "Testprojekt", 
+  adress: "Viktoriagatan 8",
   description: "En beskrivning av projektet.",
-  material_amount: 32000, 
-  misc_amount: 500, 
+  hourly_rate: 500,
+  bonus: 'hourly',
+  material_amount: 1000, 
+  misc_amount: 1000, 
   is_rot: true
 )
 
@@ -22,13 +24,33 @@ project2 = Project.create!(
   title: "Nätverkscentrum", 
   adress: "Elesbobacken 1",
   description: "En beskrivning av projektet.",
+  hourly_rate: 500,
+  bonus: 'fixed',
   material_amount: 800, 
   misc_amount: 500, 
   is_rot: false
 )
 
-project1.checklists.first.todos.create!(description: 'Måla om köket, första strykning.', amount: 6000)
-project1.checklists.first.todos.create!(description: 'Måla om köket, andra strykning.', amount: 4000)
+project1.checklists.first.update_attribute(:amount, 8000) 
+project1.checklists.last.update_attribute(:amount, 2000)
 
-project1.checklists.last.todos.create!(description: 'Måla fönster.', amount: 400)
-project1.checklists.last.todos.create!(description: 'Måla dörrar.', amount: 600)
+project1.checklists.first.todos.create!(description: 'Måla om köket, första strykning.')
+project1.checklists.first.todos.create!(description: 'Måla om köket, andra strykning.')
+
+project1.checklists.last.todos.create!(description: 'Måla fönster.')
+project1.checklists.last.todos.create!(description: 'Måla dörrar.')
+
+worker1 = Worker.create!( user: worker, salary: 100, title: 'Junior' )
+Report.create!(
+  worker: worker1,
+  checklist: project1.checklists.first,
+  time_in_minutes: 8 * 60,
+  date: Date.today
+)
+
+Report.create!(
+  worker: worker1,
+  checklist: project1.checklists.first,
+  time_in_minutes: 2 * 60,
+  date: Date.today
+)

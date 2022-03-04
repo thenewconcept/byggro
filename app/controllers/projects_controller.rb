@@ -69,6 +69,6 @@ class ProjectsController < ProtectedController
 
     # Only allow a list of trusted parameters through.
     def project_params
-      params.require(:project).permit(:title, :description, :adress, :material_amount, :misc_amount, :is_rot, :reported_hours, :bonus, :hourly_rate)
+      params.require(:project).permit(:title, :description, :adress, :material_amount, :misc_amount, :is_rot, :bonus, :hourly_rate)
     end
 end

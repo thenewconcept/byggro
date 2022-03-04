@@ -9,18 +9,23 @@ class Project < ApplicationRecord
   has_rich_text :description
 
   has_many :checklists, dependent: :destroy
-  has_many :todos, through: :checklist
+  has_many :reports, through: :checklists
+  has_many :todos, through: :checklists
+
+  def hours_reported
+    @hours_reported ||= reports.sum(:time_in_minutes) / 60
+  end
 
   def amount
     checklists.sum(&:amount)
   end
 
   def estimated_salaries
-    estimated_hours * 160 * 1.33
+    estimated_hours * 160
   end
 
   def reported_salaries
-    reported_hours * 160 * 1.33
+    hours_reported * 160
   end
 
   def bonus_fixed
@@ -28,7 +33,7 @@ class Project < ApplicationRecord
   end
 
   def bonus_percent(hours)
-    1 - (hours / estimated_hours)
+    (1 - (hours / estimated_hours))
   end
 
   def bonus_salary_hourly(salary, hours)
@@ -59,7 +64,6 @@ class Project < ApplicationRecord
     inc_vat(amount) * 0.3
   end
 
-
   def client_costs
     client_payed + rot
   end
@@ -77,6 +81,7 @@ class Project < ApplicationRecord
   end
 
   private
+
   def generate_checklists
     self.checklists.create(title: 'Arbetsorder')
     self.checklists.create(title: 'ÄTA')
