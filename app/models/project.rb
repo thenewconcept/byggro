@@ -11,7 +11,7 @@ class Project < ApplicationRecord
   has_many :todos, through: :checklists
 
   def hours_reported
-    reports.sum(&:time_in_hours)
+    reports.sum(:time_in_minutes) / 60.0
   end
 
   def amount

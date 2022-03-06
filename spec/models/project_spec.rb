@@ -15,30 +15,10 @@ RSpec.describe Project, type: :model do
     it '#hours_reported' do
       project   = create(:project, hourly_rate: 500)
       checklist = create(:checklist, amount: 10000, project: project)
-      create(:report, time_in_minutes: 300, checklist: checklist)
-      expect(project.hours_reported).to eq(5)
-      create(:report, time_in_minutes: 300, checklist: checklist)
-      expect(project.hours_reported).to eq(10)
-    end
-  end
-
-  describe 'Bonus calculations' do
-    it '#bonus_percent' do
-      project   = create(:project, hourly_rate: 500)
-      checklist = create(:checklist, amount: 10000, project: project)
-      report    = create(:report, time_in_minutes: 300, checklist: checklist)
-      expect(project.bonus_percent).to eq(0.75)
-      report    = create(:report, time_in_minutes: 300, checklist: checklist)
-      expect(project.bonus_percent).to eq(0.5)
-    end
-
-    it '#hourly_percent' do
-      project   = create(:project, hourly_rate: 500)
-      checklist = create(:checklist, amount: 10000, project: project)
-      create(:report, time_in_minutes: 300, checklist: checklist)
-      expect(project.hourly_percent).to eq(0.25)
-      create(:report, time_in_minutes: 300, checklist: checklist)
-      expect(project.hourly_percent).to eq(0.50)
+      create(:report, time_in_hours: 5, checklist: checklist)
+      expect(project.hours_reported).to eq(5.0)
+      create(:report, time_in_hours: 5, checklist: checklist)
+      expect(project.hours_reported).to eq(10.0)
     end
   end
 
