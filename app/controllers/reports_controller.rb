@@ -13,7 +13,7 @@ class ReportsController < ProtectedController
 
   def create
     @checklist = Checklist.find(params[:checklist_id])
-    @report      = @checklist.reports.new(report_params.merge(worker: Current.user.worker))
+    @report    = @checklist.reports.new(report_params.merge(worker: Current.user.worker))
     authorize(@report)
 
     if @report.save!
@@ -48,6 +48,6 @@ class ReportsController < ProtectedController
 
   private
     def report_params
-      params.require(:report).permit(:date, :time_in_minutes, :note)
+      params.require(:report).permit(:date, :time_in_hours, :time_formated, :note)
     end
 end

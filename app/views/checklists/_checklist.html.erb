@@ -10,7 +10,7 @@
         <% end %>
 
         <%= tag.span(class: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800') do %>
-          <%= heroicon('clock', variant: :outline, options: { class: 'h-3 w-3 mr-1' }) %> <%= checklist.reports.sum(&:time_in_minutes) / 60 %> timmar 
+          <%= heroicon('clock', variant: :outline, options: { class: 'h-3 w-3 mr-1' }) %> <%= checklist.reports.sum(&:time_in_hours).round(2) %> timmar 
         <% end %>
 
         <%= tag.span(class: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800') do %>

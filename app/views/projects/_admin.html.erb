@@ -79,7 +79,7 @@
       <% project.reports.each do |report| %>
       <li class="py-1"> 
         <%= link_to edit_project_checklist_report_path(project, report.checklist, report) do %>
-        <p><%= l report.date  %> | <%= report.worker.user.email  %> | <%= report.time_in_minutes / 60 %> timmar @ <%= report.checklist.title %></p>
+        <p><%= l report.date  %> | <%= report.worker.user.email  %> | <%= report.time_in_hours %> timmar @ <%= report.checklist.title %></p>
         <p class="text-xs text-gray-500 my-1"><%= report.note  %></p>
         <% end %>
       </li>

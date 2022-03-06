@@ -5,8 +5,8 @@
 </div>
 
 <div class="mt-2 text-sm text-green-800 sm:mt-4 bg-green-100 py-1 px-2 rounded-md">
-  <p class="my-1"> <%= heroicon('clock') %> <b class="pr-4">Totalt</b> <%= project.hours_reported %> tim </p>
-  <p class="my-1"> <%= heroicon('clock', variant: :outline) %> <b class="pr-4">Dina</b> <%= project.reports.where(worker: Current.user.worker).sum(&:time_in_hours) %> tim </p>
+  <p class="my-1"> <%= heroicon('clock') %> <b class="pr-4">Totalt</b> <%= project.hours_reported.round(2) %> tim </p>
+  <p class="my-1"> <%= heroicon('clock', variant: :outline) %> <b class="pr-4">Dina</b> <%= project.reports.where(worker: Current.user.worker).sum(&:time_in_hours).round(2) %> tim </p>
 </div>
 
 <div class="mt-2 text-sm text-yellow-800 sm:mt-4 bg-yellow-100 py-1 px-2 rounded-md">
