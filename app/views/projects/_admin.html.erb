@@ -50,7 +50,7 @@
     <dl class="text-sm sm:divide-y sm:divide-gray-200">
       <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class=" font-medium text-gray-500">Timmar (mål)</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= project.estimated_hours %> timmar</dd>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= project.hours_target %> timmar</dd>
       </div>
       <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class=" font-medium text-gray-500">Löner (cirka)</dt>
@@ -101,8 +101,8 @@
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
 
           <div data-controller="clipboard">
-            <span data-clipboard-target="source" data-value="<%= project.estimated_hours  %>">
-              ca <%= project.estimated_hours %> timmar
+            <span data-clipboard-target="source" data-value="<%= project.hours_target  %>">
+              ca <%= project.hours_target %> timmar
             </span>
             <button data-action="clipboard#copy">
               <%= heroicon('duplicate', variant: :outline, options: {class: 'text-gray-400 hover:text-gray-600 h-4 w-4'}) %>

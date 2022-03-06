@@ -4,8 +4,8 @@ end
 
 admin   = User.create!( email: 'jane@doe.com', password: 'kallekalle', is_admin: true )
 manager = User.create!( email: 'mia@doe.com', password: 'kallekalle', is_manager: true )
-worker  = User.create!( email: 'john@doe.com', password: 'kallekalle' )
-          Worker.create!( user: worker, salary: 160, title: 'Junior' )
+worker_user = User.create!( email: 'john@doe.com', password: 'kallekalle' )
+worker = Worker.create!( user: worker_user, salary: 160, title: 'Junior' )
 
 # Creates two checklists after save.
 project1 = Project.create!(
@@ -40,16 +40,15 @@ project1.checklists.first.todos.create!(description: 'Måla om köket, andra str
 project1.checklists.last.todos.create!(description: 'Måla fönster.')
 project1.checklists.last.todos.create!(description: 'Måla dörrar.')
 
-worker1 = Worker.create!( user: worker, salary: 100, title: 'Junior' )
 Report.create!(
-  worker: worker1,
+  worker: worker,
   checklist: project1.checklists.first,
   time_in_minutes: 8 * 60,
   date: Date.today
 )
 
 Report.create!(
-  worker: worker1,
+  worker: worker,
   checklist: project1.checklists.first,
   time_in_minutes: 2 * 60,
   date: Date.today

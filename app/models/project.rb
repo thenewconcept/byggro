@@ -1,55 +1,21 @@
 class Project < ApplicationRecord
-  include Budgetable
+  include Bonusable
 
   enum bonus: [ :none, :hourly, :fixed ], _prefix: true
   validates :material_amount, :misc_amount, numericality: true
 
   after_create :generate_checklists
-
   has_rich_text :description
-
   has_many :checklists, dependent: :destroy
   has_many :reports, through: :checklists
   has_many :todos, through: :checklists
 
   def hours_reported
-    @hours_reported ||= reports.sum(:time_in_minutes) / 60
+    reports.sum(:time_in_minutes) / 60
   end
 
   def amount
     checklists.sum(&:amount)
-  end
-
-  def estimated_salaries
-    estimated_hours * 160
-  end
-
-  def reported_salaries
-    hours_reported * 160
-  end
-
-  def bonus_fixed
-    amount * 0.35
-  end
-
-  def bonus_percent(hours)
-    (1 - (hours / estimated_hours))
-  end
-
-  def bonus_salary_hourly(salary, hours)
-    salary * bonus_percent(hours)
-  end
-
-  def bonus_salary_total(salary, hours)
-    hours * bonus_salary_hourly(salary, hours)
-  end
-
-  def actual_salary_hourly(salary, hours)
-    [salary + bonus_salary_hourly(salary, hours), salary].max
-  end
-
-  def actual_salary_total(salary, hours)
-    hours * actual_salary_hourly(salary, hours)
   end
 
   def total

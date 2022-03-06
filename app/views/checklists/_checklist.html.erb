@@ -2,11 +2,11 @@
   <turbo-frame id="<%= dom_id checklist %>">
 
     <%= turbo_frame_tag dom_id(checklist, :title) do %>
-      <h6 class="block"><%= link_to checklist.title, edit_project_checklist_path(checklist.project, checklist) %></h6>
+      <h6 class="block"><%= link_to_if policy(:checklist).create?, checklist.title, edit_project_checklist_path(checklist.project, checklist) %></h6>
       <p class="py-1.5 text-xs">
 
         <%= tag.span(class: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800') do %>
-          <%= heroicon('document-report', variant: :outline, options: { class: 'h-3 w-3 mr-1' }) %> <%= checklist.estimated_hours %> timmar 
+          <%= heroicon('document-report', variant: :outline, options: { class: 'h-3 w-3 mr-1' }) %> <%= checklist.hours_target %> timmar 
         <% end %>
 
         <%= tag.span(class: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800') do %>

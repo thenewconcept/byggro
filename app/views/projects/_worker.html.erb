@@ -1,28 +1,16 @@
 <div class="mt-2 text-sm text-indigo-800 sm:mt-4 bg-indigo-100 py-1 px-2 rounded-md">
   <%= heroicon('document-report') %>
   <b class="pr-4">Kundestimat</b> 
-  <%= project.estimated_hours %> timmar
+  <%= project.hours_target %> tim
 </div>
 
 <div class="mt-2 text-sm text-green-800 sm:mt-4 bg-green-100 py-1 px-2 rounded-md">
-  <%= heroicon('clock') %>
-  <b class="pr-4">Rapport</b> 
-  <%= project.hours_reported %> timmar
+  <p class="my-1"> <%= heroicon('clock') %> <b class="pr-4">Totalt</b> <%= project.hours_reported %> tim </p>
+  <p class="my-1"> <%= heroicon('clock', variant: :outline) %> <b class="pr-4">Dina</b> <%= project.reports.where(worker: Current.user.worker).sum(&:time_in_hours) %> tim </p>
 </div>
 
-<div class="mt-2 text-sm text-gray-900 sm:mt-4 bg-gray-100 p-2 rounded-md">
-  <p class="my-1">
-    <b class="px-1">Bonus %</b> 
-    <%= number_to_percentage project.bonus_percent(project.hours_reported) * 100 %><br/>
-  </p>
-
-  <p class="my-1">
-    <b class="px-1">Din bonus/timma</b> 
-    <%= number_to_currency project.bonus_salary_hourly(worker.salary, project.hours_reported) %><br/>
-  </p>
-
-  <p>
-    <b class="px-1">Din bonus/totalt</b> 
-    <%= number_to_currency project.bonus_salary_total(worker.salary, project.hours_reported) %><br/>
-  </p>
+<div class="mt-2 text-sm text-yellow-800 sm:mt-4 bg-yellow-100 py-1 px-2 rounded-md">
+  <%= heroicon('cash') %>
+  <b class="px-1">Bonus</b> 
+  <%= number_to_currency Bonus::Calculator.for(project).bonus_for(Current.user.worker) %>
 </div>

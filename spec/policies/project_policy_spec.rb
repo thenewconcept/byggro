@@ -10,18 +10,20 @@ RSpec.describe ProjectPolicy, type: :policy do
   end
 
   permissions :show? do
-    pending "add some examples to (or delete) #{__FILE__}"
+    it "grants show to all" do
+      expect(subject).to permit(User.new, Project.new)
+    end
   end
 
   permissions :create? do
     it "grants create user is admin" do
-      expect(subject).to permit(user, Project.new(title: 'Project 1'))
+      expect(subject).to permit(user, Project.new)
     end
   end
 
   permissions :update? do
     it "grants update user is admin" do
-      expect(subject).to permit(user, Project.new(title: 'Project 1'))
+      expect(subject).to permit(user, Project.new)
     end
   end
 

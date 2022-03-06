@@ -1,5 +1,6 @@
 class Checklist < ApplicationRecord
-  include Budgetable
+  include Bonusable
+
   belongs_to :project
   validates :title, presence: true
 
