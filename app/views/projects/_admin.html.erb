@@ -79,7 +79,7 @@
       <% project.reports.each do |report| %>
       <li class="py-1"> 
         <%= link_to edit_project_checklist_report_path(project, report.checklist, report) do %>
-        <p><%= l report.date  %> | <%= report.worker.user.email  %> | <%= report.time_in_hours %> timmar @ <%= report.checklist.title %></p>
+        <p><%= l report.date  %> | <%= report.worker.user.email  %> | <%= report.time_in_hours.round(2) %> timmar @ <%= report.checklist.title %></p>
         <p class="text-xs text-gray-500 my-1"><%= report.note  %></p>
         <% end %>
       </li>
@@ -90,7 +90,7 @@
 </div>
 
 <% if project.is_rot? %>
-<div class="bg-white shadow overflow-hidden rounded-lg">
+<div class="bg-slate-50 shadow overflow-hidden rounded-lg">
   <div class="px-4 py-5 sm:px-6">
     <h3 class="text-lg leading-6 font-medium text-gray-900">ROT</h3>
   </div>
