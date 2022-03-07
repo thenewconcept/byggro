@@ -1,8 +1,14 @@
 ---
 sv:
-  none: Ingen
-  hourly: Timmar
-  fixed: Fast
+  project:
+    status:
+      upcoming: 'Kommande'
+      started: 'Pågående'
+      completed: 'Klar'
+    bonus:
+      none: Ingen
+      hourly: Timmar
+      fixed: Fast
   activerecord:
     models:
       project: Projekt

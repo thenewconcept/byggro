@@ -12,6 +12,21 @@
   <% end %>
 
   <div class="my-5">
+    <label class="text-base font-medium text-gray-900">Status</label>
+    <fieldset class="mt-4">
+      <legend class="sr-only">Status</legend>
+      <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
+        <div class="flex items-center">
+        <% Project.statuses.keys.each do |status| %>
+          <%= form.radio_button :status, status, class: 'ml-2 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300' %>
+          <%= form.label t("project.status.#{status}"), for: "project_status_#{status}", class: 'ml-2 block text-sm font-medium text-gray-700' %>
+        <% end %>
+        </div>
+      </div>
+    </fieldset>
+  </div> 
+
+  <div class="my-5">
     <label class="text-base font-medium text-gray-900">Bonusmetod</label>
     <fieldset class="mt-4">
       <legend class="sr-only">Bonusmetod</legend>
@@ -19,7 +34,7 @@
         <div class="flex items-center">
         <% Project.bonus.keys.each do |bonus| %>
           <%= form.radio_button :bonus, bonus, class: 'ml-2 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300' %>
-          <%= form.label t(bonus.to_sym), for: "project_bonus_#{bonus}", class: 'ml-2 block text-sm font-medium text-gray-700' %>
+          <%= form.label t("project.bonus.#{bonus}"), for: "project_bonus_#{bonus}", class: 'ml-2 block text-sm font-medium text-gray-700' %>
         <% end %>
         </div>
       </div>

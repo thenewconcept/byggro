@@ -2,6 +2,8 @@ class Project < ApplicationRecord
   include Bonusable
 
   enum bonus: [ :none, :hourly, :fixed ], _prefix: true
+  enum status: { upcoming: 'upcoming', started: 'started', completed: 'completed' }, _prefix: true
+
   validates :material_amount, :misc_amount, numericality: true
 
   after_create :generate_checklists

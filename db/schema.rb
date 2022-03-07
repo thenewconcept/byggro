@@ -10,9 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_03_144104) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_07_123502) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "project_status", ["upcoming", "started", "completed"]
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -72,6 +76,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_03_144104) do
     t.boolean "is_rot", default: true, null: false
     t.integer "bonus", default: 0
     t.float "hourly_rate", default: 0.0, null: false
+    t.enum "status", default: "upcoming", null: false, enum_type: "project_status"
+    t.index ["status"], name: "index_projects_on_status"
   end
 
   create_table "reports", force: :cascade do |t|

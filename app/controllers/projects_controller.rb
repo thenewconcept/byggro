@@ -3,7 +3,8 @@ class ProjectsController < ProtectedController
 
   # GET /projects or /projects.json
   def index
-    @projects = Project.all
+    @projects  = Project.not_status_completed.order(status: :desc)
+    @completed = Project.status_completed
   end
 
   # GET /projects/1 or /projects/1.json
@@ -69,6 +70,6 @@ class ProjectsController < ProtectedController
 
     # Only allow a list of trusted parameters through.
     def project_params
-      params.require(:project).permit(:title, :description, :adress, :material_amount, :misc_amount, :is_rot, :bonus, :hourly_rate)
+      params.require(:project).permit(:title, :description, :adress, :material_amount, :misc_amount, :is_rot, :bonus, :status, :hourly_rate)
     end
 end
