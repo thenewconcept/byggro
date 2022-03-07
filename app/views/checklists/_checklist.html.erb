@@ -4,18 +4,9 @@
     <%= turbo_frame_tag dom_id(checklist, :title) do %>
       <h6 class="block"><%= link_to_if policy(:checklist).create?, checklist.title, edit_project_checklist_path(checklist.project, checklist) %></h6>
       <p class="py-1.5 text-xs">
-
-        <%= tag.span(class: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800') do %>
-          <%= heroicon('document-report', variant: :outline, options: { class: 'h-3 w-3 mr-1' }) %> <%= checklist.hours_target %> timmar 
-        <% end %>
-
-        <%= tag.span(class: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800') do %>
-          <%= heroicon('clock', variant: :outline, options: { class: 'h-3 w-3 mr-1' }) %> <%= checklist.reports.sum(&:time_in_hours).round(2) %> timmar 
-        <% end %>
-
-        <%= tag.span(class: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800') do %>
-          <%= heroicon('credit-card', variant: :outline, options: { class: 'h-3 w-3 mr-1' }) %>   <%= number_to_currency(checklist.amount)%>
-        <% end if policy(:project).create? %>
+        <%= icon_badge("#{checklist.hours_target} timmar", 'indigo', 'document-report') %>
+        <%= icon_badge("#{checklist.reports.sum(&:time_in_hours).round(2)} timmar", 'green', 'clock') %>
+        <%= icon_badge("#{number_to_currency(checklist.amount)}", 'gray', 'credit-card') if policy(:project).create? %>
       </p>
     <% end %>
 

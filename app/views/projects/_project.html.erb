@@ -6,10 +6,10 @@
       <div class="px-4 py-5 sm:px-6">
         <div class="md:flex md:items-center md:justify-between md:space-x-4">
           <div>
-            <%= status_badge(project.status)  %>
             <h1 class="mt-2 text-2xl font-bold text-gray-900"><%= project.title %></h1>
             <div class="mt-2">
-              <%= heroicon('map') %> <%= link_to project.adress, "https://www.google.com/maps?saddr=My+Location&daddr=#{project.adress}", target: :new %>
+              <%= status_badge(project.status)  %>
+              <%= icon_badge(project.adress, 'gray', 'map') %>
             </div>
           </div>
 

@@ -5,7 +5,16 @@ module ProjectsHelper
     active ? active_classes : default_classes
   end
 
-  def status_badge(status, **options)
+  def icon_badge(text, color='gray', icon='information-circle', options={})
+    default_classes = "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-#{color}-100 text-#{color}-800" 
+    options[:class] = options[:class] ? default_classes + ' ' + options[:class] : default_classes
+
+    tag.p **options do
+      heroicon(icon, variant: :outline, options: { class: 'h-3 w-3 mr-1' }) + ' ' + text
+    end 
+  end
+
+  def status_badge(status, options={})
     case status
     when 'upcoming'
       color = 'red'; icon = 'calendar'
@@ -15,9 +24,7 @@ module ProjectsHelper
       color = 'green'; icon = 'check'
     end
 
-    tag.p class: "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-#{color}-100 text-#{color}-800" do
-      heroicon(icon, variant: :outline, options: { class: 'h-3 w-3 pr-1 pt-0.5' }) + '' + t("project.status.#{status}")
-    end 
+    icon_badge(t("project.status.#{status}"), color, icon, options)
   end
-# , 
+
 end
