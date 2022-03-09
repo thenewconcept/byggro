@@ -5,12 +5,14 @@
 </div>
 
 <div class="mt-2 text-sm text-green-800 sm:mt-4 bg-green-100 py-1 px-2 rounded-md">
-  <p class="my-1"> <%= heroicon('clock') %> <b class="pr-4">Totalt</b> <%= project.hours_reported.round(2) %> tim </p>
-  <p class="my-1"> <%= heroicon('clock', variant: :outline) %> <b class="pr-4">Dina</b> <%= project.reports.where(worker: Current.user.worker).sum(&:time_in_hours).round(2) %> tim </p>
+  <p class="my-1"> <%= heroicon('clock', variant: :outline) %> <b class="pr-4">Din rapport</b> <%= project.reports.where(worker: Current.user.worker).sum(&:time_in_hours).round(2) %> tim </p>
+  <p class="my-1"> <%= heroicon('clock') %> <b class="pr-4">Teamrapport</b> <%= project.hours_reported.round(2) %> tim </p>
 </div>
 
+<% unless Current.user.worker.title == 'Konsult' %>
 <div class="mt-2 text-sm text-yellow-800 sm:mt-4 bg-yellow-100 py-1 px-2 rounded-md">
   <%= heroicon('cash') %>
   <b class="px-1">Bonus</b> 
   <%= number_to_currency Bonus::Calculator.for(project).bonus_for(Current.user.worker) %>
 </div>
+<% end %>
