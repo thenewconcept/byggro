@@ -12,6 +12,10 @@ class Project < ApplicationRecord
   has_many :reports, through: :checklists
   has_many :todos, through: :checklists
 
+  def primary_date
+    starts_at.present? ?  starts_at : created_at.to_date
+  end
+
   def hours_reported
     reports.sum(:time_in_minutes) / 60.0
   end
