@@ -1,0 +1,59 @@
+<div class="bg-slate-50 shadow overflow-hidden rounded-lg">
+  <div class="px-4 py-5 sm:px-6">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">ROT</h3>
+  </div>
+  <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+    <dl class="text-sm sm:divide-y sm:divide-gray-200">
+      <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class=" font-medium text-gray-500">Timmar</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+
+          <div data-controller="clipboard">
+            <span data-clipboard-target="source" data-value="<%= project.hours_target  %>">
+              ca <%= project.hours_target %> timmar
+            </span>
+            <button data-action="clipboard#copy">
+              <%= heroicon('duplicate', variant: :outline, options: {class: 'text-gray-400 hover:text-gray-600 h-4 w-4'}) %>
+            </button>
+          </div>
+
+        </dd>
+      </div>
+
+      <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class=" font-medium text-gray-500">Material inkl. moms</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          <%= render partial: 'shared/clipboard_value', locals: { amount: project.inc_vat(project.material_amount) } %>
+        </dd>
+      </div>
+
+      <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class=" font-medium text-gray-500">Övrigt inkl. moms</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          <%= render partial: 'shared/clipboard_value', locals: { amount: project.inc_vat(project.misc_amount) } %>
+        </dd>
+      </div>
+
+      <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class=" font-medium text-gray-500">Arbetskostnad Kund</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          <%= render partial: 'shared/clipboard_value', locals: { amount: project.client_costs } %>
+        </dd>
+      </div>
+
+      <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class=" font-medium text-gray-500">Inbetalt Kund</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          <%= render partial: 'shared/clipboard_value', locals: { amount: project.client_payed } %>
+        </dd>
+      </div>
+
+      <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class=" font-medium text-gray-500">ROT</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          <%= render partial: 'shared/clipboard_value', locals: { amount: project.rot } %>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>

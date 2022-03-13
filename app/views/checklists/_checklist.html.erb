@@ -6,7 +6,7 @@
       <p class="py-1 text-xs">
         <%= icon_badge("#{checklist.hours_target} timmar", 'indigo', 'document-report') %>
         <%= icon_badge("#{checklist.reports.sum(&:time_in_hours).round(2)} timmar", 'green', 'clock') %>
-        <%= icon_badge("#{number_to_currency(checklist.amount)}", 'gray', 'credit-card') if policy(:project).create? %>
+        <%= icon_badge("#{number_to_currency(checklist.amount)}", 'gray', 'shield-check') if policy(:project).create? %>
       </p>
     <% end %>
 
