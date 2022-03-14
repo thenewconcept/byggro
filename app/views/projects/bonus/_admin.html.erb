@@ -6,11 +6,15 @@
     <dl class="text-sm sm:divide-y sm:divide-gray-200">
       <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class=" font-medium text-gray-500">Timmar (mål)</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= project.hours_target.round(2) %> timmar</dd>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          <%= project.hours_target.round(2) %> timmar
+        </dd>
       </div>
       <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class=" font-medium text-gray-500">Löner (cirka)</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">-<%= number_to_currency project.estimated_salaries %></dd>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          -<%= number_to_currency project.estimated_salaries %>
+        </dd>
       </div>
     </dl>
   </div>
@@ -19,7 +23,7 @@
 <div class="bg-slate-50 shadow overflow-hidden rounded-lg my-4">
   <div class="px-4 py-5 sm:px-6">
     <h3 class="text-lg leading-6 font-medium text-gray-900">
-      Bonus <%= t project.bonus %>
+      Bonus <%= t "project.bonus.#{project.bonus}" %>
     </h3>
   </div>
 

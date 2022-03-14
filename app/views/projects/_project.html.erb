@@ -51,6 +51,7 @@
       </div>
 
       <div class="px-4 py-5 sm:p-6">
+        <%= render 'description', project: project if params[:tab].blank? %>
         <%= render 'checklists', project: project if params[:tab] == 'checklist' %>
         <%= render 'worker', project: project, worker: Current.user.worker if params[:tab] == 'worker' && Current.user.is_worker? %>
 
