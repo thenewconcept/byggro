@@ -3,10 +3,18 @@ require 'rails_helper'
 RSpec.describe ProjectPolicy, type: :policy do
   let(:user) { User.new(email: 'jane@doe.com', is_admin: true) }
 
+  before do
+    5.times { create(:project) }
+  end
+
   subject { described_class }
 
   permissions ".scope" do
-    pending "add some examples to (or delete) #{__FILE__}"
+    scope = Project.all
+    it "returns everything for a super admin" do
+      expect(scope).to be_a(ActiveRecord::Relation)
+      expect(scope.count).to eq(5)
+    end
   end
 
   permissions :show? do

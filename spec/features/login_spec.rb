@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'user login' do
+RSpec.describe 'login' do
   it 'works with a valid user' do
     user = create(:user, email: 'jinx@doe.com', password: '12345678')
     visit root_path

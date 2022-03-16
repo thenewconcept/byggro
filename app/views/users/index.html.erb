@@ -1,0 +1,28 @@
+<div class="bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200">
+  <div class="px-4 py-5 sm:px-6">   
+    <table class="min-w-full divide-y divide-gray-300">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Förnamn</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Efternamn</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Roller</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Epost</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Senast inloggad</th>
+          <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-6"> <span class="sr-only">Edit</span> </th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200 bg-white">
+          <% @users.each do |user| %>
+          <tr id="<%= dom_id(user) %>"> 
+            <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900"> <%= user.first_name %> </td>
+            <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900"> <%= user.last_name %> </td>
+            <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900"> <%= user.roles %> </td>
+            <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900"> <%= user.email %> </td>
+            <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900"> <%= user.created_at %> </td>
+            <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"> <%= link_to 'Ändra', edit_user_path(user) %> </td>
+          </tr>
+          <% end %>
+      </tbody>    
+    </table>
+  </div>
+</div>

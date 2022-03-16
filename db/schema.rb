@@ -116,9 +116,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_13_160920) do
   end
 
   create_table "workers", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.integer "salary"
     t.string "title"
+    t.integer "salary"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_workers_on_user_id"

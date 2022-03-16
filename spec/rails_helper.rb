@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'webdrivers'
+require 'pundit/rspec'
 
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'

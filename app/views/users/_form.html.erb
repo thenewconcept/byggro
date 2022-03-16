@@ -1,0 +1,54 @@
+<%= form_with(model: user, class: "contents" ) do |form| %>
+<div class="bg-white rounded-md py-1 px-4 my-4 border-2 border-slate-200">
+  <div class="my-4 grid grid-cols-6 gap-6">
+    <div class="col-span-3 sm:col-span-2">
+      <%= form.label :first_name, 'Förnamn' %>
+      <%= form.text_field :first_name, class: "block rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+
+    <div class="col-span-3 sm:col-span-2">
+      <%= form.label :last_name, 'Efternamn' %>
+      <%= form.text_field :last_name, class: "block rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+
+    <div class="col-span-3 sm:col-span-2">
+      <%= form.label :email, 'Epost' %>
+      <%= form.email_field :email, class: "block rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+  </div>
+</div>
+
+<%= form.fields_for(:worker, user.worker) do | worker_fields | %>
+<div class="bg-white rounded-md py-1 px-4 my-4 border-2 border-slate-200">
+  <div class="my-4 grid grid-cols-6 gap-6">
+    <div class="col-span-3 sm:col-span-3">
+      <%= worker_fields.label :title, 'Titel' %>
+      <%= worker_fields.text_field :title, class: "block rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+
+    <div class="col-span-3 sm:col-span-3">
+      <%= worker_fields.label :salary, 'Lön (kr)' %>
+      <%= worker_fields.number_field :salary, class: "block rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full appearance-none" %>
+    </div>
+  </div>
+</div>
+<% end if user.is_worker? and policy(:user).create? %>
+
+<div class="bg-white rounded-md py-1 px-4 my-4 border-2 border-slate-200">
+  <div class="my-4 grid grid-cols-6 gap-6">
+    <div class="col-span-6 sm:col-span-3">
+      <%= form.label :password, 'Nytt lösenord' %>
+      <%= form.text_field :password, class: "block rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+
+    <div class="col-span-6 sm:col-span-3">
+      <%= form.label :password_confirmation, 'Bekräfta nytt lösenord' %>
+      <%= form.text_field :password_confirmation, class: "block rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+  </div>
+</div>
+
+<div class="bg-white rounded-md py-1 px-4 my-4 border-2 border-slate-200">
+  <%= form.submit 'Spara', class: "my-2 inline-flex items-center px-4 py-2 border border-transparent sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+</div>
+<% end %>

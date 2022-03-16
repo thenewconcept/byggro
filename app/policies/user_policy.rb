@@ -1,20 +1,24 @@
-class ProjectPolicy < ApplicationPolicy
+class UserPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope.all
     end
   end
 
-  def show?
-    true
+  def index?
+    user.is_admin?
   end
 
   def create?
-    user.is_manager?
+    user.is_admin?
+  end
+
+  def edit?
+    user.is_admin?
   end
 
   def update?
-    user.is_manager?
+    user.is_admin?
   end
 
   def destroy?
