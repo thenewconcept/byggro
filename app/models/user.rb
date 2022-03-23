@@ -1,14 +1,17 @@
 class User < ApplicationRecord
   has_secure_password
 
+  has_one :contractor, dependent: :destroy
   has_one :worker, dependent: :destroy
   accepts_nested_attributes_for :worker
+  accepts_nested_attributes_for :contractor
 
   validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: 'Invalid email' }
 
   def roles
     roles = []
     roles << 'Anställd' if worker.present?
+    roles << 'Underentrepenör' if contractor.present?
     roles << 'Arbetsledare' if is_manager?
     roles << 'Admin' if is_admin?
     return roles.join(', ')
@@ -20,6 +23,10 @@ class User < ApplicationRecord
 
   def display_name
     return full_name || email
+  end
+
+  def is_contractor?
+    contractor.present?
   end
 
   def is_worker?

@@ -1,4 +1,5 @@
 class ReportsController < ProtectedController
+  # delegated type
   def new
     @checklist = Checklist.find(params[:checklist_id])
     @report = @checklist.reports.new(date: Date.today)
