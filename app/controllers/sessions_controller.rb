@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to root_path
     else
-      flash.now[:alert] = 'Invalid email or password'
+      flash.now[:alert] = 'Ogiltigt användarnamn eller lösenord.'
       render :new
     end
   end
