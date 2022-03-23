@@ -6,7 +6,6 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(email: params[:email])
     if user.present? && user.authenticate(params[:password])
-      flash[:notice] = 'Signed in successfully.'
       session[:user_id] = user.id
       redirect_to root_path
     else
@@ -17,6 +16,6 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    redirect_to root_path, notice: 'Logged out'
+    redirect_to root_path, notice: 'Utloggad.'
   end
 end
