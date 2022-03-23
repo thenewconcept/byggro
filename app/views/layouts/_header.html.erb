@@ -41,22 +41,17 @@
           <div class="hidden md:ml-6 md:flex md:items-center md:space-x-4">
             <!--  Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
             <%= link_to 'Start', root_path, class: 'bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium' %>
-            <%= link_to 'Användare', users_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' %>
-            <%= link_to 'Harvest', harvest_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' %>
+            <%= link_to 'Användare', users_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:user).create? %>
+            <%= link_to 'Harvest', harvest_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:project).create? %>
           </div>
         </div>
 
         <div class="flex items-center">
           <div class="flex-shrink-0">
-
-            <%= link_to new_project_path, class: 'relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500' do %>
-              <!-- Heroicon name: solid/plus-sm -->
-              <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
-              </svg>
+            <%= link_to new_project_path, class: 'btn-primary' do %>
+              <%= heroicon('plus-sm', options: { class: '-ml-1 mr-1 h-5 w-5' }) %>
               <span>Nytt projekt</span>
             <% end if Current.user && policy(:project).create? %>
-
           </div>
 
           <!-- Profile dropdown -->

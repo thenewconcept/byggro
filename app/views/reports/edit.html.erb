@@ -1,7 +1,8 @@
-<div class="mx-auto md:w-2/3 w-full">
-  <h1 class="font-bold text-2xl">Uppdatera tidrapport</h1>
-
-  <%= turbo_frame_tag dom_id(@report) do %>
-    <%= render partial: "form", locals: { report: @report, turbo_target: dom_id(@report) } %>
-  <% end %>
+<div class="xl:col-spangt-2 xl:pr-8">
+  <div class="bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200">
+    <div class="px-4 py-5 sm:px-6">
+      <h1 class="font-bold text-2xl mb-4">Uppdatera tidrapport</h1>
+        <%= render partial: "form", locals: { report: @report, turbo_target: dom_id(@report.checklist) } %>
+    </div>
+  </div>
 </div>

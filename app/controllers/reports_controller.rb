@@ -29,7 +29,7 @@ class ReportsController < ProtectedController
     authorize(@report)
 
     if @report.update!(report_params)
-      redirect_to project_url(@checklist.project, tab: 'checklist', status: 303)
+      redirect_to project_url(@checklist.project, tab: 'time')
     else
       render :edit
     end

@@ -1,11 +1,12 @@
 <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-<table class="min-w-full divide-y divide-gray-300">
+<table class="table-fixed min-w-full divide-y divide-gray-300">
   <thead class="bg-gray-50">
     <tr>
-      <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Datum</th>
+      <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Datum</th>
       <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Person</th>
+      <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Moment</th>
+      <th scope="col" class="max-w-xs whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Checkout</th>
       <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Timmar</th>
-      <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Arbete</th>
       <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-6">
         <span class="sr-only">Edit</span>
       </th>
@@ -14,35 +15,34 @@
   <tbody class="divide-y divide-gray-200 bg-white">
       <% project.reports.each do |report| %>
       <tr> 
-        <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+        <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">
           <%= l report.date  %>
         </td>
         <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
           <%= report.worker.user.display_name  %>
         </td>
         <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-          <p>
-          <%= report.time_in_hours.round(2) %> tim
-          <span class="text-xs text-gray-500 my-1 mx-3"><%= report.note  %></span>
-          </p>
-        </td>
-        <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
           <%= report.checklist.title %>
         </td>
+         <td class="max-w-xs px-2 py-2 text-sm text-gray-900">
+          <span class="text-xs text-gray-500"><%= report.note  %></span>
+        </td>
+        <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+          <p> <%= report.time_in_hours.round(2) %> tim </p>
+        </td>
         <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-          <%= link_to 'Ändra', edit_project_checklist_report_path(project, report.checklist, report) %>
+          <%= link_to 'Ändra', edit_project_checklist_report_path(project, report.checklist, report) if policy(report).edit? %>
         </td>
       </tr>
       <% end %>
   </tbody>
   <tfoot class="bg-gray-50">
-    <tr class="font-medium text-sm text-gray-900"> 
-        <td class="whitespace-nowrap px-2 py-2">Summa</td>
+    <tr class="font-medium text-md text-gray-900"> 
+        <td class="whitespace-nowrap px-4 py-3">Summa</td>
         <td class="whitespace-nowrap px-2 py-2"></td>
-        <td class="whitespace-nowrap px-2 py-2">
-         <%= project.hours_reported.round(2) %> tim
-        </td>
         <td class="whitespace-nowrap px-2 py-2"></td>
+        <td class="whitespace-nowrap px-2 py-2"></td>
+        <td class="whitespace-nowrap px-2 py-2"> <%= project.hours_reported.round(2) %> tim </td>
         <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right sm:pr-6"></td>
       </tr>
   </tfoot>

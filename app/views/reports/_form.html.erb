@@ -2,7 +2,7 @@
   <%= f.date_field :date, required: true, class: 'text-sm mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
 
   <div data-controller="time">
-    <%= f.text_field :time_formated, placeholder: '0:00', required: true, data: { action: 'blur->time#format', 'time-target': 'source' }, class: 'text-sm mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
+    <%= f.text_field :time_formated, placeholder: '0:00', required: true, data: { action: 'blur->time#format keyup->time#update', 'time-target': 'source' }, class: 'text-sm mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
     <%= f.hidden_field :time_in_hours, required: true, data: { 'time-target': 'holder' } %>
   </div>
 
