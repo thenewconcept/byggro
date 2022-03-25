@@ -1,4 +1,4 @@
-[Project, Worker, User, Report].each do |_class|
+[Report, Project, Worker, Contractor, User].each do |_class|
   _class.destroy_all
 end
 
@@ -45,22 +45,22 @@ project1.checklists.last.todos.create!(description: 'Måla fönster.')
 project1.checklists.last.todos.create!(description: 'Måla dörrar.')
 
 Report.create!(
-  worker: intern,
-  checklist: project1.checklists.first,
+  reportee: intern,
+  reportable: project1.checklists.first,
   time_in_minutes: 8 * 60,
   date: Date.today
 )
 
 Report.create!(
-  worker: worker,
-  checklist: project1.checklists.first,
+  reportee: worker,
+  reportable: project1.checklists.first,
   time_in_minutes: 8 * 60,
   date: Date.today
 )
 
 Report.create!(
-  worker: worker,
-  checklist: project1.checklists.first,
+  reportee: worker,
+  reportable: project1.checklists.first,
   time_in_minutes: 2 * 60,
   date: Date.today
 )

@@ -1,5 +1,5 @@
 class Worker < ApplicationRecord
+  has_many :reports, as: :reportee, dependent: :destroy
   validates :user, presence: true, uniqueness: true
-  has_many :reports
   belongs_to :user
 end

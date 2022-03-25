@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_23_122217) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_25_134941) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -89,15 +89,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_23_122217) do
   end
 
   create_table "reports", force: :cascade do |t|
-    t.bigint "worker_id", null: false
-    t.bigint "checklist_id", null: false
     t.date "date"
     t.integer "time_in_minutes"
     t.string "note"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["checklist_id"], name: "index_reports_on_checklist_id"
-    t.index ["worker_id"], name: "index_reports_on_worker_id"
+    t.string "reportable_type"
+    t.bigint "reportable_id"
+    t.string "reportee_type"
+    t.bigint "reportee_id"
+    t.index ["reportable_type", "reportable_id"], name: "index_reports_on_reportable"
+    t.index ["reportee_type", "reportee_id"], name: "index_reports_on_reportee"
   end
 
   create_table "todos", force: :cascade do |t|
@@ -134,8 +136,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_23_122217) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "checklists", "projects"
   add_foreign_key "contractors", "users"
-  add_foreign_key "reports", "checklists"
-  add_foreign_key "reports", "workers"
   add_foreign_key "todos", "checklists"
   add_foreign_key "workers", "users"
 end

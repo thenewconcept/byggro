@@ -3,6 +3,7 @@ class User < ApplicationRecord
 
   has_one :contractor, dependent: :destroy
   has_one :worker, dependent: :destroy
+
   accepts_nested_attributes_for :worker
   accepts_nested_attributes_for :contractor
 
@@ -22,7 +23,7 @@ class User < ApplicationRecord
   end
 
   def display_name
-    return full_name || email
+    (full_name || email)
   end
 
   def is_contractor?

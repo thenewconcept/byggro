@@ -1,14 +1,12 @@
 class Report < ApplicationRecord
   attr_accessor :time_in_hours, :time_formated
 
+  belongs_to :reportee, polymorphic: true
+  belongs_to :reportable, polymorphic: true
+
+  validates_associated :reportee, :reportable
   validates :time_in_minutes, numericality: true, allow_blank: false, presence: true
   validates :date, presence: true
-
-  validates_associated :worker
-  validates_associated :checklist
-
-  belongs_to :worker
-  belongs_to :checklist
 
   delegate :project, to: :checklist
 
