@@ -9,6 +9,7 @@ class ProjectsController < ProtectedController
 
   # GET /projects/1 or /projects/1.json
   def show
+    @reports = Report.by_project(@project).order(date: :desc, created_at: :desc)
   end
 
   # GET /projects/new

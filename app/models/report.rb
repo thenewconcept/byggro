@@ -8,7 +8,16 @@ class Report < ApplicationRecord
   validates :time_in_minutes, numericality: true, allow_blank: false, presence: true
   validates :date, presence: true
 
-  delegate :project, to: :checklist
+  def self.by_project(project)
+    self
+      .where(reportable: project)
+      .or(self.where(reportable_type: 'Checklist', reportable_id: project.checklists.pluck(:id)))
+  end
+
+  def project
+    return reportable if reportable.is_a?(Project)
+    return reportable.project if reportable.is_a?(Checklist)
+  end
 
   def time_in_hours
     time_in_minutes&./60.0&.round(2)

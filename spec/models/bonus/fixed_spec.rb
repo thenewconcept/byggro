@@ -8,8 +8,8 @@ RSpec.describe Bonus::Fixed, type: :model do
     let(:jim)     { create(:worker) }
     
     before do
-      create(:report, time_in_minutes: 360, checklist: checklist, worker: john)
-      create(:report, time_in_minutes: 240, checklist: checklist, worker: jim)
+      create(:report, time_in_minutes: 360, reportable: checklist, reportee: john)
+      create(:report, time_in_minutes: 240, reportable: checklist, reportee: jim)
     end
 
     describe '#worker_hours' do

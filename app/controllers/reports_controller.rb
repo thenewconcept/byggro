@@ -1,36 +1,36 @@
 class ReportsController < ProtectedController
-  # delegated type
   def new
-    @checklist = Checklist.find(params[:checklist_id])
-    @report = @checklist.reports.new(date: Date.today)
-    authorize(@report)
-  end
+    @report = Report.new(
+      date: Date.today,
+      reportable_type: params[:reportable_type],
+      reportable_id: params[:reportable_id]
+    )
 
-  def edit
-    @checklist = Checklist.find(params[:checklist_id])
-    @report      = @checklist.reports.find(params[:id])
     authorize(@report)
   end
 
   def create
-    @checklist = Checklist.find(params[:checklist_id])
-    @report    = @checklist.reports.new(report_params.merge(worker: Current.user.worker))
+    @report = Report.new(report_params.merge(reportee: Current.user.profile))
     authorize(@report)
 
     if @report.save!
-      redirect_to project_url(@checklist.project, tab: 'checklist')
+      redirect_to project_url(@report.project, tab: 'checklist'), notice: 'Tidrapporten har sparats.'
     else
       render :new
     end
   end
 
+  def edit
+    @report = Report.find(params[:id])
+    authorize(@report)
+  end
+
   def update
-    @checklist = Checklist.find(params[:checklist_id])
-    @report    = @checklist.reports.find(params[:id])
+    @report    = Report.find(params[:id])
     authorize(@report)
 
     if @report.update!(report_params)
-      redirect_to project_url(@checklist.project, tab: 'time')
+      redirect_to project_url(@report.project, tab: 'time')
     else
       render :edit
     end
@@ -43,12 +43,12 @@ class ReportsController < ProtectedController
 
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.remove(@report) }
-      format.html {  redirect_to project_url(@checklist.project, tab: 'checklist') }
+      format.html {  redirect_to project_url(@report.project, tab: 'checklist') }
     end
   end
 
   private
     def report_params
-      params.require(:report).permit(:date, :time_in_hours, :time_formated, :note)
+      params.require(:report).permit(:date, :time_in_hours, :time_formated, :note, :reportable_type, :reportable_id) 
     end
 end

@@ -14,11 +14,11 @@ RSpec.describe Bonus::Calculator do
   let(:calc_fixed)  { Bonus::Calculator.for(fixed_project) }
 
   before do
-    create(:report, time_in_minutes: 300, checklist: checklist1, worker: john)
-    create(:report, time_in_minutes: 300, checklist: checklist1, worker: jim)
+    create(:report, time_in_minutes: 300, reportable: checklist1, reportee: john)
+    create(:report, time_in_minutes: 300, reportable: checklist1, reportee: jim)
 
-    create(:report, time_in_minutes: 300, checklist: checklist2, worker: john)
-    create(:report, time_in_minutes: 300, checklist: checklist2, worker: jim)
+    create(:report, time_in_minutes: 300, reportable: checklist2, reportee: john)
+    create(:report, time_in_minutes: 300, reportable: checklist2, reportee: jim)
   end
 
   it '#hourly_bonus_total' do

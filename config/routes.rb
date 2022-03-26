@@ -9,9 +9,10 @@ Rails.application.routes.draw do
   resources :projects do
     resources :checklists do
       resources :todos
-      resources :reports
     end
   end
+
+  resources :reports
 
   root "projects#index"
 
