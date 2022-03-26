@@ -1,18 +1,18 @@
 class Bonus::Hourly
   BASE = ENV['HOURLY_BASE']&.to_i || 300
-  attr_reader :project, :worker
+  attr_reader :project, :reportee
 
-  def initialize(project, worker)
+  def initialize(project, reportee)
     @project = project
-    @worker = worker
+    @reportee = reportee
   end
 
-  def self.for(project, worker)
-    new(project, worker)
+  def self.for(project, reportee)
+    new(project, reportee)
   end
   
   def bonus_base
-    Bonus::Hourly::BASE - worker.salary 
+    Bonus::Hourly::BASE - reportee.salary 
   end
 
   def bonus_salary
@@ -20,6 +20,6 @@ class Bonus::Hourly
   end
 
   def bonus_total
-    bonus_salary * (project.reports.where(worker: worker).sum(:time_in_minutes) / 60)
+    bonus_salary * (Report.by_project(project).where(reportee: reportee).sum(:time_in_minutes) / 60)
   end
 end

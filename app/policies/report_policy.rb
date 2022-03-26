@@ -6,14 +6,14 @@ class ReportPolicy < ApplicationPolicy
   end
 
   def create?
-    user.is_worker?
+    user.is_worker? || user.is_contractor?
   end
 
   def update?
-    (user.is_worker?  && record.worker == user.worker) || user.is_manager?
+    (record.reportee == user.profile) || user.is_manager?
   end
 
   def destroy?
-    (user.is_worker?  && record.worker == user.worker) || user.is_manager?
+    (record.reportee == user.profile) || user.is_manager?
   end
 end

@@ -7,4 +7,14 @@ RSpec.describe Report, type: :model do
       expect(report.time_in_minutes).to eq(60)
     end
   end
+
+  describe '.by_project' do
+    it 'returns reports by project' do
+      project   = create(:project)
+      checklist = create(:checklist, project: project)
+      p_report    = create(:report, reportable: checklist)
+      c_report    = create(:report, reportable: project)
+      expect(Report.by_project(project)).to eq([p_report, c_report])
+    end
+  end
 end

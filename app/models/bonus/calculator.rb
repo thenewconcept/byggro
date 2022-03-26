@@ -9,13 +9,13 @@ class Bonus::Calculator
     new(project)
   end
 
-  def salary_for(worker)
-    project.reports.where(worker: worker).sum(:time_in_minutes).round(2) / 60.0 * worker.salary
+  def salary_for(reportee)
+    Report.by_project(project).where(reportee: reportee).sum(:time_in_minutes).round(2) / 60.0 * reportee.salary
   end
 
-  def bonus_for(worker)
+  def bonus_for(reportee)
     _class = eval("Bonus::#{project.bonus.capitalize}")
-    _class.for(project, worker).bonus_total
+    _class.for(project, reportee).bonus_total
   end
 
   def bonus_total
@@ -23,8 +23,8 @@ class Bonus::Calculator
   end
 
   def hourly_bonus_total
-    project.reports.reduce(0) do |total, report|
-      totalt = total + Bonus::Hourly.for(project, report.worker).bonus_salary * report.time_in_hours
+    Report.by_project(project).reduce(0) do |total, report|
+      totalt = total + Bonus::Hourly.for(project, report.reportee).bonus_salary * report.time_in_hours
     end
   end
 

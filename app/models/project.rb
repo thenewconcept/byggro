@@ -9,15 +9,15 @@ class Project < ApplicationRecord
   after_create :generate_checklists
   has_rich_text :description
   has_many :checklists, dependent: :destroy
-  has_many :reports, through: :checklists
   has_many :todos, through: :checklists
+  has_many :reports, as: :reportable, dependent: :destroy
 
   def primary_date
     starts_at.present? ?  starts_at : created_at.to_date
   end
 
   def hours_reported
-    reports.sum(:time_in_minutes) / 60.0
+    Report.by_project(self).sum(:time_in_minutes) / 60.0
   end
 
   def amount

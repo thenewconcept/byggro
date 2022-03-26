@@ -18,6 +18,11 @@ class User < ApplicationRecord
     return roles.join(', ')
   end
 
+  def profile
+    return worker if is_worker?
+    return contractor if is_contractor?
+  end
+
   def full_name
     [first_name, last_name].compact.join(' ').presence
   end

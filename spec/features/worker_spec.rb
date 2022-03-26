@@ -17,6 +17,6 @@ RSpec.describe 'worker user interface' do
     fill_in :email, with: 'jinx@doe.com'
     fill_in :password, with: '12345678'
     click_button 'Logga in'
-    expect(page).to have_content('Signed in successfully')
+    expect(page).to have_content(project.title)
   end
 end

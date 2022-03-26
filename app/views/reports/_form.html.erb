@@ -1,4 +1,6 @@
-<%= form_with(model: [:project, :checklist, report], class: "contents", data: { 'turbo-frame': turbo_target }) do |f| %>
+<%= form_with(model: [report], class: "contents", data: { 'turbo-frame': turbo_target }) do |f| %>
+  <%= f.hidden_field :reportable_type %>
+  <%= f.hidden_field :reportable_id %>
   <%= f.date_field :date, required: true, class: 'text-sm mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
 
   <div data-controller="time">
