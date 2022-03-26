@@ -10,10 +10,10 @@ class ReportPolicy < ApplicationPolicy
   end
 
   def update?
-    (record.reportee == user.profile) || user.is_manager?
+    (record.reportee == user.profile && record.date > 5.days.ago ) || user.is_manager?
   end
 
   def destroy?
-    (record.reportee == user.profile) || user.is_manager?
+    (record.reportee == user.profile && record.date > 5.days.ago) || user.is_manager?
   end
 end

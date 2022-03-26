@@ -12,25 +12,25 @@
     <tbody class=" align-top">
         <% @reports.each do |report| %>
         <tr class="border-t border-gray-100"> 
-          <td class="whitespace-nowrap px-4 py-2 text-gray-900">
+          <td class="whitespace-nowrap px-4 py-2 text-gray-600">
             <%= l report.date  %>
           </td>
-          <td class="whitespace-nowrap px-2 py-2 text-gray-900">
+          <td class="whitespace-nowrap px-2 py-2 text-gray-600">
             <%= report.reportee.user.display_name  %>
           </td>
-          <td class="whitespace-nowrap px-2 py-2 text-gray-900">
+          <td class="whitespace-nowrap px-2 py-2 text-gray-600">
             <p> <%= report.time_in_hours.round(2) %> tim </p>
           </td>
-          <td class="whitespace-nowrap px-2 py-2 text-gray-900">
+          <td class="whitespace-nowrap text-sm px-2 py-2 text-gray-600">
             <%= report.reportable.title %>
           </td>
           <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right font-medium sm:pr-6">
-            <%= link_to 'Ändra', edit_report_path(report) if policy(report).edit? %>
+            <%= link_to 'Ändra', edit_report_path(report), class: "text-sm inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-100" if policy(report).edit? %>
           </td>
         </tr>
           <% if report.note.present? %>
             <tr>
-              <td colspan="4" class="px-4 pb-3 text-sm text-gray-900">
+              <td colspan="4" class="px-4 pb-3 text-sm">
                 <span class="text-gray-500"><%= report.note %></span>
               </td>
             </tr>
