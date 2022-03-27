@@ -13,7 +13,7 @@
         </div>
 
         <div class="ml-2 mt-0.5">
-          <%= link_to todo.description, edit_project_checklist_todo_path(todo.project, todo.checklist, todo), class: "text-sm text-gray-700 #{class_names("line-through text-gray-400": todo.completed?)}" %>
+          <%= link_to todo.description, edit_project_checklist_todo_path(todo.project, todo.checklist, todo), class: "text-sm font-medium text-gray-600 #{class_names("line-through text-gray-400": todo.completed?)}" %>
         </div>
       </div>
 
