@@ -4,8 +4,8 @@
     <%= turbo_frame_tag dom_id(checklist, :title) do %>
       <h6 class="block font-bold"><%= link_to_if policy(:checklist).create?, checklist.title, edit_project_checklist_path(checklist.project, checklist) %></h6>
       <p class="py-1 text-xs">
-        <%= icon_badge("#{checklist.hours_target.round(0)} timmar", 'indigo', 'document-report') %>
-        <%= icon_badge("#{checklist.reports.sum(&:time_in_hours).round(2)} timmar", 'green', 'clock') %>
+        <%= icon_badge("~ #{checklist.reports.sum(&:time_in_hours).round(1)} tim", 'green', 'clock') %>
+        <%= icon_badge("#{checklist.hours_target.round(0)} tim", 'indigo', 'flag') %>
         <%= icon_badge("#{number_to_currency(checklist.amount)}", 'gray', 'shield-check') if policy(:project).create? %>
       </p>
     <% end %>
@@ -15,6 +15,7 @@
         data-controller="sortable"
         data-sortable-animation-value="250"
         data-sortable-param-name-value="todo[position]"
+        data-sortable-handle-value=".handle"
         >
       <%= checklist.todos.present? \
         ? render(checklist.todos) \
