@@ -5,6 +5,7 @@ class ProjectPolicy < ApplicationPolicy
         scope.all
       else
         scope
+          .not_status_draft
           .includes(:assignments)
           .where(assignments: { user: user })
       end

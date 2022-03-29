@@ -6,8 +6,9 @@ RSpec.describe 'Assignments' do
 
   context 'as a worker' do
     before do
-      create(:project, title: 'Assigned Project', users: [user])
-      create(:project, title: 'Unassigned Project')
+      create(:project, :upcoming, title: 'Assigned Project', users: [user])
+      create(:project, :upcoming, title: 'Unassigned Project')
+      create(:project, title: 'Draft Project', users: [user])
 
       visit root_path
       fill_in :email, with: user.email
@@ -19,12 +20,17 @@ RSpec.describe 'Assignments' do
       expect(page).to have_content('Assigned Project')
       expect(page).to_not have_content('Unassigned Project')
     end
+
+    it 'can not see draft projects' do
+      expect(page).to_not have_content('Draft Project')
+    end
   end
 
   context 'as an admin' do
     before do
-      create(:project, title: 'Assigned Project')
-      create(:project, title: 'Unassigned Project')
+      create(:project, :upcoming, title: 'Assigned Project', users: [user])
+      create(:project, :upcoming, title: 'Unassigned Project')
+      create(:project, title: 'Draft Project', users: [user])
 
       visit root_path
       fill_in :email, with: admin.email
@@ -35,6 +41,7 @@ RSpec.describe 'Assignments' do
     it 'can see ALL assignments' do
       expect(page).to have_content('Assigned Project')
       expect(page).to have_content('Unassigned Project')
+      expect(page).to have_content('Draft Project')
     end
   end
 end

@@ -2,6 +2,7 @@
 sv:
   project:
     status:
+      draft: Utkast
       upcoming: Kommande
       started: Pågående
       completed: Klar
