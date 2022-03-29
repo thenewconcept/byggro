@@ -16,10 +16,15 @@ module ProjectsHelper
 
   def status_badge(status, options={})
     case status
+    when 'draft'
+      color = 'gray'; icon = 'question-mark-circle'
+      icon_badge(t("project.status.#{status}"), color, icon, options)
     when 'upcoming'
       color = 'red'; icon = 'calendar'
+      icon_badge(t("project.status.#{status}"), color, icon, options)
     when 'started'
       color = 'yellow'; icon = 'clock'
+      icon_badge(t("project.status.#{status}"), color, icon, options)
     when 'completed'
       color = 'green'; icon = 'check'
     end
