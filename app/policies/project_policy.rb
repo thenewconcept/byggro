@@ -1,7 +1,13 @@
 class ProjectPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.all
+      if user.is_manager?
+        scope.all
+      else
+        scope
+          .includes(:assignments)
+          .where(assignments: { user: user })
+      end
     end
   end
 
