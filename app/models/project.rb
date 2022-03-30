@@ -12,7 +12,7 @@ class Project < ApplicationRecord
   has_many :todos, through: :checklists
   has_many :reports, as: :reportable, dependent: :destroy
 
-  has_many :assignments
+  has_many :assignments, dependent: :destroy
   has_many :users, through: :assignments
 
   def primary_date

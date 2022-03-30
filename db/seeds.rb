@@ -8,6 +8,9 @@ manager = User.create!( email: 'mia@doe.com', password: 'kallekalle', is_manager
 worker_user = User.create!( first_name: 'John', last_name: 'Doe', email: 'john@doe.com', password: 'kallekalle' )
 worker = Worker.create!( user: worker_user, salary: 160, title: 'Senior' )
 
+contractor_user = User.create!( first_name: 'Cleo', last_name: 'Doe', email: 'cleo@doe.com', password: 'kallekalle' )
+contractor = Contractor.create!( user: contractor_user, fee: 400 )
+
 intern_user = User.create!( first_name: 'Jim', last_name: 'Doe', email: 'jim@doe.com', password: 'kallekalle' )
 intern = Worker.create!( user: intern_user, salary: 0, title: 'Junior' )
 

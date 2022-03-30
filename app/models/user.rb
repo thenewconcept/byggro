@@ -12,6 +12,8 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: 'Invalid email' }
 
+  scope :workers, -> { includes(:worker, :contractor).where.not(workers: { id: nil }, contractor: { id: nil }) }
+
   def roles
     roles = []
     roles << 'Anställd' if worker.present?

@@ -1,0 +1,6 @@
+<%= link_to "Lägg till", new_project_assignment_path(project) %>
+
+<h1 class="text-xl mb-2">Team</h1>
+<% project.assignments.each do |a| %>
+ <%= a.user.display_name  %>
+<% end %>
