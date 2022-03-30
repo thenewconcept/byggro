@@ -3,13 +3,13 @@ class ProjectsController < ProtectedController
 
   # GET /projects or /projects.json
   def index
-    @projects  = Project.not_status_completed.order(status: :desc)
-    @completed = Project.status_completed
+    @projects  = policy_scope(Project).not_status_completed.order(status: :desc)
+    @completed = policy_scope(Project).status_completed
   end
 
   # GET /projects/1 or /projects/1.json
   def show
-    @reports = Report.by_project(@project).order(date: :desc, created_at: :desc)
+    @reports = policy_scope(Report).by_project(@project).order(date: :desc, created_at: :desc)
   end
 
   # GET /projects/new
@@ -41,6 +41,7 @@ class ProjectsController < ProtectedController
 
   # PATCH/PUT /projects/1 or /projects/1.json
   def update
+    authorize @project
     respond_to do |format|
       if @project.update(project_params)
         format.html { redirect_to project_url(@project), notice: "Project was successfully updated." }

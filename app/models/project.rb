@@ -2,7 +2,7 @@ class Project < ApplicationRecord
   include Bonusable
 
   enum bonus: [ :none, :hourly, :fixed ], _prefix: true
-  enum status: { upcoming: 'upcoming', started: 'started', completed: 'completed' }, _prefix: true
+  enum status: { draft: 'draft', upcoming: 'upcoming', started: 'started', completed: 'completed' }, _prefix: true
 
   validates :material_amount, :misc_amount, numericality: true
 
@@ -11,6 +11,9 @@ class Project < ApplicationRecord
   has_many :checklists, dependent: :destroy
   has_many :todos, through: :checklists
   has_many :reports, as: :reportable, dependent: :destroy
+
+  has_many :assignments
+  has_many :users, through: :assignments
 
   def primary_date
     starts_at.present? ?  starts_at : created_at.to_date

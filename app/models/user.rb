@@ -4,6 +4,9 @@ class User < ApplicationRecord
   has_one :contractor, dependent: :destroy
   has_one :worker, dependent: :destroy
 
+  has_many :assignments
+  has_many :projects, through: :assignments
+
   accepts_nested_attributes_for :worker
   accepts_nested_attributes_for :contractor
 

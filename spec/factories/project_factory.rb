@@ -9,4 +9,8 @@ FactoryBot.define do
     misc_amount { 500  }
     is_rot { false }
   end
+
+  trait :completed do
+    status { 'completed' }
+  end
 end

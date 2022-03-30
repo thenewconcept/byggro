@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_25_134941) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_29_164434) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
-  create_enum "project_status", ["upcoming", "started", "completed"]
+  create_enum "project_status", ["draft", "upcoming", "started", "completed"]
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -56,6 +56,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_25_134941) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "assignments", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_assignments_on_project_id"
+    t.index ["user_id"], name: "index_assignments_on_user_id"
+  end
+
   create_table "checklists", force: :cascade do |t|
     t.bigint "project_id", null: false
     t.string "title"
@@ -82,7 +91,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_25_134941) do
     t.boolean "is_rot", default: true, null: false
     t.integer "bonus", default: 0
     t.float "hourly_rate", default: 0.0, null: false
-    t.enum "status", default: "upcoming", null: false, enum_type: "project_status"
+    t.enum "status", default: "draft", null: false, enum_type: "project_status"
     t.date "starts_at"
     t.date "due_at"
     t.index ["status"], name: "index_projects_on_status"
@@ -134,6 +143,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_25_134941) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "assignments", "projects"
+  add_foreign_key "assignments", "users"
   add_foreign_key "checklists", "projects"
   add_foreign_key "contractors", "users"
   add_foreign_key "todos", "checklists"
