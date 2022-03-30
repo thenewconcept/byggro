@@ -4,10 +4,7 @@ class ProjectPolicy < ApplicationPolicy
       if user.is_manager?
         scope.all
       else
-        scope
-          .not_status_draft
-          .includes(:assignments)
-          .where(assignments: { user: user })
+        scope.not_status_draft
       end
     end
   end

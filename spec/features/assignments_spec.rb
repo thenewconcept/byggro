@@ -16,9 +16,9 @@ RSpec.describe 'Assignments' do
       click_button 'Logga in'
     end
 
-    it 'can see his assignments' do
+    it 'can see non-draft assignments' do
       expect(page).to have_content('Assigned Project')
-      expect(page).to_not have_content('Unassigned Project')
+      expect(page).to have_content('Unassigned Project')
     end
 
     it 'can not see draft projects' do
