@@ -41,12 +41,10 @@
       <tr class="font-medium text-md text-gray-900"> 
           <td class="whitespace-nowrap px-4 py-3.5">Summa</td>
           <td class="whitespace-nowrap px-2 py-3.5"></td>
-          <td class="whitespace-nowrap px-2 py-3.5"> <%= project.hours_reported.round(2) %> tim </td>
+          <td class="whitespace-nowrap px-2 py-3.5"> <%= format_hours(project.hours_reported) %> tim </td>
           <td class="whitespace-nowrap px-2 py-3.5"></td>
           <td class="whitespace-nowrap px-2 py-3.5"></td>
         </tr>
     </tfoot>
   </table>
  </div>
-
-
