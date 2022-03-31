@@ -2,11 +2,21 @@
   <turbo-frame id="<%= dom_id checklist %>">
     
     <%= turbo_frame_tag dom_id(checklist, :title) do %>
-      <h6 class="block font-bold"><%= link_to_if policy(:checklist).create?, checklist.title, edit_project_checklist_path(checklist.project, checklist) %></h6>
+
+      <% if policy(:checklist).create? %>
+        <%= link_to edit_project_checklist_path(checklist.project, checklist) do %>
+          <div class="flex justify-between">
+            <h6 class="font-bold"> <%= checklist.title %> </h6>
+            <%= icon_badge("#{number_to_currency(checklist.amount)}", 'gray', 'shield-check') %>
+          </div>
+        <% end %>
+      <% else %>
+          <h6 class="block font-bold"> <%= checklist.title %> </h6>
+      <% end  %>
+
       <p class="py-1 text-xs">
         <%= icon_badge("~ #{checklist.reports.sum(&:time_in_hours).round(1)} tim", 'green', 'clock') %>
         <%= icon_badge("#{checklist.hours_target.round(0)} tim", 'indigo', 'flag') %>
-        <%= icon_badge("#{number_to_currency(checklist.amount)}", 'gray', 'shield-check') if policy(:project).create? %>
       </p>
     <% end %>
 
