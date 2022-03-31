@@ -1,0 +1,12 @@
+<turbo-frame id="flash">
+  <% flash.each do |type, msg| %>
+    <div class="rounded-md bg-yellow-50 p-3">
+      <div class="flex">
+        <%= heroicon('information-circle', options: { class: 'h-5 w-5 text-yellow-400'}) %>
+        <div class="ml-3">
+          <p class="text-sm text-yellow-800"><%= msg %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</turbo-frame>

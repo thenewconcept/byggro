@@ -21,16 +21,7 @@
       <div class="mt-8 mx-5 sm:mx-auto sm:w-full sm:max-w-md">
         <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
 
-          <% flash.each do |type, msg| %>
-            <div class="rounded-md bg-yellow-50 p-3">
-              <div class="flex">
-                <%= heroicon('information-circle', options: { class: 'h-5 w-5 text-yellow-400'}) %>
-                <div class="ml-3">
-                  <p class="text-sm text-yellow-800"><%= msg %></p>
-                </div>
-              </div>
-            </div>
-          <% end %>
+          <%= render 'shared/flash' %>
 
           <%= form_with url: signin_path, class: 'space-y-6' do |f| %>
             <%= f.text_field :email, id: 'email', placeholder: 'E-post', class: 'appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' %>

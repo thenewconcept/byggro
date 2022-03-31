@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
+  
+  before_create { self.email = email.downcase }
 
   has_one :contractor, dependent: :destroy
   has_one :worker, dependent: :destroy

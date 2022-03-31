@@ -27,17 +27,7 @@
 
           <div class="py-6">
             <div class="mx-auto w-11/12 md:w-3/4">
-              <% flash.each do |type, msg| %>
-                <div id="notice" class="rounded-md bg-yellow-50 p-3 mb-4">
-                  <div class="flex">
-                    <%= heroicon('information-circle', options: { class: 'h-5 w-5 text-yellow-400'}) %>
-                    <div class="ml-3">
-                      <p class="text-sm text-yellow-800"><%= msg %></p>
-                    </div>
-                  </div>
-                </div>
-              <% end %>
-
+              <%= render 'shared/flash' %>
               <%= yield %>
             </div>
           </div>
