@@ -42,8 +42,7 @@ class ReportsController < ProtectedController
     @report.destroy!
 
     respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.remove(@report) }
-      format.html {  redirect_to project_url(@report.project, tab: 'checklist') }
+      format.html { redirect_to project_url(@report.project, tab: 'time'), notice: 'Rapport borttaget.' }
     end
   end
 
