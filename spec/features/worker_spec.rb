@@ -4,19 +4,17 @@ RSpec.describe 'worker user interface' do
   let(:user)    { create(:user) }
   let(:worker)  { create(:worker, user: user) }
   let(:project) { create(:project) }
-  let(:todo1)   { create(:todo, description: 'Måla köket.', checklist: project.checklists.first ) }
-  let(:todo2)   { create(:todo, description: 'Måla vardagsrum.', checklist: project.checklists.first ) }
 
-  before :each do
-    project.checklists.first.update_attribute(:amount, 10000)
-  end
-
-  it 'does not display admin data' do
-    create(:user, email: 'jinx@doe.com', password: '12345678')
+  it 'only sees published projects' do
     visit root_path
-    fill_in :email, with: 'jinx@doe.com'
-    fill_in :password, with: '12345678'
+    fill_in :email, with: user.email
+    fill_in :password, with: user.password
     click_button 'Logga in'
+
+    expect(page).to_not have_content(project.title)
+    project.update_attribute(:status, 'upcoming')
+
+    visit root_path
     expect(page).to have_content(project.title)
   end
 end
