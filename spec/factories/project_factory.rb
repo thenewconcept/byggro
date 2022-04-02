@@ -10,6 +10,14 @@ FactoryBot.define do
     is_rot { false }
   end
 
+  trait :upcoming do
+    status { 'completed' }
+  end
+
+  trait :started do
+    status { 'started' }
+  end
+
   trait :completed do
     status { 'completed' }
   end

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'reports', :js do
   let(:worker)  { create(:worker) }
   let(:contractor) { create(:contractor)}
-  let(:project) { create(:project) }
+  let(:project) { create(:project, :upcoming) }
   let(:todo1)   { create(:todo, description: 'Måla köket.', checklist: project.checklists.first ) }
   let(:todo2)   { create(:todo, description: 'Måla vardagsrum.', checklist: project.checklists.first ) }
 
