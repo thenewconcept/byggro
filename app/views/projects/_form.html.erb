@@ -87,7 +87,11 @@
     <%= form.check_box :is_rot, class: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" %>
   </div>
 
-  <div class="inline">
-    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
-  </div>
+  <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white font-medium cursor-pointer" %>
+<% end %>
+
+<% if !project.new_record? and policy(project).destroy? %>
+  <%= button_to project_path([project]), method: :delete, class: "rounded-lg py-3 px-5 bg-red-600 text-white font-medium cursor-pointer" do %>
+    <%= heroicon('trash', options: { class: '-ml-1 mr-1 h-5 w-5'}) %> Ta bort
+  <% end %>
 <% end %>

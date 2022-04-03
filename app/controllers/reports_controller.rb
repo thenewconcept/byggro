@@ -14,7 +14,8 @@ class ReportsController < ProtectedController
     authorize(@report)
 
     if @report.save!
-      redirect_to project_url(@report.project, tab: 'checklist'), notice: 'Tidrapporten har sparats.'
+      flash.now[:now] = 'Tidrapporten har sparats.'
+      redirect_to project_url(@report.project, tab: 'checklist')
     else
       render :new
     end

@@ -19,19 +19,40 @@ RSpec.describe 'reports', :js do
       click_button 'Logga in'
     end
 
-    it 'can be created' do
-      click_link project.title
-      click_link 'Arbetsmoment' 
+    context 'can create' do
+      it 'for checklist' do
+        click_link project.title
+        click_link 'Arbetsmoment' 
 
-      within "#checklist_#{project.checklists.first.id}" do
-        click_link 'Tidrapport'
+        within "#checklist_#{project.checklists.first.id}" do
+          click_link 'Tidrapport'
+        end
+
+        fill_in :report_time_formated, with: '2:30'
+        fill_in :report_note, with: 'Tidrapport för arbetsmomentet.'
+        click_on 'Spara'
+
+        expect(page).to have_content('2.5')
       end
 
-      fill_in :report_time_formated, with: '2:30'
-      fill_in :report_note, with: 'Tidrapport för arbetsmomentet.'
-      click_on 'Spara'
+      it 'for project' do
+        click_link project.title
+        click_link 'Arbetsmoment' 
 
-      expect(page).to have_content('2.5')
+        within "#project-actions" do
+          click_link 'Tidrapport'
+        end
+
+        fill_in :report_time_formated, with: '2:30'
+        fill_in :report_note, with: 'Tidrapport för projekt.'
+        click_on 'Spara'
+
+        within "#project-sections" do
+          click_link('Tidrapport')
+        end
+
+        expect(page).to have_content('Tidrapport för projekt')
+      end
     end
   end
 

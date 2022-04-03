@@ -19,12 +19,16 @@ class Project < ApplicationRecord
     starts_at.present? ?  starts_at : created_at.to_date
   end
 
+  def hours_estimated
+    checklists&.sum(&:hours_target)&.round(0)
+  end
+
   def hours_reported
     Report.by_project(self).sum(:time_in_minutes) / 60.0
   end
 
   def amount
-    checklists.sum(&:amount)
+    checklists&.sum(&:amount)
   end
 
   def total
@@ -59,6 +63,5 @@ class Project < ApplicationRecord
 
   def generate_checklists
     self.checklists.create(title: 'Arbetsorder')
-    self.checklists.create(title: 'ÄTA')
   end
 end

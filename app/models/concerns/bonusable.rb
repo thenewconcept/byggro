@@ -3,6 +3,7 @@ module Bonusable
   extend ActiveSupport::Concern
 
   def hours_target
+    return 0 if amount.zero? or hourly_rate.zero?
     amount / hourly_rate
   end
 
