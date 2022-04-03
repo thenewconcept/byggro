@@ -4,10 +4,4 @@
   <%= button_to project_checklists_path(project, method: :post), class: 'inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500' do %>
     <%= heroicon('clipboard-list', variant: :outline, options: { class: 'mr-2' }) %> Ny arbetslista
   <% end if policy(:checklist).create? %>
-
-  <%= turbo_frame_tag "new_report" do %>
-    <%= link_to new_report_path(reportable_type: 'Project', reportable_id: project.id), class: 'inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500' do %>
-      <%= heroicon('plus-circle', variant: :outline, options: { class: 'mr-2' }) %> Projektrapport
-    <% end if policy(:report).create? %>
-  <% end %>
 </div>

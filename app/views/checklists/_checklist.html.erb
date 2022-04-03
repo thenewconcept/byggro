@@ -16,7 +16,7 @@
 
       <p class="py-1 text-xs">
         <%= icon_badge("~ #{checklist.reports.sum(&:time_in_hours).round(1)} tim", 'green', 'clock') %>
-        <%= icon_badge("#{checklist.hours_target} tim", 'indigo', 'flag') %>
+        <%= icon_badge("#{checklist.hours_target} tim", 'indigo', 'flag') unless checklist.hours_target.zero? %>
       </p>
     <% end %>
 
@@ -27,9 +27,7 @@
         data-sortable-param-name-value="todo[position]"
         data-sortable-handle-value=".handle"
         >
-      <%= checklist.todos.present? \
-        ? render(checklist.todos) \
-        : content_tag(:li, 'Inget här just nu …', class: 'my-3 text-sm italic text-gray-400') %>
+        <%= render(checklist.todos) %>
       </ul>
     </div>
 
