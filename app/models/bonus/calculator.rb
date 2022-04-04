@@ -3,6 +3,7 @@ class Bonus::Calculator
 
   def initialize(project)
     @project = project
+    @klass = eval("Bonus::#{project.bonus.capitalize}")
   end
 
   def self.for(project)
@@ -10,16 +11,39 @@ class Bonus::Calculator
   end
 
   def salary_for(reportee)
-    Report.by_project(project).where(reportee: reportee).sum(:time_in_minutes).round(2) / 60.0 * reportee.salary
+    @klass.for(project, reportee).salary
   end
 
   def bonus_for(reportee)
-    _class = eval("Bonus::#{project.bonus.capitalize}")
-    _class.for(project, reportee).bonus_amount
+    @klass.for(project, reportee).bonus_amount
   end
 
-  def bonus_total
-    public_send("#{project.bonus}_bonus_total")
+  def bonus_percent(reportee=nil)
+    public_send("#{project.bonus}_bonus_percent", reportee)
+  end
+
+  def bonus_total(reportee)
+    public_send("#{project.bonus}_salary_total_for", reportee)
+  end
+
+  def salary_total_for(reportee)
+    public_send("#{project.bonus}_salary_total_for", reportee)
+  end
+
+  def hourly_salary_total_for(reportee)
+    @klass.for(project, reportee).salary_total
+  end
+
+  def fixed_salary_total_for(reportee)
+    @klass.for(project, reportee).salary_total
+  end
+
+  def hourly_bonus_percent(reportee)
+    @klass.for(project, reportee).bonus_percent
+  end
+
+  def fixed_bonus_percent(reportee)
+    @klass.for(project, reportee).bonus_percent
   end
 
   def hourly_bonus_total

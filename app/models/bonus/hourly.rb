@@ -9,20 +9,28 @@ class Bonus::Hourly
   def self.for(project, reportee)
     new(project, reportee)
   end
+
+  def salary
+    reportee.salary * (Report.by_project(project).where(reportee: reportee).sum(&:time_in_hours))
+  end
+
+  def bonus_percent
+    (1.0 - project.hourly_percent)
+  end
   
   def bonus_base
     reportee.salary 
   end
 
   def bonus_salary
-    bonus_base * (1.0 - project.hourly_percent).round(2)
+    bonus_base * bonus_percent
   end
 
   def bonus_amount
-    bonus_salary * (Report.by_project(project).where(reportee: reportee).sum(:time_in_minutes) / 60)
+    bonus_salary * (Report.by_project(project).where(reportee: reportee).sum(&:time_in_hours))
   end
   
-  def bonus_total
-    bonus_amount * Report.where(reportee: reportee).sum(&:time_in_hours)
+  def salary_total
+    bonus_amount + (Report.by_project(project).where(reportee: reportee).sum(&:time_in_hours) * reportee.salary)
   end
 end

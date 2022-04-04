@@ -1,31 +1,34 @@
-<div>
-  <h3 class="text-lg leading-6 font-medium text-gray-900"><%= t("project.bonus." + project.bonus) %></h3>
+  <h3 class="text-xl leading-6 font-medium text-gray-900"><%= t("project.bonus." + project.bonus) %></h3>
   <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
 
+    <% if project.bonus_hourly? %>
     <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
       <dt class="text-sm font-medium text-gray-500 truncate">
-        <%= heroicon('clock', variant: :outline) %> Projektmål
+        <%= heroicon('clock', variant: :outline) %> Timmål
       </dt>
       <dd class="mt-1 text-3xl font-semibold text-gray-900">
         <%= project.hours_target %> tim 
       </dd>
     </div>
+    <% end %>
+
+    <% if project.bonus_fixed? %>
+    <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
+      <dt class="text-sm font-medium text-gray-500 truncate">
+        <%= heroicon('clock', variant: :outline) %> Projektlön
+      </dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900">
+        <%= project.bonus_fixed %> kr
+      </dd>
+    </div>
+    <% end %>
 
     <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
       <dt class="text-sm font-medium text-gray-500 truncate">
-        <%= heroicon('clock', variant: :outline) %> Projekttimmar
+        <%= heroicon('clock', variant: :outline) %> Team timmar
       </dt>
       <dd class="mt-1 text-3xl font-semibold text-gray-900">
         <%= Report.by_project(project).sum(&:time_in_hours).round(2) %> tim 
-      </dd>
-    </div>
-
-    <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
-      <dt class="text-sm font-medium text-gray-500 truncate">
-        <%= heroicon('clock', variant: :outline) %> Projektbonus
-      </dt>
-      <dd class="mt-1 text-3xl font-semibold text-gray-900">
-        <%= number_to_percentage project.bonus_percent * 100 %>
       </dd>
     </div>
 
@@ -40,48 +43,43 @@
 
     <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
       <dt class="text-sm font-medium text-gray-500 truncate">
-        <%= heroicon('clock', variant: :outline) %> Din timlön
+        <%= heroicon('clock', variant: :outline) %> Projektbonus
       </dt>
       <dd class="mt-1 text-3xl font-semibold text-gray-900">
-        <%= number_to_currency Current.user.employee.salary %>
+        <%= number_to_percentage Bonus::Calculator.for(project).bonus_percent(Current.user.employee) * 100 %>
+        <span class="text-sm ml-2">
+          <%= number_to_currency Current.user.employee.salary * project.bonus_percent if project.bonus_hourly? %>
+        </span>
       </dd>
     </div>
 
-    <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
-      <dt class="text-sm font-medium text-gray-500 truncate">
-        <%= heroicon('clock', variant: :outline) %> Din bonusarvode
-      </dt>
-      <dd class="mt-1 text-3xl font-semibold text-gray-900">
-        <%= number_to_currency Current.user.employee.salary * project.bonus_percent %>
-      </dd>
-    </div>
+    <% if project.bonus_hourly? %>
+      <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
+        <dt class="text-sm font-medium text-gray-500 truncate">
+          <%= heroicon('clock', variant: :outline) %> Din fasta lön
+        </dt>
+        <dd class="mt-1 text-3xl font-semibold text-gray-900">
+          <%= number_to_currency Bonus::Calculator.for(project).salary_for(Current.user.employee) %>
+        </dd>
+      </div>
 
-    <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
-      <dt class="text-sm font-medium text-gray-500 truncate">
-        <%= heroicon('clock', variant: :outline) %> Din projektlön
-      </dt>
-      <dd class="mt-1 text-3xl font-semibold text-gray-900">
-        <%= number_to_currency Bonus::Calculator.for(project).salary_for(Current.user.employee) %>
-      </dd>
-    </div>
+      <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
+        <dt class="text-sm font-medium text-gray-500 truncate">
+          <%= heroicon('cash', variant: :outline) %> Din bonuslön
+        </dt>
+        <dd class="mt-1 text-3xl font-semibold text-gray-900">
+          <%= number_to_currency Bonus::Calculator.for(project).bonus_for(Current.user.employee) %> 
+        </dd>
+      </div>
+    <% end %>
 
-    <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
-      <dt class="text-sm font-medium text-gray-500 truncate">
-        <%= heroicon('cash', variant: :outline) %> Din bonuslön
-      </dt>
-      <dd class="mt-1 text-3xl font-semibold text-gray-900">
-        <%= number_to_currency Bonus::Calculator.for(project).bonus_for(Current.user.employee) %> 
-      </dd>
-    </div>
-
-    <div class="px-4 py-5 bg-slate-400 shadow rounded-lg overflow-hidden sm:p-6">
+    <div class="px-4 py-5 bg-slate-800 shadow rounded-lg overflow-hidden sm:p-6">
       <dt class="text-sm font-medium text-white truncate">
         <%= heroicon('clock', variant: :outline) %> Din totallön
       </dt>
       <dd class="mt-1 text-3xl font-semibold text-white">
-        <%= number_to_currency (Bonus::Calculator.for(project).salary_for(Current.user.employee) + Bonus::Calculator.for(project).bonus_for(Current.user.employee)) %>
+        <%= number_to_currency Bonus::Calculator.for(project).salary_total_for(Current.user.employee) %>
       </dd>
     </div>
 
   </dl>
-</div>

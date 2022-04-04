@@ -7,16 +7,8 @@ module Bonusable
     amount / hourly_rate
   end
 
-  def reported_salaries
-    hours_reported * 160
-  end
-
   def bonus_fixed
     amount * 0.35
-  end
-
-  def estimated_salaries
-    hours_target * 160
   end
 
   def bonus_percent
@@ -42,5 +34,4 @@ module Bonusable
   def actual_salary_total(salary, hours)
     hours * actual_salary_hourly(salary, hours)
   end
-
 end
