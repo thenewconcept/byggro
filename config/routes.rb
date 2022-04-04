@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get :harvest, to: 'harvest#index'
 
   resources :users do
-    resources :workers
+    resources :employees
   end
 
   resources :projects do

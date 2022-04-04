@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'reports', :js do
-  let(:worker)  { create(:worker) }
+  let(:employee)  { create(:employee) }
   let(:contractor) { create(:contractor)}
   let(:project) { create(:project, :started) }
   let(:todo1)   { create(:todo, description: 'Måla köket.', checklist: project.checklists.first ) }
@@ -11,11 +11,11 @@ RSpec.describe 'reports', :js do
     project.checklists.first.update_attribute(:amount, 10000)
   end
 
-  context 'as a worker' do
+  context 'as a employee' do
     before do
       visit root_path
-      fill_in :email, with: worker.email
-      fill_in :password, with: worker.password
+      fill_in :email, with: employee.email
+      fill_in :password, with: employee.password
       click_button 'Logga in'
     end
 

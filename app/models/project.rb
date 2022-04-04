@@ -23,8 +23,12 @@ class Project < ApplicationRecord
     checklists&.sum(&:hours_target)&.round(0)
   end
 
+  def hours_for(reportee)
+    Report.where(reportee: reportee).sum(&:time_in_hours)
+  end
+
   def hours_reported
-    Report.by_project(self).sum(:time_in_minutes) / 60.0
+    Report.by_project(self).sum(&:time_in_hours)
   end
 
   def amount

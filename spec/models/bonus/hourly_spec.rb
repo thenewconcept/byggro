@@ -6,55 +6,68 @@ RSpec.describe Bonus::Hourly, type: :model do
     let(:checklist) { create(:checklist, amount: 10000, project: project) }
 
     describe 'with an employee with 200 salary' do
-      let(:worker)  { create(:worker, salary: 200) }
-      let(:calc)    { Bonus::Hourly.for(project, worker) }
-
-      it '#bonus_base' do
-        expect(calc.bonus_base).to eq(100)
-      end
-
-      it 'pays 50 when done in 50% time' do
-        create(:report, time_in_minutes: 600, reportable: checklist)
-        expect(calc.bonus_salary).to eq(50)
-      end
-
-      it 'pays 25 when done in 75% time' do
-        create(:report, time_in_minutes: 900, reportable: checklist)
-        expect(calc.bonus_salary).to eq(25)
-      end
-    end
-
-    describe 'with an employee with 100 salary' do
-      let(:worker)  { create(:worker, salary: 100) }
-      let(:calc)    { Bonus::Hourly.for(project, worker) }
+      let(:employee)  { create(:employee, salary: 200) }
+      let(:calc)    { Bonus::Hourly.for(project, employee) }
 
       it '#bonus_base' do
         expect(calc.bonus_base).to eq(200)
       end
 
+      it 'pays 100 when done in 50% time' do
+        create(:report, time_in_hours: 10, reportable: checklist)
+        expect(calc.bonus_salary).to eq(100)
+      end
+
+      it 'pays 50 when done in 75% time' do
+        create(:report, time_in_hours: 15, reportable: checklist)
+        expect(calc.bonus_salary).to eq(50)
+      end
+    end
+
+    describe 'with an employee with 100 salary' do
+      let(:employee)  { create(:employee, salary: 100) }
+      let(:calc)    { Bonus::Hourly.for(project, employee) }
+
+      it '#bonus_base' do
+        expect(calc.bonus_base).to eq(100)
+      end
+
       describe '#bonus_salary' do
-        it 'pays 100 when done in 50% time' do
-          create(:report, time_in_minutes: 600, reportable: checklist)
-          expect(calc.bonus_salary).to eq(100)
+        it 'pays 50 when done in 50% time' do
+          create(:report, time_in_hours: 10, reportable: checklist)
+          expect(calc.bonus_salary).to eq(50)
         end
 
-        it 'pays 50 when done in 75% time' do
-          create(:report, time_in_minutes: 900, reportable: checklist)
-          expect(calc.bonus_salary).to eq(50)
+        it 'pays 25 when done in 75% time' do
+          create(:report, time_in_hours: 15, reportable: checklist)
+          expect(calc.bonus_salary).to eq(25)
         end
       end
     end
 
+    describe '#bonus_amount' do
+      let(:john)    { create(:employee, salary: 200) }
+      let(:jim)     { create(:employee, salary: 100) }
+
+      it 'returns total bonus for project' do
+        create(:report, time_in_hours: 5, reportable: checklist, reportee: john)
+        create(:report, time_in_hours: 5, reportable: checklist, reportee: jim)
+
+        expect(Bonus::Hourly.for(project, john).bonus_amount).to eq(500)
+        expect(Bonus::Hourly.for(project, jim).bonus_amount).to eq(250)
+      end
+    end
+
     describe '#bonus_total' do
-      let(:john)    { create(:worker, salary: 200) }
-      let(:jim)     { create(:worker, salary: 100) }
+      let(:john)    { create(:employee, salary: 200) }
+      let(:jim)     { create(:employee, salary: 100) }
 
-      it 'returns total salary expenses' do
-        create(:report, time_in_minutes: 300, reportable: checklist, reportee: john)
-        create(:report, time_in_minutes: 300, reportable: checklist, reportee: jim)
+      it 'returns total bonus for project' do
+        create(:report, time_in_hours: 5, reportable: checklist, reportee: john)
+        create(:report, time_in_hours: 5, reportable: checklist, reportee: jim)
 
-        expect(Bonus::Hourly.for(project, john).bonus_total).to eq(250)
-        expect(Bonus::Hourly.for(project, jim).bonus_total).to eq(500)
+        expect(Bonus::Hourly.for(project, john).bonus_total).to eq(2500)
+        expect(Bonus::Hourly.for(project, jim).bonus_total).to eq(1250)
       end
     end
   end

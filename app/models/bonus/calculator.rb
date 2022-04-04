@@ -15,7 +15,7 @@ class Bonus::Calculator
 
   def bonus_for(reportee)
     _class = eval("Bonus::#{project.bonus.capitalize}")
-    _class.for(project, reportee).bonus_total
+    _class.for(project, reportee).bonus_amount
   end
 
   def bonus_total

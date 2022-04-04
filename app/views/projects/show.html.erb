@@ -36,7 +36,7 @@
 
           <%= link_to 'Arbetsmoment', project_path(@project, tab: 'checklist'), class: tab_classes(params[:tab] == 'checklist') %>
           <%= link_to 'Tidrapport', project_path(@project, tab: 'time'), class: tab_classes(params[:tab] == 'time') %>
-          <%#= link_to 'Lönerapport', project_path(project, tab: 'worker'), class: tab_classes(params[:tab] == 'worker') if Current.user.is_worker? %>
+          <%= link_to 'Lönerapport', project_path(@project, tab: 'employee'), class: tab_classes(params[:tab] == 'employee') if Current.user.is_worker? %>
 
           <%= link_to icon_text('Admin', 'shield-check'), project_path(@project, tab: 'internal'), class: tab_classes(params[:tab] == 'internal') if Current.user.is_manager? %>
           <%= link_to icon_text('Lönerapport', 'shield-check'), project_path(@project, tab: 'bonus'), class: tab_classes(params[:tab] == 'bonus') if Current.user.is_manager? %>
@@ -47,7 +47,7 @@
       <div class="p-4">
         <%= render 'description', project: @project if params[:tab].blank? %>
         <%= render 'checklists', project: @project if params[:tab] == 'checklist' %>
-        <%= render 'worker', project: @project, worker: Current.user.worker if params[:tab] == 'worker' && Current.user.is_worker? %>
+        <%= render 'employee', project: @project, employee: Current.user.employee if params[:tab] == 'employee' && Current.user.is_employee? %>
 
         <%= render 'internal', project: @project if params[:tab] == 'internal' && policy(:project).edit? %>
         <%= render 'time', project: @project if params[:tab] == 'time' %>

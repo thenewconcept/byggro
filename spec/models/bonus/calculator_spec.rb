@@ -7,18 +7,18 @@ RSpec.describe Bonus::Calculator do
   let!(:checklist1) { create(:checklist, amount: 10000, project: hourly_project) }
   let!(:checklist2) { create(:checklist, amount: 10000, project: fixed_project) }
 
-  let(:john)      { create(:worker, salary: 200) }
-  let(:jim)       { create(:worker, salary: 100) }
+  let(:john)      { create(:employee, salary: 200) }
+  let(:jim)       { create(:employee, salary: 100) }
 
   let(:calc_hourly) { Bonus::Calculator.for(hourly_project) }
   let(:calc_fixed)  { Bonus::Calculator.for(fixed_project) }
 
   before do
-    create(:report, time_in_minutes: 300, reportable: checklist1, reportee: john)
-    create(:report, time_in_minutes: 300, reportable: checklist1, reportee: jim)
+    create(:report, time_in_hours: 5, reportable: checklist1, reportee: john)
+    create(:report, time_in_hours: 5, reportable: checklist1, reportee: jim)
 
-    create(:report, time_in_minutes: 300, reportable: checklist2, reportee: john)
-    create(:report, time_in_minutes: 300, reportable: checklist2, reportee: jim)
+    create(:report, time_in_hours: 5, reportable: checklist2, reportee: john)
+    create(:report, time_in_hours: 5, reportable: checklist2, reportee: jim)
   end
 
   it '#hourly_bonus_total' do
@@ -35,8 +35,8 @@ RSpec.describe Bonus::Calculator do
   end
 
   it '#bonus_for' do
-    expect(calc_hourly.bonus_for(jim)).to eq(500)
-    expect(calc_hourly.bonus_for(john)).to eq(250)
+    expect(calc_hourly.bonus_for(jim)).to eq(250)
+    expect(calc_hourly.bonus_for(john)).to eq(500)
 
     expect(calc_fixed.bonus_for(jim)).to eq(1750)
     expect(calc_fixed.bonus_for(john)).to eq(1750)

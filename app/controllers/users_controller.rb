@@ -70,7 +70,7 @@ class UsersController < ProtectedController
         :email, 
         :password, 
         :password_confirmation,
-        worker_attributes: [ :id, :title, :salary ]
+        employee_attributes: [ :id, :title, :salary ]
       )
   end
 end

@@ -14,15 +14,15 @@ class Bonus::Fixed
     new(project, reportee)
   end
   
-  def worker_hours
+  def employee_hours
     Report.by_project(project).where(reportee: reportee).sum(:time_in_minutes).to_f / 60
   end
 
-  def worker_percentage
-    worker_percentage = worker_hours / total_hours
+  def employee_percentage
+    employee_percentage = employee_hours / total_hours
   end
 
-  def bonus_total
-    total_bonus * worker_percentage
+  def bonus_amount
+    total_bonus * employee_percentage
   end
 end

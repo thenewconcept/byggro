@@ -1,15 +1,15 @@
-[Report, Project, Worker, Contractor, User].each do |_class|
+[Report, Project, Employee, Contractor, User].each do |_class|
   _class.destroy_all
 end
 
 admin   = User.create!( email: 'jane@doe.com', password: 'kallekalle', is_admin: true )
 manager = User.create!( email: 'mia@doe.com', password: 'kallekalle', is_manager: true )
 
-worker_user = User.create!( first_name: 'John', last_name: 'Doe', email: 'john@doe.com', password: 'kallekalle' )
-worker = Worker.create!( user: worker_user, salary: 160, title: 'Senior' )
+employee_user = User.create!( first_name: 'John', last_name: 'Doe', email: 'john@doe.com', password: 'kallekalle' )
+employee = Employee.create!( user: employee_user, salary: 160, title: 'Senior' )
 
 intern_user = User.create!( first_name: 'Jim', last_name: 'Doe', email: 'jim@doe.com', password: 'kallekalle' )
-intern = Worker.create!( user: intern_user, salary: 0, title: 'Junior' )
+intern = Employee.create!( user: intern_user, salary: 0, title: 'Junior' )
 
 # Creates two checklists after save.
 project1 = Project.create!(
@@ -52,14 +52,14 @@ Report.create!(
 )
 
 Report.create!(
-  reportee: worker,
+  reportee: employee,
   reportable: project1.checklists.first,
   time_in_minutes: 8 * 60,
   date: Date.today
 )
 
 Report.create!(
-  reportee: worker,
+  reportee: employee,
   reportable: project1.checklists.first,
   time_in_minutes: 2 * 60,
   date: Date.today
