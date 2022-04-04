@@ -17,12 +17,13 @@ RSpec.describe 'Assignments' do
     end
 
     it 'can see non-draft assignments' do
+      click_link 'Kommande'
       expect(page).to have_content('Assigned Project')
       expect(page).to have_content('Unassigned Project')
     end
 
     it 'can not see draft projects' do
-      expect(page).to_not have_content('Draft Project')
+      expect(page).to_not have_content('Utkast')
     end
   end
 
@@ -39,8 +40,10 @@ RSpec.describe 'Assignments' do
     end
 
     it 'can see ALL assignments' do
+      click_link 'Kommande'
       expect(page).to have_content('Assigned Project')
       expect(page).to have_content('Unassigned Project')
+      click_link 'Utkast'
       expect(page).to have_content('Draft Project')
     end
   end

@@ -5,6 +5,12 @@ module ProjectsHelper
     active ? active_classes : default_classes
   end
 
+  def active_tab(active)
+    active_classes = 'bg-red-500'
+    default_classes = 'bg-trasparent'
+    active ? active_classes : default_classes
+  end
+
   def icon_badge(text, color='gray', icon='information-circle', options={})
     default_classes = "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-#{color}-100 border-2 border-#{color}-300 text-#{color}-800" 
     options[:class] = options[:class] ? default_classes + ' ' + options[:class] : default_classes

@@ -1,12 +1,12 @@
 <div id="<%= dom_id @project %>">
   <div class="xl:col-spangt-2 xl:pr-8">
 
-    <div class="bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200">
+    <div class="bg-white overflow-hidden shadow rounded-md divide-y divide-gray-200">
 
       <div class="px-4 pb-4">
         <div class="md:flex md:items-center md:justify-between md:space-x-4">
           <div>
-            <h2 class="my-4 text-2xl font-bold text-gray-900"><%= @project.title %></h2>
+            <h2 class="my-4 text-xl font-medium text-gray-900"><%= @project.title %></h2>
             <div class="mt-2">
               <%= icon_badge(@project.adress, 'gray', 'map') if @project.adress.present? %>
               <%= status_badge(@project.status)  %>

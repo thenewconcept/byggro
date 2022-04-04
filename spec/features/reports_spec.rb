@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'reports', :js do
   let(:worker)  { create(:worker) }
   let(:contractor) { create(:contractor)}
-  let(:project) { create(:project, :upcoming) }
+  let(:project) { create(:project, :started) }
   let(:todo1)   { create(:todo, description: 'Måla köket.', checklist: project.checklists.first ) }
   let(:todo2)   { create(:todo, description: 'Måla vardagsrum.', checklist: project.checklists.first ) }
 
@@ -19,7 +19,7 @@ RSpec.describe 'reports', :js do
       click_button 'Logga in'
     end
 
-    context 'can create' do
+    context 'can be created' do
       it 'for checklist' do
         click_link project.title
         click_link 'Arbetsmoment' 
@@ -33,25 +33,6 @@ RSpec.describe 'reports', :js do
         click_on 'Spara'
 
         expect(page).to have_content('2.5')
-      end
-
-      it 'for project' do
-        click_link project.title
-        click_link 'Arbetsmoment' 
-
-        within "#project-actions" do
-          click_link 'Tidrapport'
-        end
-
-        fill_in :report_time_formated, with: '2:30'
-        fill_in :report_note, with: 'Tidrapport för projekt.'
-        click_on 'Spara'
-
-        within "#project-sections" do
-          click_link('Tidrapport')
-        end
-
-        expect(page).to have_content('Tidrapport för projekt')
       end
     end
   end

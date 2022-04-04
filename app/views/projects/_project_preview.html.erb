@@ -1,28 +1,32 @@
 <li>
   <a href="<%= project_path(project) %>" class="block hover:bg-gray-50">
-    <div class="px-4 py-4 sm:px-6">
+    <div class="px-4 py-4">
 
       <div class="flex items-center justify-between">
-        <h2 class="font-medium text-gray-800 truncate"><%= project.title %></h2>
-        <div class="ml-2 flex-shrink-0 flex">
-          <%= status_badge(project.status) %>
-        </div>
+        <h2 class="text-xl font-medium text-gray-900"><%= project.title %></h2>
       </div>
 
       <div class="mt-2 sm:flex sm:justify-between">
         <div class="sm:flex text-gray-500">
-          <% if project.adress.present? %>
-            <p class="flex items-center text-sm">
-              <%= heroicon('map', options: { class: 'flex-shrink-0 mr-1.5 h-5 w-5' }) %>
-              <%= project.adress %>
-            </p>
-          <% end %>
+          <div class="mt-2">
+            <%= icon_badge(project.adress, 'gray', 'map') if project.adress.present? %>
+            <%= status_badge(project.status)  %>
+            <%= icon_badge "~ #{project.hours_reported} tim", 'green', 'clock' unless project.hours_reported.zero? %>
+            <%= icon_badge "#{project.hours_estimated} tim", 'indigo', 'flag' unless project.hours_estimated.zero? %>
+          </div>
         </div>
 
         <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
-          <%= heroicon('calendar', options: { class: 'mr-1 text-gray-400' }) %>
+          <%= heroicon('calendar', variant: :outline, options: { class: 'mr-1 text-gray-400' }) %>
           <p>
-            <time datetime="<%= project.primary_date %>"><%= l project.primary_date, format: :short %></time>
+            <time class="capitalize" datetime="<%= project.primary_date %>">
+              <%= l(project.primary_date, format: :short) %>
+            </time>
+            <% if project.due_at %>
+              — <time class="capitalize" datetime="<%= project.due_at %>">
+                  <%= l(project.due_at, format: :short) %>
+                </time>
+            <% end %>
           </p>
         </div>
       </div>

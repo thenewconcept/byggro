@@ -12,7 +12,7 @@ RSpec.describe 'worker user interface' do
     click_button 'Logga in'
 
     expect(page).to_not have_content(project.title)
-    project.update_attribute(:status, 'upcoming')
+    project.update_attribute(:status, 'started')
 
     visit root_path
     expect(page).to have_content(project.title)
