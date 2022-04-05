@@ -7,6 +7,8 @@ class Project < ApplicationRecord
   validates :material_amount, :misc_amount, numericality: true
 
   after_create :generate_checklists
+  before_save  :defaults
+
   has_rich_text :description
   has_many :checklists, dependent: :destroy
   has_many :todos, through: :checklists
@@ -14,6 +16,10 @@ class Project < ApplicationRecord
 
   has_many :assignments
   has_many :users, through: :assignments
+
+  def workers
+    Report.by_project(self).where.not(reportee_type: 'Contractor').map(&:reportee).uniq
+  end
 
   def primary_date
     starts_at.present? ?  starts_at : created_at.to_date
@@ -23,12 +29,12 @@ class Project < ApplicationRecord
     checklists&.sum(&:hours_target)&.round(0)
   end
 
-  def hours_for(reportee)
-    Report.where(reportee: reportee).sum(&:time_in_hours)
-  end
-
   def hours_reported
     Report.by_project(self).sum(&:time_in_hours)
+  end
+
+  def hours_for(reportee)
+    Report.where(reportee: reportee).sum(&:time_in_hours)
   end
 
   def amount
@@ -64,6 +70,11 @@ class Project < ApplicationRecord
   end
 
   private
+
+  def defaults
+    self.fixed_fee ||= 0.35
+    self.hourly_rate ||= 500
+  end
 
   def generate_checklists
     self.checklists.create(title: 'Arbetsorder')

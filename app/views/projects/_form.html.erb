@@ -66,6 +66,12 @@
     <%= form.date_field :due_at, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
+  <% if Current.user.is_admin? %>
+  <div class="my-5">
+    <%= form.label :fixed_fee, 'Projektarvode' %>
+    <%= form.text_field :fixed_fee, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+  <% end %>
 
   <div class="my-5">
     <%= form.label :hourly_rate, 'Timarvode' %>

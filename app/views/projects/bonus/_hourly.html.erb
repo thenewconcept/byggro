@@ -1,7 +1,22 @@
+<div class="shadow overflow-hidden rounded-lg my-4 ring-black ring-opacity-5 ">
+
+  <div class="bg-slate-50 px-2 py-3 sm:px-4">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">
+      <%= t "project.bonus.#{project.bonus}" %>
+    </h3>
+  </div>
+
   <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
     <dl class="text-sm sm:divide-y sm:divide-gray-200">
       <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-2 sm:px-4">
-        <dt class=" font-medium text-gray-500">Timmar (rapporterade)</dt>
+        <dt class=" font-medium text-gray-500">Måltimmar</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          <%= project.hours_target.round(2) %> timmar
+        </dd>
+      </div>
+
+      <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-2 sm:px-4">
+        <dt class=" font-medium text-gray-500">Rapporterade Timmar</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
           <%= project.hours_reported.round(2) %> timmar
         </dd>
@@ -13,12 +28,50 @@
           <%= number_to_percentage project.bonus_percent * 100 %>
         </dd>
       </div>
-
-      <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-2 sm:px-4">
-        <dt class=" font-medium text-gray-500">Bonuslöner</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          -<%= number_to_currency Bonus::Calculator.for(project).bonus_total %>
-        </dd>
-      </div>
     </dl>
   </div>
+</div>
+
+<div class="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+  <table class="table-auto min-w-full divide-y divide-gray-300 text-sm">
+    <thead class="bg-gray-50">
+      <tr>
+        <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left font-semibold text-gray-900">Person</th>
+        <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Tid</th>
+        <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Bonus</th>
+        <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Lön</th>
+        <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Summa</th>
+      </tr>
+    </thead>
+    <tbody class=" align-top">
+        <% project.workers.each do |reportee| %>
+        <tr class="border-t border-gray-100"> 
+          <td class="whitespace-nowrap px-4 py-2.5 text-gray-600">
+            <%= reportee.user.display_name  %>
+          </td>
+          <td class="whitespace-nowrap px-2 py-2.5 text-gray-600">
+            <p><%= @calculator.hours_for(reportee) %> tim</p>
+          </td>
+          <td class="whitespace-nowrap text-sm px-2 py-2.5 text-gray-600">
+            <%= number_to_currency @calculator.bonus_for(reportee) %>
+          </td>
+          <td class="whitespace-nowrap text-sm px-2 py-2.5 text-gray-600">
+            <%= number_to_currency @calculator.salary_for(reportee) %>
+          </td>
+          <td class="whitespace-nowrap text-sm px-2 py-2.5 text-gray-600">
+            <%= @calculator.salary_total_for(reportee).round(2) %> kr
+          </td>
+        </tr>
+        <% end %>
+    </tbody>
+    <tfoot class="bg-gray-50">
+      <tr class="font-medium text-md text-gray-900"> 
+          <td class="whitespace-nowrap px-4 py-3.5">Summa</td>
+          <td class="whitespace-nowrap px-2 py-3.5"> <%= format_hours(project.hours_reported) %> tim </td>
+          <td class="whitespace-nowrap px-2 py-3.5"></td>
+          <td class="whitespace-nowrap px-2 py-3.5"></td>
+          <td class="whitespace-nowrap px-2 py-3.5"></td>
+        </tr>
+    </tfoot>
+  </table>
+ </div>

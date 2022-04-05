@@ -8,11 +8,8 @@ class Report < ApplicationRecord
   validates :time_in_minutes, numericality: true, allow_blank: false, presence: true
   validates :date, presence: true
 
-  def self.by_project(project)
-    self
-      .where(reportable: project)
-      .or(self.where(reportable_type: 'Checklist', reportable_id: project.checklists.pluck(:id)))
-  end
+  scope :by_checklist, -> (checklist) { where(reportable: checklist) }
+  scope :by_project,   -> (project) { where(reportable: project).or(self.where(reportable_type: 'Checklist', reportable_id: project.checklists.pluck(:id))) }
 
   def project
     return reportable if reportable.is_a?(Project)

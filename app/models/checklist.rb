@@ -9,6 +9,15 @@ class Checklist < ApplicationRecord
   has_many :todos, -> { order(position: :asc) }, dependent: :destroy 
 
   delegate :hourly_rate, to: :project
+  delegate :fixed_fee, to: :project
+
+  def hours_reported
+    Report.by_checklist(self).sum(&:time_in_hours)
+  end
+
+  def hours_estimated
+    hours_target.round(0)
+  end
 
   private
   def destroyable?

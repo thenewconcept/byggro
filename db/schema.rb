@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_04_125718) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_05_165444) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -103,6 +103,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_04_125718) do
     t.enum "status", default: "draft", null: false, enum_type: "project_status"
     t.date "starts_at"
     t.date "due_at"
+    t.float "fixed_fee"
     t.index ["status"], name: "index_projects_on_status"
   end
 

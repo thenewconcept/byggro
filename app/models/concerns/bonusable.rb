@@ -1,5 +1,5 @@
 module Bonusable
-  # expects and amount, hourly_rate
+  # expects and amount, hourly_rate and reportable
   extend ActiveSupport::Concern
 
   def hours_target
@@ -8,7 +8,7 @@ module Bonusable
   end
 
   def bonus_fixed
-    amount * 0.35
+    amount * fixed_fee
   end
 
   def bonus_percent

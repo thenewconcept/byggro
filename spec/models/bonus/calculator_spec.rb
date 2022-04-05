@@ -1,15 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe Bonus::Calculator do
+  let(:normal_project)  { create(:project, hourly_rate: 500, bonus: :none) }
   let(:hourly_project)  { create(:project, hourly_rate: 500, bonus: :hourly) }
   let(:fixed_project)   { create(:project, bonus: :fixed) }
 
+  let!(:normal_checklist) { create(:checklist, amount: 10000, project: normal_project) }
   let!(:hourly_checklist) { create(:checklist, amount: 10000, project: hourly_project) }
   let!(:fixed_checklist)  { create(:checklist, amount: 10000, project: fixed_project) }
 
   let(:john)      { create(:employee, salary: 200) }
   let(:jim)       { create(:employee, salary: 100) }
 
+  let(:calc_normal) { Bonus::Calculator.for(normal_project) }
   let(:calc_hourly) { Bonus::Calculator.for(hourly_project) }
   let(:calc_fixed)  { Bonus::Calculator.for(fixed_project) }
 
@@ -23,14 +26,21 @@ RSpec.describe Bonus::Calculator do
     create(:report, time_in_hours: 5, reportable: fixed_checklist, reportee: jim)
   end
 
-  describe '#[klass]_bonus_percent' do
-    it '[hourly] returns 25% for the hourly bonus' do
+  describe '#none_bonus_percent' do
+    it 'returns 0' do
+      expect(calc_normal.bonus_percent(john)).to eq(0)
+    end
+  end
+
+  describe '#hourly_bonus_percent' do
+    it 'returns 25% for the hourly bonus' do
       create(:report, time_in_hours: 5, reportable: hourly_checklist, reportee: john)
       expect(calc_hourly.bonus_percent(john)).to eq(0.25)
     end
+  end
 
-
-    it '[fixed] returns %-portion of total hours' do
+  describe '#fixed_bonus_percent' do
+    it 'returns %-portion of total hours' do
       create(:report, time_in_hours: 5, reportable: fixed_checklist, reportee: john)
       expect(calc_fixed.bonus_percent(john)).to be_within(0.01).of(0.66)
       expect(calc_fixed.bonus_percent(jim)).to be_within(0.01).of(0.33)

@@ -9,10 +9,9 @@
       <div class="mt-2 sm:flex sm:justify-between">
         <div class="sm:flex text-gray-500">
           <div class="mt-2">
-            <%= icon_badge(project.adress, 'gray', 'map') if project.adress.present? %>
-            <%= status_badge(project.status)  %>
-            <%= icon_badge "~ #{project.hours_reported} tim", 'green', 'clock' unless project.hours_reported.zero? %>
-            <%= icon_badge "#{project.hours_estimated} tim", 'indigo', 'flag' unless project.hours_estimated.zero? %>
+            <%= icon_badge(project.adress, 'map', class: 'slate') if project.adress.present? %>
+            <%= icon_badge "~ #{project.hours_reported} tim", 'clock', class: 'green' unless project.hours_reported.zero? %>
+            <%= icon_badge "#{project.hours_estimated} tim", 'flag', class: 'indigo' unless project.hours_estimated.zero? %>
           </div>
         </div>
 

@@ -5,8 +5,12 @@ class ReportPolicy < ApplicationPolicy
     end
   end
 
+  def show?
+    user.is_worker?
+  end
+
   def create?
-    user.is_employee? || user.is_contractor?
+    user.is_worker?
   end
 
   def update?

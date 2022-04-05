@@ -22,7 +22,6 @@ RSpec.describe 'reports', :js do
     context 'can be created' do
       it 'for checklist' do
         click_link project.title
-        click_link 'Arbetsmoment' 
 
         within "#checklist_#{project.checklists.first.id}" do
           click_link 'Tidrapport'
@@ -47,7 +46,6 @@ RSpec.describe 'reports', :js do
 
     it 'can be created' do
       click_link project.title
-      click_link 'Arbetsmoment' 
 
       within "#checklist_#{project.checklists.first.id}" do
         click_link 'Tidrapport'
