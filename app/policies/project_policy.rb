@@ -28,4 +28,10 @@ class ProjectPolicy < ApplicationPolicy
   def administer?
     user.is_admin?
   end
+
+  def salary?
+    user.is_worker? and 
+      record.status_completed? and
+      record.bonus_fixed?
+  end
 end

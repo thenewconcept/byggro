@@ -33,7 +33,7 @@
           <%= link_to 'Uppdrag', project_path(@project), class: tab_classes(params[:tab].blank?) %>
 
           <%= link_to 'Tidrapport', project_path(@project, tab: 'time'), class: tab_classes(params[:tab] == 'time') %>
-          <%= link_to 'Lönerapport', project_path(@project, tab: 'employee'), class: tab_classes(params[:tab] == 'employee') if policy(:report).show? && @project.status_completed? %>
+          <%= link_to 'Lönerapport', project_path(@project, tab: 'employee'), class: tab_classes(params[:tab] == 'employee') if policy(@project).salary? %>
 
           <%= link_to icon_text('Admin', 'shield-check'), project_path(@project, tab: 'internal'), class: tab_classes(params[:tab] == 'internal') if Current.user.is_manager? %>
           <%= link_to icon_text('Lönerapport', 'shield-check'), project_path(@project, tab: 'bonus'), class: tab_classes(params[:tab] == 'bonus') if Current.user.is_manager? %>

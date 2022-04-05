@@ -16,6 +16,9 @@ class ProjectsController < ProtectedController
   def show
     @reports = policy_scope(Report).by_project(@project).order(date: :desc, created_at: :desc)
     @calculator = Bonus::Calculator.for(@project)
+
+    # TODO: Hide salaries for now.
+    authorize(@project, :salary?) if params[:tab] == 'employee'
   end
 
   # GET /projects/new
