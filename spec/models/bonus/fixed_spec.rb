@@ -28,15 +28,15 @@ RSpec.describe Bonus::Fixed, type: :model do
 
     describe '#bonus_for' do
       it 'returns total salary expenses' do
-        expect(Bonus::Fixed.for(project, john).bonus_amount).to eq(2100)
-        expect(Bonus::Fixed.for(project, jim).bonus_amount).to eq(1400)
+        expect(Bonus::Fixed.for(project, john).bonus).to eq(2100)
+        expect(Bonus::Fixed.for(project, jim).bonus).to eq(1400)
       end
     end
 
-    describe '#salary_total' do
+    describe '#total' do
       it 'returns total salary expenses' do
-        expect(Bonus::Fixed.for(project, john).salary_total).to eq(2100)
-        expect(Bonus::Fixed.for(project, jim).salary_total).to eq(1400)
+        expect(Bonus::Fixed.for(project, john).total).to eq(2100)
+        expect(Bonus::Fixed.for(project, jim).total).to eq(1400)
       end
     end
   end

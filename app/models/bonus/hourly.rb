@@ -1,9 +1,10 @@
 class Bonus::Hourly
-  attr_reader :project, :reportee
+  attr_reader :project, :reportee, :hours
 
   def initialize(project, reportee)
-    @project = project
+    @project  = project
     @reportee = reportee
+    @hours    = Report.by_project(project).where(reportee: reportee).sum(&:time_in_hours)
   end
 
   def self.for(project, reportee)
@@ -12,6 +13,12 @@ class Bonus::Hourly
 
   def salary
     reportee.salary * (Report.by_project(project).where(reportee: reportee).sum(&:time_in_hours))
+  end
+
+  def bonus_total
+    project.workers.reduce(0) do |sum, worker|
+      sum += Bonus::Hourly.for(project, worker).bonus
+    end
   end
 
   def bonus_percent
@@ -26,11 +33,11 @@ class Bonus::Hourly
     bonus_base * bonus_percent
   end
 
-  def bonus_amount
-    bonus_salary * (Report.by_project(project).where(reportee: reportee).sum(&:time_in_hours))
+  def bonus
+    bonus_salary * (hours)
   end
-  
-  def salary_total
-    bonus_amount + (Report.by_project(project).where(reportee: reportee).sum(&:time_in_hours) * reportee.salary)
+
+  def total
+    bonus + (hours * reportee.salary)
   end
 end

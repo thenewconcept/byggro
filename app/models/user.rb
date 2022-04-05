@@ -5,6 +5,7 @@ class User < ApplicationRecord
 
   has_one :contractor, dependent: :destroy
   has_one :employee, dependent: :destroy
+  has_one :intern, dependent: :destroy
 
   has_many :assignments
   has_many :projects, through: :assignments
@@ -16,7 +17,8 @@ class User < ApplicationRecord
 
   def roles
     roles = []
-    roles << 'Anställd' if employee.present?
+    roles << 'Praktikant' if intern.present?
+    roles << 'Anställd'   if employee.present?
     roles << 'Underentrepenör' if contractor.present?
     roles << 'Arbetsledare' if is_manager?
     roles << 'Admin' if is_admin?
@@ -25,6 +27,7 @@ class User < ApplicationRecord
 
   def profile
     return employee if is_employee?
+    return intern if is_intern?
     return contractor if is_contractor?
   end
 
@@ -46,6 +49,10 @@ class User < ApplicationRecord
 
   def is_employee?
     employee.present?
+  end
+
+  def is_intern?
+    intern.present?
   end
 
   def is_manager?

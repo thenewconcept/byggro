@@ -22,11 +22,15 @@ class Bonus::Fixed
     bonus_percent = employee_hours / total_hours
   end
 
-  def bonus_amount
+  def bonus_total
+    project.bonus_fixed
+  end
+
+  def bonus
     total_bonus * bonus_percent
   end
 
-  def salary_total
-    bonus_amount
+  def total
+    bonus
   end
 end

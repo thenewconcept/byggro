@@ -32,14 +32,14 @@ RSpec.describe Bonus::Calculator do
     end
   end
 
-  describe '#hourly_bonus_percent' do
+  describe '#bonus_percent' do
     it 'returns 25% for the hourly bonus' do
       create(:report, time_in_hours: 5, reportable: hourly_checklist, reportee: john)
       expect(calc_hourly.bonus_percent(john)).to eq(0.25)
     end
   end
 
-  describe '#fixed_bonus_percent' do
+  describe '#bonus_percent' do
     it 'returns %-portion of total hours' do
       create(:report, time_in_hours: 5, reportable: fixed_checklist, reportee: john)
       expect(calc_fixed.bonus_percent(john)).to be_within(0.01).of(0.66)
@@ -47,22 +47,14 @@ RSpec.describe Bonus::Calculator do
     end
   end
 
-  describe '#[klass]_bonus_total' do
-    it '[hourly] return total bonus for all workers' do
-      expect(calc_hourly.hourly_bonus_total).to eq(750)
+  describe '#bonus_total' do
+    it 'hourly return total bonus for all workers' do
+      expect(calc_hourly.bonus_total).to eq(750)
     end
 
-    it '[fixed] returns total bonus for the project' do
-      expect(calc_fixed.fixed_bonus_total).to eq(3500)
+    it 'fixed returns total bonus for the project' do
+      expect(calc_fixed.bonus_total).to eq(3500)
     end
-  end
-
-  it '#bonus_total' do
-    expect(calc_hourly.bonus_total(jim)).to eq(750)
-    expect(calc_hourly.bonus_total(john)).to eq(1500)
-
-    expect(calc_fixed.bonus_total(jim)).to eq(1750)
-    expect(calc_fixed.bonus_total(john)).to eq(1750)
   end
 
   it '#bonus_for' do
@@ -73,12 +65,12 @@ RSpec.describe Bonus::Calculator do
     expect(calc_fixed.bonus_for(john)).to eq(1750)
   end
 
-  it '#salary_total_for' do
-    expect(calc_hourly.salary_total_for(jim)).to eq(750)
-    expect(calc_hourly.salary_total_for(john)).to eq(1500)
+  it '#total_for' do
+    expect(calc_hourly.total_for(jim)).to eq(750)
+    expect(calc_hourly.total_for(john)).to eq(1500)
 
     create(:report, time_in_hours: 5, reportable: fixed_checklist, reportee: john)
-    expect(calc_fixed.salary_total_for(jim)).to be_within(0.1).of(1166.6)
-    expect(calc_fixed.salary_total_for(john)).to be_within(0.1).of(2333.3)
+    expect(calc_fixed.total_for(jim)).to be_within(0.1).of(1166.6)
+    expect(calc_fixed.total_for(john)).to be_within(0.1).of(2333.3)
   end
 end

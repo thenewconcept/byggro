@@ -10,6 +10,10 @@ class Bonus::Calculator
     new(project)
   end
 
+  def bonus_percent(reportee=nil)
+    @klass.for(project, reportee).bonus_percent
+  end
+
   def hours_for(reportee)
     Report.by_project(project).where(reportee: reportee).sum(&:time_in_hours)
   end
@@ -19,28 +23,14 @@ class Bonus::Calculator
   end
 
   def bonus_for(reportee)
-    @klass.for(project, reportee).bonus_amount
+    @klass.for(project, reportee).bonus
   end
 
-  def bonus_percent(reportee=nil)
-    @klass.for(project, reportee).bonus_percent
+  def bonus_total
+    @klass.for(project, nil).bonus_total
   end
 
-  def bonus_total(reportee)
-    @klass.for(project, reportee).salary_total
-  end
-
-  def salary_total_for(reportee)
-    @klass.for(project, reportee).salary_total
-  end
-
-  def hourly_bonus_total
-    Report.by_project(project).reduce(0) do |total, report|
-      totalt = total + Bonus::Hourly.for(project, report.reportee).bonus_salary * report.time_in_hours
-    end
-  end
-
-  def fixed_bonus_total
-    project.bonus_fixed
+  def total_for(reportee)
+    @klass.for(project, reportee).total
   end
 end
