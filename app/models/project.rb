@@ -69,6 +69,10 @@ class Project < ApplicationRecord
     amount + vat(amount)
   end
 
+  def is_bonusable?
+    bonus_fixed? or bonus_hourly?
+  end
+
   private
 
   def defaults

@@ -41,6 +41,7 @@
       </dd>
     </div>
 
+    <% if project.is_bonusable? %>
     <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
       <dt class="text-sm font-medium text-gray-500 truncate">
         <%= heroicon('clock', variant: :outline) %> Projektbonus
@@ -52,6 +53,7 @@
         </span>
       </dd>
     </div>
+    <% end %>
 
     <% if project.bonus_hourly? %>
       <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
