@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :worker do
+  factory :employee do
     user
     salary { 100 }
     title { "John Doe" }

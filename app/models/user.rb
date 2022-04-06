@@ -4,19 +4,21 @@ class User < ApplicationRecord
   before_create { self.email = email.downcase }
 
   has_one :contractor, dependent: :destroy
-  has_one :worker, dependent: :destroy
+  has_one :employee, dependent: :destroy
+  has_one :intern, dependent: :destroy
 
   has_many :assignments
   has_many :projects, through: :assignments
 
-  accepts_nested_attributes_for :worker
+  accepts_nested_attributes_for :employee
   accepts_nested_attributes_for :contractor
 
   validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: 'Invalid email' }
 
   def roles
     roles = []
-    roles << 'Anställd' if worker.present?
+    roles << 'Praktikant' if intern.present?
+    roles << 'Anställd'   if employee.present?
     roles << 'Underentrepenör' if contractor.present?
     roles << 'Arbetsledare' if is_manager?
     roles << 'Admin' if is_admin?
@@ -24,7 +26,8 @@ class User < ApplicationRecord
   end
 
   def profile
-    return worker if is_worker?
+    return employee if is_employee?
+    return intern if is_intern?
     return contractor if is_contractor?
   end
 
@@ -36,12 +39,20 @@ class User < ApplicationRecord
     (full_name || email)
   end
 
+  def is_worker?
+    is_contractor? || is_employee?
+  end
+
   def is_contractor?
     contractor.present?
   end
 
-  def is_worker?
-    worker.present?
+  def is_employee?
+    employee.present?
+  end
+
+  def is_intern?
+    intern.present?
   end
 
   def is_manager?

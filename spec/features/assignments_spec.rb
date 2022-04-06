@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe 'Assignments' do
   let!(:admin)  { create(:user, :admin) }
-  let!(:user)  { create(:user, first_name: 'John', last_name: 'Doe', email: 'john@doe.com', worker: create(:worker)) }
+  let!(:user)  { create(:user, first_name: 'John', last_name: 'Doe', email: 'john@doe.com', employee: create(:employee)) }
 
-  context 'as a worker' do
+  context 'as a employee' do
     before do
       create(:project, :upcoming, title: 'Assigned Project', users: [user])
       create(:project, :upcoming, title: 'Unassigned Project')

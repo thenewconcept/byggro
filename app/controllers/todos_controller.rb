@@ -17,7 +17,7 @@ class TodosController < ProtectedController
     authorize(@todo)
 
     if @todo.save!
-      redirect_to project_url(@checklist.project, tab: 'checklist')
+      redirect_to project_url(@checklist.project)
     else
       render :new
     end
@@ -29,7 +29,7 @@ class TodosController < ProtectedController
     authorize(@todo)
 
     if @todo.update!(todo_params)
-      redirect_to project_url(@checklist.project, tab: 'checklist', status: 303)
+      redirect_to project_url(@checklist.project, status: 303)
     else
       render :edit
     end
@@ -42,7 +42,7 @@ class TodosController < ProtectedController
 
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.remove(@todo) }
-      format.html {  redirect_to project_url(@checklist.project, tab: 'checklist') }
+      format.html {  redirect_to project_url(@checklist.project) }
     end
     
   end

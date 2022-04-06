@@ -41,57 +41,71 @@
     </fieldset>
   </div> 
 
-  <div class="my-5">
-    <%= form.label :title, 'Projektnamn' %>
-    <%= form.text_field :title, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  <div class="grid grid-cols-2 gap-2">
+    <div class="my-2">
+      <%= form.label :title, 'Projektnamn', class: 'label' %>
+      <%= form.text_field :title, class: 'input' %>
+    </div>
+
+    <div class="my-2">
+      <%= form.label :adress, 'Adress', class: 'label' %>
+      <%= form.text_field :adress, class: 'input' %>
+    </div>
   </div>
 
   <div class="my-5">
-    <%= form.label :adress %>
-    <%= form.text_field :adress, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.label :description, 'Information', class: 'label' %>
+    <%= form.rich_text_area :description, class: 'input' %>
   </div>
+
+  <div class="grid grid-cols-2 gap-2">
+    <div class="my-2">
+      <%= form.label :title, 'Startdatum', class: 'label' %>
+      <%= form.date_field :starts_at, class: 'input' %>
+    </div>
+
+    <div class="my-2">
+      <%= form.label :title, 'Leveransdatum', class: 'label' %>
+      <%= form.date_field :due_at, class: 'input' %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-2">
+    <div class="my-2">
+      <%= form.label :material_amount, 'Materialkostnader', class: 'label' %>
+      <%= form.text_field :material_amount, class: 'input' %>
+    </div>
+
+    <div class="my-2">
+      <%= form.label :misc_amount, 'Övriga kostnader', class: 'label' %>
+      <%= form.text_field :misc_amount, class: 'input' %>
+    </div>
+  </div>
+
+  <% if policy(project).administer? %>
+    <div class="grid grid-cols-2 gap-2">
+      <div class="my-2">
+        <%= form.label :hourly_rate, 'Timarvode', class: 'label' %>
+        <%= form.number_field :hourly_rate, class: 'input' %>
+      </div>
+
+      <div class="my-2">
+        <%= form.label :fixed_fee, 'Projektarvode', class: 'label' %>
+        <%= form.text_field :fixed_fee, class: 'input' %>
+      </div>
+    </div>
+  <% end %>
 
   <div class="my-5">
-    <%= form.label :description, 'Information' %>
-    <%= form.rich_text_area :description, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 w-full" %>
+    <%= form.label :is_rot, 'ROT?', class: 'label' %>
+    <%= form.check_box :is_rot, class: "checkbox" %> <span class="text-sm">Jepp!</span>
   </div>
 
-  <div class="my-5">
-    <%= form.label :title, 'Startdatum' %>
-    <%= form.date_field :starts_at, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :title, 'Leveransdatum' %>
-    <%= form.date_field :due_at, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-
-  <div class="my-5">
-    <%= form.label :hourly_rate, 'Timarvode' %>
-    <%= form.number_field :hourly_rate, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :material_amount, 'Materialkostnader' %>
-    <%= form.text_field :material_amount, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :misc_amount, 'Övriga kostnader' %>
-    <%= form.text_field :misc_amount, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :is_rot, 'ROT?' %>
-    <%= form.check_box :is_rot, class: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" %>
-  </div>
-
-  <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white font-medium cursor-pointer" %>
+  <%= form.submit class: "btn-primary" %>
 <% end %>
 
 <% if !project.new_record? and policy(project).destroy? %>
-  <%= button_to project_path([project]), method: :delete, class: "rounded-lg py-3 px-5 bg-red-600 text-white font-medium cursor-pointer" do %>
+  <%= button_to project_path([project]), method: :delete, class: "btn-red mt-4" do %>
     <%= heroicon('trash', options: { class: '-ml-1 mr-1 h-5 w-5'}) %> Ta bort
   <% end %>
 <% end %>

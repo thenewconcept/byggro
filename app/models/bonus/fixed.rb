@@ -3,7 +3,7 @@ class Bonus::Fixed
   attr_reader :project, :reportee, :total_bonus, :total_hours
 
   def initialize(project, reportee)
-    @project = project
+    @project   = project
     @reportee  = reportee
 
     @total_bonus  = project.bonus_fixed
@@ -14,15 +14,28 @@ class Bonus::Fixed
     new(project, reportee)
   end
   
-  def worker_hours
-    Report.by_project(project).where(reportee: reportee).sum(:time_in_minutes).to_f / 60
+  def employee_hours
+    Report.by_project(project).where(reportee: reportee).sum(&:time_in_hours)
   end
 
-  def worker_percentage
-    worker_percentage = worker_hours / total_hours
+  def intern_hours
+    Report.by_project(project).where(reportee_type: 'Intern').sum(&:time_in_hours)
+  end
+
+  def bonus_percent
+    return 0 if reportee.is_a?(Intern)
+    bonus_percent = employee_hours / (total_hours - intern_hours)
   end
 
   def bonus_total
-    total_bonus * worker_percentage
+    project.bonus_fixed
+  end
+
+  def bonus
+    total_bonus * bonus_percent
+  end
+
+  def total
+    bonus
   end
 end

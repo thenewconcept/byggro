@@ -2,48 +2,48 @@
 <div class="bg-white rounded-md py-1 px-4 my-4 border-2 border-slate-200">
   <div class="my-4 grid grid-cols-6 gap-6">
     <div class="col-span-3 sm:col-span-2">
-      <%= form.label :first_name, 'Förnamn' %>
-      <%= form.text_field :first_name, class: "block rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+      <%= form.label :first_name, 'Förnamn', class: 'label' %>
+      <%= form.text_field :first_name, class: "input" %>
     </div>
 
     <div class="col-span-3 sm:col-span-2">
-      <%= form.label :last_name, 'Efternamn' %>
-      <%= form.text_field :last_name, class: "block rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+      <%= form.label :last_name, 'Efternamn', class: 'label' %>
+      <%= form.text_field :last_name, class: "input" %>
     </div>
 
     <div class="col-span-3 sm:col-span-2">
-      <%= form.label :email, 'Epost' %>
-      <%= form.email_field :email, class: "block rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+      <%= form.label :email, 'Epost', class: 'label' %>
+      <%= form.email_field :email, class: "input" %>
     </div>
   </div>
 </div>
 
-<%= form.fields_for(:worker, user.worker) do | worker_fields | %>
+<%= form.fields_for(:employee, user.employee) do | employee_fields | %>
 <div class="bg-white rounded-md py-1 px-4 my-4 border-2 border-slate-200">
   <div class="my-4 grid grid-cols-6 gap-6">
     <div class="col-span-3 sm:col-span-3">
-      <%= worker_fields.label :title, 'Titel' %>
-      <%= worker_fields.text_field :title, class: "block rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+      <%= employee_fields.label :title, 'Titel', class: 'label' %>
+      <%= employee_fields.text_field :title, class: "input" %>
     </div>
 
     <div class="col-span-3 sm:col-span-3">
-      <%= worker_fields.label :salary, 'Lön (kr)' %>
-      <%= worker_fields.number_field :salary, class: "block rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full appearance-none" %>
+      <%= employee_fields.label :salary, 'Lön (kr)', class: 'label' %>
+      <%= employee_fields.number_field :salary, class: "input" %>
     </div>
   </div>
 </div>
-<% end if user.is_worker? and policy(:user).create? %>
+<% end if user.is_employee? and policy(:user).create? %>
 
 <div class="bg-white rounded-md py-1 px-4 my-4 border-2 border-slate-200">
   <div class="my-4 grid grid-cols-6 gap-6">
     <div class="col-span-6 sm:col-span-3">
-      <%= form.label :password, 'Nytt lösenord' %>
-      <%= form.text_field :password, class: "block rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+      <%= form.label :password, 'Nytt lösenord', class: 'label' %>
+      <%= form.text_field :password, class: "input" %>
     </div>
 
     <div class="col-span-6 sm:col-span-3">
-      <%= form.label :password_confirmation, 'Bekräfta nytt lösenord' %>
-      <%= form.text_field :password_confirmation, class: "block rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+      <%= form.label :password_confirmation, 'Bekräfta nytt lösenord', class: 'label' %>
+      <%= form.text_field :password_confirmation, class: "input" %>
     </div>
   </div>
 </div>

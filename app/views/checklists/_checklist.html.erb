@@ -7,17 +7,19 @@
         <%= link_to edit_project_checklist_path(checklist.project, checklist) do %>
           <div class="flex justify-between">
             <h6 class="font-bold"> <%= checklist.title %> </h6>
-            <%= icon_badge("#{number_to_currency(checklist.amount)}", 'gray', 'shield-check') %>
+            <div>
+              <%= render "projects/meta/#{@project.bonus}", reportable: checklist %>
+              <%= icon_badge("#{number_to_currency(checklist.amount)}", 'eye-off', class: 'silver') %>
+            </div>
           </div>
         <% end %>
       <% else %>
+        <div class="flex justify-between">
           <h6 class="block font-bold"> <%= checklist.title %> </h6>
+          <%= render "projects/meta/#{@project.bonus}", reportable: checklist %>
+        </div>
       <% end  %>
 
-      <p class="py-1 text-xs">
-        <%= icon_badge("~ #{checklist.reports.sum(&:time_in_hours).round(1)} tim", 'green', 'clock') %>
-        <%= icon_badge("#{checklist.hours_target} tim", 'indigo', 'flag') unless checklist.hours_target.zero? %>
-      </p>
     <% end %>
 
     <div class="my-2">

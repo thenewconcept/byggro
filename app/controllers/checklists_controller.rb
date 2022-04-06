@@ -11,7 +11,7 @@ class ChecklistsController < ProtectedController
     authorize(@checklist)
 
     if @checklist.save!
-      redirect_to project_url(@project, tab: 'checklist')
+      redirect_to project_url(@project)
     else
       render :new
     end
@@ -23,7 +23,7 @@ class ChecklistsController < ProtectedController
     authorize(@checklist)
 
     if @checklist.update!(checklist_params)
-      redirect_to project_url(@project, tab: 'checklist', status: 303)
+      redirect_to project_url(@project, status: 303)
     else
       render :edit
     end
@@ -37,7 +37,7 @@ class ChecklistsController < ProtectedController
 
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.remove(@checklist) }
-      format.html { redirect_to project_url(@project, tab: 'checklists') }
+      format.html { redirect_to project_url(@project) }
     end
   end
 

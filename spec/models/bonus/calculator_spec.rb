@@ -1,44 +1,76 @@
 require 'rails_helper'
 
 RSpec.describe Bonus::Calculator do
+  let(:normal_project)  { create(:project, hourly_rate: 500, bonus: :none) }
   let(:hourly_project)  { create(:project, hourly_rate: 500, bonus: :hourly) }
   let(:fixed_project)   { create(:project, bonus: :fixed) }
 
-  let!(:checklist1) { create(:checklist, amount: 10000, project: hourly_project) }
-  let!(:checklist2) { create(:checklist, amount: 10000, project: fixed_project) }
+  let!(:normal_checklist) { create(:checklist, amount: 10000, project: normal_project) }
+  let!(:hourly_checklist) { create(:checklist, amount: 10000, project: hourly_project) }
+  let!(:fixed_checklist)  { create(:checklist, amount: 10000, project: fixed_project) }
 
-  let(:john)      { create(:worker, salary: 200) }
-  let(:jim)       { create(:worker, salary: 100) }
+  let(:john)      { create(:employee, salary: 200) }
+  let(:jim)       { create(:employee, salary: 100) }
 
+  let(:calc_normal) { Bonus::Calculator.for(normal_project) }
   let(:calc_hourly) { Bonus::Calculator.for(hourly_project) }
   let(:calc_fixed)  { Bonus::Calculator.for(fixed_project) }
 
   before do
-    create(:report, time_in_minutes: 300, reportable: checklist1, reportee: john)
-    create(:report, time_in_minutes: 300, reportable: checklist1, reportee: jim)
+    # Hourly project has an hourly target of 20 hours
+    create(:report, time_in_hours: 5, reportable: hourly_checklist, reportee: john)
+    create(:report, time_in_hours: 5, reportable: hourly_checklist, reportee: jim)
 
-    create(:report, time_in_minutes: 300, reportable: checklist2, reportee: john)
-    create(:report, time_in_minutes: 300, reportable: checklist2, reportee: jim)
+    # Fixed project has an project salary of 3500
+    create(:report, time_in_hours: 5, reportable: fixed_checklist, reportee: john)
+    create(:report, time_in_hours: 5, reportable: fixed_checklist, reportee: jim)
   end
 
-  it '#hourly_bonus_total' do
-    expect(calc_hourly.hourly_bonus_total).to eq(750)
+  describe '#none_bonus_percent' do
+    it 'returns 0' do
+      expect(calc_normal.bonus_percent(john)).to eq(0)
+    end
   end
 
-  it '#fixed_bonus_total' do
-    expect(calc_fixed.fixed_bonus_total).to eq(3500)
+  describe '#bonus_percent' do
+    it 'returns 25% for the hourly bonus' do
+      create(:report, time_in_hours: 5, reportable: hourly_checklist, reportee: john)
+      expect(calc_hourly.bonus_percent(john)).to eq(0.25)
+    end
   end
 
-  it '#bonus_total' do
-    expect(calc_hourly.bonus_total).to eq(750)
-    expect(calc_fixed.bonus_total).to eq(3500)
+  describe '#bonus_percent' do
+    it 'returns %-portion of total hours' do
+      create(:report, time_in_hours: 5, reportable: fixed_checklist, reportee: john)
+      expect(calc_fixed.bonus_percent(john)).to be_within(0.01).of(0.66)
+      expect(calc_fixed.bonus_percent(jim)).to be_within(0.01).of(0.33)
+    end
+  end
+
+  describe '#bonus_total' do
+    it 'hourly return total bonus for all workers' do
+      expect(calc_hourly.bonus_total).to eq(750)
+    end
+
+    it 'fixed returns total bonus for the project' do
+      expect(calc_fixed.bonus_total).to eq(3500)
+    end
   end
 
   it '#bonus_for' do
-    expect(calc_hourly.bonus_for(jim)).to eq(500)
-    expect(calc_hourly.bonus_for(john)).to eq(250)
+    expect(calc_hourly.bonus_for(jim)).to eq(250)
+    expect(calc_hourly.bonus_for(john)).to eq(500)
 
     expect(calc_fixed.bonus_for(jim)).to eq(1750)
     expect(calc_fixed.bonus_for(john)).to eq(1750)
+  end
+
+  it '#total_for' do
+    expect(calc_hourly.total_for(jim)).to eq(750)
+    expect(calc_hourly.total_for(john)).to eq(1500)
+
+    create(:report, time_in_hours: 5, reportable: fixed_checklist, reportee: john)
+    expect(calc_fixed.total_for(jim)).to be_within(0.1).of(1166.6)
+    expect(calc_fixed.total_for(john)).to be_within(0.1).of(2333.3)
   end
 end

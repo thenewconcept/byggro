@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe 'worker user interface' do
+RSpec.describe 'employee user interface' do
   let(:user)    { create(:user) }
-  let(:worker)  { create(:worker, user: user) }
+  let(:employee)  { create(:employee, user: user) }
   let(:project) { create(:project) }
 
   it 'only sees published projects' do

@@ -39,7 +39,7 @@ class UsersController < ProtectedController
   # PATCH/PUT /projects/1 or /projects/1.json
   def update
     if @user.update(user_params)
-      redirect_to edit_user_url(@user), notice: "User was successfully updated."
+      redirect_to edit_user_url(@user), notice: "Uppgifter uppdaterade."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -70,7 +70,7 @@ class UsersController < ProtectedController
         :email, 
         :password, 
         :password_confirmation,
-        worker_attributes: [ :id, :title, :salary ]
+        employee_attributes: [ :id, :title, :salary ]
       )
   end
 end
