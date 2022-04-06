@@ -14,11 +14,11 @@ class UserPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.is_admin?
+    user.is_admin? or record === Current.user
   end
 
   def update?
-    user.is_admin?
+    user.is_admin? or record === Current.user
   end
 
   def destroy?

@@ -1,6 +1,6 @@
 <div class="bg-gray-100 overflow-hidden shadow rounded-lg divide-y divide-gray-200">
   <div class="px-4 py-5 sm:px-6">   
-  <h1 class="font-bold text-2xl">Uppdatera användare</h1>
+  <h1 class="text-3xl"> <%= @user.display_name %> </h1>
   <%= render partial: "form", locals: { user: @user } %>
   </div>
 </div>

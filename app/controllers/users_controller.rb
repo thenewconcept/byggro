@@ -41,6 +41,7 @@ class UsersController < ProtectedController
     if @user.update(user_params)
       redirect_to edit_user_url(@user), notice: "Uppgifter uppdaterade."
     else
+      flash.now[:alert] = "Uppgifterna kunde inte uppdateras."
       render :edit, status: :unprocessable_entity
     end
   end

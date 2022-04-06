@@ -25,6 +25,10 @@ class User < ApplicationRecord
     return roles.join(', ')
   end
 
+  def title
+    profile&.title || ''
+  end
+
   def profile
     return employee if is_employee?
     return intern if is_intern?
@@ -40,7 +44,7 @@ class User < ApplicationRecord
   end
 
   def is_worker?
-    is_contractor? || is_employee?
+    profile.present?
   end
 
   def is_contractor?

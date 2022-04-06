@@ -57,8 +57,8 @@
           <!-- Profile dropdown -->
           <div class="ml-3 relative">
             <div>
-              <button data-action="click->toggle#switch" data-toggle-id-param="profile-menu" type="button" class="bg-yellow-600 text-white text-sm p-1 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                <%= heroicon('user') %>
+              <button data-action="click->toggle#switch" data-toggle-id-param="profile-menu" type="button" class="bg-yellow-600 text-white text-sm px-2 py-1 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                <%= heroicon('user') %> <span class="px-1"><%= Current.user.display_name %></span> 
               </button>
             </div>
 
@@ -72,9 +72,10 @@
                 From: "transform opacity-100 scale-100"
                 To: "transform opacity-0 scale-95"
             -->
-            <div id="profile-menu" class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+            <div id="profile-menu" class="z-50 hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
               <!-- Active: "bg-gray-100", Not Active: "" -->
-              <%= link_to 'Logga ut', signout_path, data: { 'turbo-method': :delete }, class: 'block px-4 py-2 text-sm text-gray-700' %>
+              <%= link_to 'Din profil', edit_user_path(Current.user), class: 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %>
+              <%= link_to 'Logga ut', signout_path, data: { 'turbo-method': :delete }, class: 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %>
             </div>
           </div>
         </div>
