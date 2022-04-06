@@ -18,7 +18,7 @@
         <%= heroicon('clock', variant: :outline) %> Projektlön
       </dt>
       <dd class="mt-1 text-3xl font-semibold text-gray-900">
-        <%= project.bonus_fixed %> kr
+        <%= number_to_currency project.bonus_fixed %>
       </dd>
     </div>
     <% end %>

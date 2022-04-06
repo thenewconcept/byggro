@@ -8,7 +8,7 @@ module Bonusable
   end
 
   def bonus_fixed
-    amount * fixed_fee
+    (amount * fixed_fee).round(0)
   end
 
   def bonus_percent
