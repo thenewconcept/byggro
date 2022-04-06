@@ -1,1 +1,3 @@
-<%= icon_badge "#{reportable.bonus_fixed} kr", 'cash', class: 'indigo' %>
+<% if policy(:project).salary? %>
+  <%= icon_badge "#{reportable.bonus_fixed.round(0)} kr", 'cash', class: 'indigo' %>
+<% end %>
