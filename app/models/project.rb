@@ -17,8 +17,12 @@ class Project < ApplicationRecord
   has_many :assignments
   has_many :users, through: :assignments
 
+  def reports
+    @reports ||= Report.by_project(self)
+  end
+
   def workers
-    Report.by_project(self).where.not(reportee_type: 'Contractor').map(&:reportee).uniq
+    reports.where.not(reportee_type: 'Contractor').map(&:reportee).uniq
   end
 
   def primary_date
@@ -30,7 +34,11 @@ class Project < ApplicationRecord
   end
 
   def hours_reported
-    Report.by_project(self).sum(&:time_in_hours)
+    reports.sum(&:time_in_hours)
+  end
+
+  def hours_by_interns
+    reports.where(reportee_type: 'Intern').sum(&:time_in_hours)
   end
 
   def hours_for(reportee)

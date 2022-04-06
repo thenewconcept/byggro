@@ -9,7 +9,7 @@ employee_user = User.create!( first_name: 'John', last_name: 'Doe', email: 'john
 employee = Employee.create!( user: employee_user, salary: 160, title: 'Senior' )
 
 intern_user = User.create!( first_name: 'Jim', last_name: 'Doe', email: 'jim@doe.com', password: 'kallekalle' )
-intern = Employee.create!( user: intern_user, salary: 0, title: 'Junior' )
+intern = Intern.create!( user: intern_user )
 
 contractor_user = User.create!( first_name: 'Jake', last_name: 'Doe', email: 'jake@doe.com', password: 'kallekalle' )
 contractor = Contractor.create!( user: contractor_user, fee: 400 )

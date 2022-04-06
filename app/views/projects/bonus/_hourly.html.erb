@@ -48,6 +48,7 @@
         <tr class="border-t border-gray-100"> 
           <td class="whitespace-nowrap px-4 py-2.5 text-gray-600">
             <%= reportee.user.display_name  %>
+            <span class="text-xs text-gray-400"><%= reportee.title %></span>
           </td>
           <td class="whitespace-nowrap px-2 py-2.5 text-gray-600">
             <p><%= @calculator.hours_for(reportee) %> tim</p>
@@ -59,7 +60,7 @@
             <%= number_to_currency @calculator.salary_for(reportee) %>
           </td>
           <td class="whitespace-nowrap text-sm px-2 py-2.5 text-gray-600">
-            <%= @calculator.salary_total_for(reportee).round(2) %> kr
+            <%= @calculator.total_for(reportee).round(2) %> kr
           </td>
         </tr>
         <% end %>

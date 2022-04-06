@@ -25,10 +25,13 @@
 
     <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
       <dt class="text-sm font-medium text-gray-500 truncate">
-        <%= heroicon('clock', variant: :outline) %> Team timmar
+        <%= heroicon('clock', variant: :outline) %> Teamets timmar
       </dt>
       <dd class="mt-1 text-3xl font-semibold text-gray-900">
-        <%= Report.by_project(project).sum(&:time_in_hours).round(2) %> tim 
+        <%= project.hours_reported - project.hours_by_interns %> tim 
+        <% unless project.hours_by_interns.zero? %>
+        <span class="inline text-sm"> <%= project.hours_by_interns %> p/tim </span>
+        <% end %>
       </dd>
     </div>
 
@@ -80,7 +83,7 @@
         <%= heroicon('clock', variant: :outline) %> Din totallön
       </dt>
       <dd class="mt-1 text-3xl font-semibold text-white">
-        <%= number_to_currency @calculator.salary_total_for(Current.user.employee) %>
+        <%= number_to_currency @calculator.total_for(Current.user.employee) %>
       </dd>
     </div>
 
