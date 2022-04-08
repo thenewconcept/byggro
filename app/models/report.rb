@@ -1,6 +1,8 @@
 class Report < ApplicationRecord
   attr_accessor :time_in_hours, :time_formated
 
+  before_save :set_fee
+
   belongs_to :reportee, polymorphic: true
   belongs_to :reportable, polymorphic: true
 
@@ -22,5 +24,11 @@ class Report < ApplicationRecord
 
   def time_in_hours=(value)
     write_attribute(:time_in_minutes, value.to_f * 60.0)
+  end
+
+  private
+
+  def set_fee
+    self.fee = reportee.fees.at_date(self.date)&.amount || reportee.fee
   end
 end

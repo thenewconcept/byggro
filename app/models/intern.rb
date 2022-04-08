@@ -1,8 +1,10 @@
 class Intern < ApplicationRecord
-  has_many :reports, as: :reportee, dependent: :destroy
+  include Reportee
+
   validates :user, presence: true, uniqueness: true
   belongs_to :user
 
+  alias_attribute :fee, :salary
   delegate :email, :password, :first_name, :last_name, :full_name, :display_name, to: :user
 
   def salary

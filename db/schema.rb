@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_05_220943) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_08_123147) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -89,6 +89,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_05_220943) do
     t.index ["user_id"], name: "index_employees_on_user_id"
   end
 
+  create_table "fees", force: :cascade do |t|
+    t.string "reportee_type", null: false
+    t.bigint "reportee_id", null: false
+    t.integer "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reportee_type", "reportee_id"], name: "index_fees_on_reportee"
+  end
+
   create_table "interns", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
@@ -124,6 +133,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_05_220943) do
     t.bigint "reportable_id"
     t.string "reportee_type"
     t.bigint "reportee_id"
+    t.integer "fee"
     t.index ["reportable_type", "reportable_id"], name: "index_reports_on_reportable"
     t.index ["reportee_type", "reportee_id"], name: "index_reports_on_reportee"
   end

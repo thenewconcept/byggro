@@ -16,4 +16,10 @@ class ChecklistPolicy < ApplicationPolicy
   def destroy?
     user.is_manager?
   end
+  
+  def salary?
+    user.is_employee? and 
+      record.project.try(:status_completed?) and
+      record.project.try(:bonus_fixed?)
+  end
 end

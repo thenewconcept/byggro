@@ -31,7 +31,11 @@ RSpec.describe 'reports', :js do
         fill_in :report_note, with: 'Tidrapport för arbetsmomentet.'
         click_on 'Spara'
 
-        expect(page).to have_content('2.5')
+        within '#project-sections' do
+          click_link 'Tidrapport'
+        end
+
+        expect(page).to have_content('2:30')
       end
     end
   end
@@ -55,7 +59,10 @@ RSpec.describe 'reports', :js do
       fill_in :report_note, with: 'Tidrapport för arbetsmomentet.'
       click_on 'Spara'
 
-      expect(page).to have_content('2.5')
+      within '#project-sections' do
+        click_link 'Tidrapport'
+      end
+      expect(page).to have_content('2:30')
     end
   end
 end

@@ -15,8 +15,10 @@ RSpec.describe Project, type: :model do
     it '#hours_reported' do
       project   = create(:project, hourly_rate: 500)
       checklist = create(:checklist, amount: 10000, project: project)
+
       create(:report, time_in_hours: 5, reportable: checklist)
       expect(project.hours_reported).to eq(5.0)
+
       create(:report, time_in_hours: 5, reportable: checklist)
       expect(project.hours_reported).to eq(10.0)
     end

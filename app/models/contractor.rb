@@ -1,5 +1,6 @@
 class Contractor < ApplicationRecord
-  has_many :reports, as: :reportee, dependent: :destroy
+  include Reportee
+
   validates :user, presence: true, uniqueness: true
   belongs_to :user
 

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :report do
-    reportee { create(:user) }
+    reportee { create(:employee) }
     reportable { create(:checklist) }
     date { Date.today }
     time_in_minutes { 60 }
