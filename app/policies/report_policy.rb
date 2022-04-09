@@ -10,7 +10,7 @@ class ReportPolicy < ApplicationPolicy
   end
 
   def create?
-    user.is_worker?
+    user.is_worker? && !record.reportable.status_completed?
   end
 
   def update?

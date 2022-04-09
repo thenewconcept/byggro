@@ -28,6 +28,18 @@ class ProjectPolicy < ApplicationPolicy
   def administer?
     user.is_admin?
   end
+  
+  def report?
+    user.is_worker? and !record.status_completed?
+  end
+
+  def checklist?
+    create? and !record.status_completed?
+  end
+
+  def todo?
+    checklist?
+  end
 
   def salary?
     user.is_employee? and 

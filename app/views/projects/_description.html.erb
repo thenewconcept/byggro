@@ -8,8 +8,9 @@
 
 <%= render project.checklists.order(id: :asc) %>
 
+<%= tag.div(id: 'project-actions') do %>
 <div id="project-actions">
   <%= button_to project_checklists_path(project, method: :post), class: 'inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500' do %>
     <%= heroicon('clipboard-list', variant: :outline, options: { class: 'mr-2' }) %> Ny arbetslista
-  <% end if policy(:checklist).create? %>
-</div>
+  <% end %>
+<% end if policy(project).checklist? %>

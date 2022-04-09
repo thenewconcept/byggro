@@ -8,8 +8,7 @@ class Checklist < ApplicationRecord
   has_many :reports, as: :reportable, dependent: :destroy
   has_many :todos, -> { order(position: :asc) }, dependent: :destroy 
 
-  delegate :hourly_rate, to: :project
-  delegate :fixed_fee, to: :project
+  delegate :status_completed?, :fixed_fee, :hourly_rate, to: :project
 
   def hours_reported
     Report.by_checklist(self).sum(&:time_in_hours)
