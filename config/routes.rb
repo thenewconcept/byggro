@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get    'signin', to: 'sessions#new'
   post   'signin', to: 'sessions#create'
   delete 'signout', to: 'sessions#destroy'
+  post   'switch', to: 'sessions#switch'
   
   get   'password', to: 'passwords#edit'
   patch 'password', to: 'passwords#update'

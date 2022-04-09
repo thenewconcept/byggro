@@ -24,4 +24,8 @@ class UserPolicy < ApplicationPolicy
   def destroy?
     user.is_admin?
   end
+
+  def switch?
+    user.is_admin?
+  end
 end

@@ -14,6 +14,17 @@ class SessionsController < ApplicationController
     end
   end
 
+  def switch
+    current_user = User.find_by(id: session[:user_id])
+    if current_user.is_admin?
+      user = User.find(params[:id])
+      session[:user_id] = user.id
+      redirect_to root_path, alert: 'Du har bytt användare.'
+    else
+      redirect_to root_path, alert: 'Du måste vara inloggad för att kunna växla användare.'
+    end
+  end
+
   def destroy
     session[:user_id] = nil
     redirect_to root_path, notice: 'Utloggad.'
