@@ -3,6 +3,6 @@ class Fee < ApplicationRecord
   validates_associated :reportee
 
   def self.at_date(date)
-    where('created_at < ?', date).order(created_at: :desc).first
+    where('created_at::date <= ?', date).order(created_at: :desc).first
   end
 end

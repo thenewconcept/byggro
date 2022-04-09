@@ -12,9 +12,9 @@ RSpec.describe Fee, type: :model do
       travel_to Time.parse('2022-01-01')
       employee.update_attribute(:salary, 300)
 
-      expect(employee.fees.at_date('2020-02-01').amount).to eq(100)
-      expect(employee.fees.at_date('2021-02-01').amount).to eq(200)
-      expect(employee.fees.at_date('2023-02-01').amount).to eq(300)
+      expect(employee.fees.at_date('2020-01-01').amount).to eq(100)
+      expect(employee.fees.at_date('2021-01-01').amount).to eq(200)
+      expect(employee.fees.at_date('2023-01-01').amount).to eq(300)
     end
   end
 

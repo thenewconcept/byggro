@@ -29,6 +29,6 @@ class Report < ApplicationRecord
   private
 
   def set_fee
-    self.fee = reportee.fees.at_date(self.date)&.amount || reportee.fee
+    self.fee = reportee.fees.at_date(self.date)&.amount
   end
 end

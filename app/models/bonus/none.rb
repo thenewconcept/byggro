@@ -13,7 +13,9 @@ class Bonus::None
   def bonus_percent; 0; end 
 
   def salary
-    reportee.salary * (Report.by_project(project).where(reportee: reportee).sum(&:time_in_hours))
+    salary ||= Report.by_project(project).where(reportee: reportee).reduce(0) do |salary, report|
+      salary += report.fee * report.time_in_hours
+    end
   end
 
   def salary_total
