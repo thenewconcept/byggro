@@ -10,7 +10,7 @@ RSpec.describe 'User management' do
       fill_in :email, with: admin.email
       fill_in :password, with: admin.password
       click_button 'Logga in'
-      click_link 'Användare'
+      find('#mobile-menu').click_link('Användare')
     end
 
     it 'can list all users' do
@@ -25,7 +25,7 @@ RSpec.describe 'User management' do
 
       fill_in 'Efternamn', with: 'Dae'
       click_button 'Spara'
-      click_link 'Användare'
+      find('#mobile-menu').click_link('Användare')
 
       expect(page).to have_content('John Dae')
     end

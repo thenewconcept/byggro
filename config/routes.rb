@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   end
 
   resources :reports
+  resources :fees
 
   root "projects#index"
 

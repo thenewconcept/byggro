@@ -42,6 +42,7 @@
             <!--  Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
             <%= link_to 'Start', root_path, class: 'bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium' %>
             <%= link_to 'Användare', users_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:user).create? %>
+            <%= link_to 'Lönelogg', fees_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:fee).show? %>
             <%= link_to 'Harvest', harvest_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:project).create? %>
           </div>
         </div>
@@ -87,6 +88,8 @@
       <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
         <%= link_to 'Start', root_path, class: 'text-white block px-3 py-2 text-base font-medium' %>
+        <%= link_to 'Lönelogg', fees_path, class: 'text-white block px-3 py-2 text-base font-medium' if policy(:fee).show? %>
+        <%= link_to 'Användare', users_path, class: 'text-white block px-3 py-2 text-base font-medium' if policy(:user).create? %>
       </div>
     </div>
   </nav>

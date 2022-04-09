@@ -220,7 +220,7 @@ sv:
   time:
     am: ''
     formats:
-      default: "%a, %e %b %Y %H:%M:%S %z"
+      default: "%Y-%m-%d @ %H:%M"
       long: "%e %B %Y %H:%M"
       short: "%e %b %H:%M"
     pm: ''
