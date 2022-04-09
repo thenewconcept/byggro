@@ -16,6 +16,10 @@ class ChecklistPolicy < ApplicationPolicy
   def destroy?
     user.is_manager?
   end
+
+  def meta?
+    !user.is_contractor? and !record.project.bonus_fixed?
+  end
   
   def salary?
     user.is_employee? and 

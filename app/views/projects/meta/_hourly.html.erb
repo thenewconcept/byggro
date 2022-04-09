@@ -1,4 +1,2 @@
-<% if policy(reportable).salary? %>
-  <%= icon_badge "~ #{reportable.hours_reported} tim", 'clock', class: 'green' %>
-  <%= icon_badge "#{reportable.hours_estimated} tim", 'flag', class: 'indigo' unless reportable.hours_estimated.zero? %>
-<% end %>
+<%= icon_badge "~ #{reportable.hours_reported} tim", 'clock', class: 'green' %>
+<%= icon_badge "#{reportable.hours_estimated} tim", 'flag', class: 'indigo' unless reportable.hours_estimated.zero? %>

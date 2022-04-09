@@ -1,31 +1,29 @@
-  <div class="xl:col-spangt-2 xl:pr-8">
-    <div class="bg-white overflow-hidden shadow rounded-md divide-y divide-gray-200">
-      <div class="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-        <table class="table-auto min-w-full divide-y divide-gray-300 text-sm">
-          <thead class="bg-gray-50">
-            <tr>
-              <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left font-semibold text-gray-900">Person</th>
-              <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Datum</th>
-              <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Belopp</th>
-            </tr>
-          </thead>
-          <tbody class=" align-top">
-            <% @fees.each do |fee| %>
-              <tr class="border-t border-gray-100">
-                <td class="whitespace-nowrap px-4 py-2 text-gray-600">
-                  <%= fee.reportee.display_name %>
-                  <span class="text-xs"> <%= fee.reportee.roles %> </span>
-                </td>
-                <td class="whitespace-nowrap px-2 py-2 text-gray-600">
-                <%= l fee.created_at %>
-                </td>
-                <td class="whitespace-nowrap px-2 py-2 text-gray-600">
-                <%= number_to_currency fee.amount %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
+<div class="bg-white overflow-hidden shadow rounded-md divide-y divide-gray-200">
+  <div class="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+    <table class="table-auto min-w-full divide-y divide-gray-300 text-sm">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left font-semibold text-gray-900">Person</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Datum</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Belopp</th>
+        </tr>
+      </thead>
+      <tbody class=" align-top">
+        <% @fees.each do |fee| %>
+          <tr class="border-t border-gray-100">
+            <td class="whitespace-nowrap px-4 py-2 text-gray-600">
+              <%= fee.reportee.display_name %>
+              <span class="text-xs"> <%= fee.reportee.roles %> </span>
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 text-gray-600">
+            <%= l fee.created_at %>
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 text-gray-600">
+            <%= number_to_currency fee.amount %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
+</div>

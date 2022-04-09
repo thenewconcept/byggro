@@ -41,6 +41,10 @@ class ProjectPolicy < ApplicationPolicy
     checklist?
   end
 
+  def meta?
+    !user.is_contractor? && !user.is_intern?
+  end
+
   def salary?
     user.is_employee? and 
       record.try(:status_completed?) and

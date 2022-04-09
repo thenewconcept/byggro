@@ -1,33 +1,5 @@
 <li>
   <a href="<%= project_path(project) %>" class="block hover:bg-gray-50">
-    <div class="px-4 py-4">
-
-      <div class="flex items-center justify-between">
-        <h2 class="text-xl font-medium text-gray-900"><%= project.title %></h2>
-      </div>
-
-      <div class="mt-2 sm:flex sm:justify-between">
-        <div class="sm:flex text-gray-500">
-          <div class="mt-2">
-            <%= icon_badge(project.adress, 'map', class: 'slate') if project.adress.present? %>
-            <%= render "projects/meta/#{project.bonus}", reportable: project %>
-          </div>
-        </div>
-
-        <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
-          <%= heroicon('calendar', variant: :outline, options: { class: 'mr-1 text-gray-400' }) %>
-          <p>
-            <time class="capitalize" datetime="<%= project.primary_date %>">
-              <%= l(project.primary_date, format: :short) %>
-            </time>
-            <% if project.due_at %>
-              — <time class="capitalize" datetime="<%= project.due_at %>">
-                  <%= l(project.due_at, format: :short) %>
-                </time>
-            <% end %>
-          </p>
-        </div>
-      </div>
-    </div>
+    <%= render 'projects/project_header', project: project %>
   </a>
 </li>

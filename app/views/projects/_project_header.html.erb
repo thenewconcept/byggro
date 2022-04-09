@@ -1,0 +1,14 @@
+<div class="px-4 pb-4">
+  <div class="pb-1 pt-3 text-gray-500 text-sm">
+    <%= t("project.bonus." + project.bonus) %> > <%= t("project.status." + project.status) %>
+  </div>
+
+  <h2 class="text-2xl font-medium text-gray-900">
+    <%= project.title %>
+  </h2>
+
+  <div class="mt-2">
+    <%= icon_badge(project.adress, 'map', class: 'badge gray') if project.adress.present? %>
+    <%= render "projects/meta/#{project.bonus}", reportable: project if policy(project).meta? %>
+  </div>
+</div>

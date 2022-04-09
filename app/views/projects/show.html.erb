@@ -1,55 +1,23 @@
 <div id="<%= dom_id @project %>">
-  <div class="xl:col-spangt-2 xl:pr-8">
-
-    <div class="bg-white overflow-hidden shadow rounded-md divide-y divide-gray-200">
-
-      <div class="px-4 pb-4">
-        <div class="md:flex md:items-center md:justify-between md:space-x-4">
-          <div>
-            <h2 class="my-4 text-xl font-medium text-gray-900"><%= @project.title %></h2>
-            <div class="mt-2">
-              <%= icon_badge(@project.adress, 'map', class: 'badge gray') if @project.adress.present? %>
-              <%= render "projects/meta/#{@project.bonus}", reportable: @project %>
-            </div>
-          </div>
-
-          <div class="mt-2 md:flex md:space-x-1 md:mt-0">
-            <%= link_to edit_project_path(@project), class: "mb-1 block text-center md:inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900" do %>
-              <%= heroicon("pencil", options: { class: "-ml-1 mr-1 h-5 w-5 text-gray-400" }) %>
-              <span>Uppdatera</span>
-            <% end if policy(@project).update? %>
-
-            <%= link_to "https://www.google.com/maps?saddr=My+Location&daddr=#{@project.adress}", 
-              class: "mb-1 block text-center md:inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900", target: :new do %>
-              <%= heroicon("map", options: { class: "-ml-1 mr-1 text-gray-400 h-5 w-5" }) %>
-              <span>Vägbeskrivning</span>
-            <% end %>
-          </div>
-        </div>
-      </div>
-
-      <div id="project-sections" class="px-4">
-        <nav class="-mb-px flex space-x-6 overflow-y-auto" aria-label="Tabs">
-          <%= link_to 'Uppdrag', project_path(@project), class: tab_classes(params[:tab].blank?) %>
-
-          <%= link_to 'Tidrapport', project_path(@project, tab: 'time'), class: tab_classes(params[:tab] == 'time') %>
-          <%= link_to 'Lönerapport', project_path(@project, tab: 'employee'), class: tab_classes(params[:tab] == 'employee') if policy(@project).salary? %>
-
-          <%= link_to icon_text('Admin', 'shield-check'), project_path(@project, tab: 'internal'), class: tab_classes(params[:tab] == 'internal') if Current.user.is_manager? %>
-          <%= link_to icon_text('Lönerapport', 'shield-check'), project_path(@project, tab: 'bonus'), class: tab_classes(params[:tab] == 'bonus') if Current.user.is_manager? %>
-          <%= link_to icon_text('ROT', 'shield-check'), project_path(@project, tab: 'rot'), class: tab_classes(params[:tab] == 'rot') if Current.user.is_manager? && @project.is_rot? %>
-        </nav>
-      </div>
-
-      <div class="p-4">
-        <%= render 'description', project: @project if params[:tab].blank? %>
-        <%= render 'employee', project: @project, employee: Current.user.employee if params[:tab] == 'employee' && policy(:report).show? && @project.status_completed? %>
-
-        <!-- Admin Section -->
-        <%= render 'internal', project: @project if params[:tab] == 'internal' && policy(:project).edit? %>
-        <%= render 'time', project: @project if params[:tab] == 'time' %>
-        <%= render 'projects/bonus/admin', project: @project if params[:tab] == 'bonus' && policy(:project).edit? %>
-        <%= render 'rot', project: @project if params[:tab] == 'rot' && policy(:project).edit? %>
-      </div>
+  <div class="bg-white overflow-hidden shadow rounded-md divide-y divide-gray-200">
+    <%= render 'projects/project_header', project: @project %>
+    <div id="project-sections" class="px-4">
+      <nav class="-mb-px flex space-x-6 overflow-y-auto" aria-label="Tabs">
+        <%= link_to 'Uppdrag', project_path(@project), class: tab_classes(params[:tab].blank?) %>
+        <%= link_to 'Tidrapport', project_path(@project, tab: 'time'), class: tab_classes(params[:tab] == 'time') %>
+        <%= link_to 'Lönerapport', project_path(@project, tab: 'employee'), class: tab_classes(params[:tab] == 'employee') if policy(@project).salary? %>
+        <%= link_to icon_text('Admin', 'shield-check'), project_path(@project, tab: 'internal'), class: tab_classes(params[:tab] == 'internal') if Current.user.is_manager? %>
+        <%= link_to icon_text('Lönerapport', 'shield-check'), project_path(@project, tab: 'bonus'), class: tab_classes(params[:tab] == 'bonus') if Current.user.is_manager? %>
+        <%= link_to icon_text('ROT', 'shield-check'), project_path(@project, tab: 'rot'), class: tab_classes(params[:tab] == 'rot') if Current.user.is_manager? && @project.is_rot? %>
+      </nav>
     </div>
-</div>
+    <div class="p-4">
+      <%= render 'description', project: @project if params[:tab].blank? %>
+      <%= render 'employee', project: @project, employee: Current.user.employee if params[:tab] == 'employee' && policy(:report).show? && @project.status_completed? %>
+      <!-- Admin Section -->
+      <%= render 'internal', project: @project if params[:tab] == 'internal' && policy(:project).edit? %>
+      <%= render 'time', project: @project if params[:tab] == 'time' %>
+      <%= render 'projects/bonus/admin', project: @project if params[:tab] == 'bonus' && policy(:project).edit? %>
+      <%= render 'rot', project: @project if params[:tab] == 'rot' && policy(:project).edit? %>
+    </div>
+  </div>

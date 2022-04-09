@@ -7,13 +7,19 @@
     <div class="flex justify-between">
       <div class="flex items-start">
         <div>
+        <% unless todo.project.status_completed? %>
           <%= form_with(model: [todo.project, todo.checklist, todo], data: { 'turbo-frame': dom_id(todo) }) do |f| %>
             <%= f.check_box :completed, onchange: "this.form.requestSubmit()", class: "focus:ring-indigo-500 text-indigo-600 border-gray-300 rounded" %>
           <% end %>
+        <% else %>
+            <input type="checkbox" checked class="focus:gray-indigo-200 text-gray-400 border-gray-300 rounded" disabled>
+        <% end %>
         </div>
 
         <div class="ml-2 mt-0.5">
-          <%= link_to todo.description, edit_project_checklist_todo_path(todo.project, todo.checklist, todo), class: "text-sm font-medium text-gray-600 #{class_names("line-through text-gray-400": todo.completed?)}" %>
+          <span class="text-sm font-medium text-gray-600 <%= class_names("line-through text-gray-400": todo.completed?) %>">
+            <%= link_to_if !todo.project.status_completed?, todo.description, edit_project_checklist_todo_path(todo.project, todo.checklist, todo) %>
+          </span>
         </div>
       </div>
 

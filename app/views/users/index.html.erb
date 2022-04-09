@@ -9,7 +9,6 @@
           <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Epost</th>
           <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Senast inloggad</th>
           <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-6"> <span class="sr-only">Edit</span> </th>
-          <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-6"> <span class="sr-only">Edit</span> </th>
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-200 bg-white">
@@ -20,11 +19,9 @@
             <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900"> <%= user.roles %> </td>
             <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900"> <%= user.email %> </td>
             <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900"> <%= user.created_at %> </td>
-            <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right sm:pr-6"> 
-            <%= link_to 'Uppdatera', edit_user_path(user), class: "text-sm inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-100" if policy(user).edit? %>
-            </td>
-            <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right sm:pr-6"> 
-            <%= button_to 'Switch', switch_path(id: user.id), class: "text-sm inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-100" if policy(user).edit? %>
+            <td class="flex justify-start relative whitespace-nowrap py-2 pl-3 pr-4 text-right sm:pr-6"> 
+              <%= link_to 'Uppdatera', edit_user_path(user), class: "mr-2 text-sm inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-100" if policy(user).edit? %>
+              <%= button_to 'Switch', switch_path(id: user.id), class: "text-sm inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-100" if policy(user).edit? %>
             </td>
           </tr>
           <% end %>

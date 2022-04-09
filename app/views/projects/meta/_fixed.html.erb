@@ -1,3 +1,3 @@
-<% if policy(reportable).salary? and reportable.is_a?(Project) %>
+<% if reportable.is_a?(Project) %>
   <%= icon_badge "#{number_to_currency(reportable.bonus_fixed)}", 'cash', class: 'indigo' %>
 <% end %>

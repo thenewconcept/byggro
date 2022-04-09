@@ -8,7 +8,7 @@
           <div class="flex justify-between">
             <h6 class="font-bold"> <%= checklist.title %> </h6>
             <div>
-              <%= render "projects/meta/#{@project.bonus}", reportable: checklist %>
+              <%= render "projects/meta/#{@project.bonus}", reportable: checklist if policy(checklist).meta? %>
               <%= icon_badge("#{number_to_currency(checklist.amount)}", 'eye-off', class: 'silver') %>
             </div>
           </div>
@@ -16,7 +16,9 @@
       <% else %>
         <div class="flex justify-between">
           <h6 class="block font-bold"> <%= checklist.title %> </h6>
-          <%= render "projects/meta/#{@project.bonus}", reportable: checklist %>
+          <div>
+            <%= render "projects/meta/#{@project.bonus}", reportable: checklist if policy(checklist).meta? %>
+          </div>
         </div>
       <% end  %>
 
