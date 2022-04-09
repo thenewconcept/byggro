@@ -20,7 +20,7 @@ RSpec.describe 'User management' do
 
     it 'can edit a user' do
       within("#user_#{user.id}") do
-        click_on('Ändra')
+        click_on('Uppdatera')
       end
 
       fill_in 'Efternamn', with: 'Dae'
