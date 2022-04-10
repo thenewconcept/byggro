@@ -4,37 +4,12 @@
 
   <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
 
-    <% if project.bonus_hourly? %>
-      <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
-        <dt class="text-sm font-medium text-gray-500 truncate">
-          <%= heroicon('clock', variant: :outline) %> Timmål
-        </dt>
-        <dd class="mt-1 text-3xl font-semibold text-gray-900">
-          <%= project.hours_target %> tim 
-        </dd>
-      </div>
-    <% end %>
-
-    <% if project.bonus_fixed? %>
-      <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
-        <dt class="text-sm font-medium text-gray-500 truncate">
-          <%= heroicon('clock', variant: :outline) %> Projektlön
-        </dt>
-        <dd class="mt-1 text-3xl font-semibold text-gray-900">
-          <%= number_to_currency project.bonus_fixed %>
-        </dd>
-      </div>
-    <% end %>
-
     <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
       <dt class="text-sm font-medium text-gray-500 truncate">
         <%= heroicon('clock', variant: :outline) %> Teamets timmar
       </dt>
       <dd class="mt-1 text-3xl font-semibold text-gray-900">
-        <%= project.hours_reported - project.hours_by_interns %> tim 
-        <% unless project.hours_by_interns.zero? %>
-        <span class="inline text-sm"> <%= project.hours_by_interns %> p/tim </span>
-        <% end %>
+        <%= project.hours_reported %> tim 
       </dd>
     </div>
 
@@ -46,31 +21,6 @@
         <%= @calculator.hours_for(Current.user.employee) %> tim 
       </dd>
     </div>
-
-    <% if project.is_bonusable? %>
-    <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
-      <dt class="text-sm font-medium text-gray-500 truncate">
-        <%= heroicon('clock', variant: :outline) %> Projektbonus
-      </dt>
-      <dd class="mt-1 text-3xl font-semibold text-gray-900">
-        <%= number_to_percentage @calculator.bonus_percent(Current.user.employee) * 100 %>
-        <span class="text-sm ml-2">
-          <%= number_to_currency Current.user.employee.salary * project.bonus_percent if project.bonus_hourly? %>
-        </span>
-      </dd>
-    </div>
-    <% end %>
-
-    <% if project.bonus_hourly? %>
-      <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
-        <dt class="text-sm font-medium text-gray-500 truncate">
-          <%= heroicon('cash', variant: :outline) %> Din bonus
-        </dt>
-        <dd class="mt-1 text-3xl font-semibold text-gray-900">
-          <%= number_to_currency @calculator.bonus_for(Current.user.employee) %> 
-        </dd>
-      </div>
-    <% end %>
 
     <div class="px-4 py-5 bg-slate-800 shadow rounded-lg overflow-hidden sm:p-6">
       <dt class="text-sm font-medium text-white truncate">
@@ -91,7 +41,7 @@
         <tr>
           <th scope="col" class="whitespace-nowrap px-4 py-3 text-left font-semibold text-gray-900">Datum</th>
           <th scope="col" class="whitespace-nowrap px-2 py-3 text-left font-semibold text-gray-900">Tid</th>
-          <th scope="col" class="whitespace-nowrap px-2 py-3 text-left font-semibold text-gray-900">Lön/Arvode</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3 text-left font-semibold text-gray-900">Lön</th>
           <th scope="col" class="whitespace-nowrap px-4 py-3 font-semibold text-gray-900 text-right">Totalt</th>
         </tr>
       </thead>
@@ -122,10 +72,10 @@
       </tbody>
       <tfoot class="bg-gray-50">
         <tr class="font-medium text-md text-gray-900 text-right"> 
-            <td class="whitespace-nowrap px-4 py-3.5">Summa</td>
-            <td class="whitespace-nowrap px-2 py-3.5"> <%= format_hours(@reports.where(reportee: Current.user.employee).sum(&:time_in_hours)) %> tim </td>
-            <td class="whitespace-nowrap px-2 py-3.5"></td>
-            <td class="whitespace-nowrap px-4 py-3.5"> <%= number_to_currency(@reports.where(reportee: Current.user.employee).sum(&:total)) %> </td>
+            <td class="whitespace-nowrap px-4 py-3.5 text-left">Summa</td>
+            <td class="whitespace-nowrap px-2 py-3.5 text-left"> <%= format_hours(@reports.where(reportee: Current.user.employee).sum(&:time_in_hours)) %> tim </td>
+            <td class="whitespace-nowrap px-2 py-3.5 text-left"></td>
+            <td class="whitespace-nowrap px-4 py-3.5 text-right"> <%= number_to_currency(@reports.where(reportee: Current.user.employee).sum(&:total)) %> </td>
           </tr>
       </tfoot>
     </table>
