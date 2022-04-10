@@ -1,4 +1,4 @@
-<div class="shadow overflow-hidden rounded-lg my-4 ring-black ring-opacity-5 ">
+<div class="shadow overflow-hidden rounded-lg mb-4 ring-black ring-opacity-5 ">
 
   <div class="bg-slate-50 px-2 py-3 sm:px-4">
     <h3 class="text-lg leading-6 font-medium text-gray-900">
@@ -8,6 +8,12 @@
 
   <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
     <dl class="text-sm sm:divide-y sm:divide-gray-200">
+      <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-2 sm:px-4">
+        <dt class=" font-medium text-gray-500">Bonusindex</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          <%= number_to_currency Bonus::Hourly::INDEX %>
+        </dd>
+      </div>
       <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-2 sm:px-4">
         <dt class=" font-medium text-gray-500">Måltimmar</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">

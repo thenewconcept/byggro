@@ -1,4 +1,5 @@
 class Bonus::Hourly
+  INDEX = ENV['BONUS_INDEX'] || 300
   attr_reader :project, :reportee, :hours
 
   def initialize(project, reportee)
@@ -11,13 +12,26 @@ class Bonus::Hourly
     new(project, reportee)
   end
 
+  # TODO: Move these to a separate concern, not attached to a reportee
+  def bonus_base(salary)
+    [(INDEX - salary), salary].min
+  end
+
+  def bonus_salary(salary)
+    bonus_base(salary) * bonus_percent
+  end
+
+  # TODO END
+
   def salary
-    reportee.salary * (Report.by_project(project).where(reportee: reportee).sum(&:time_in_hours))
+    salary ||= Report.by_project(project).where(reportee: reportee).sum do |report| 
+      report.fee * report.time_in_hours
+    end
   end
 
   def bonus_total
-    project.workers.reduce(0) do |sum, worker|
-      sum += Bonus::Hourly.for(project, worker).bonus
+    project.workers.sum do |worker|
+      Bonus::Hourly.for(project, worker).bonus
     end
   end
 
@@ -25,19 +39,17 @@ class Bonus::Hourly
     (1.0 - project.hourly_percent)
   end
   
-  def bonus_base
-    reportee.salary 
+  def bonus_for_report(report)
+    [(INDEX - report.fee), report.fee].min * bonus_percent * report.time_in_hours
   end
-
-  def bonus_salary
-    bonus_base * bonus_percent
-  end
-
+  
   def bonus
-    bonus_salary * (hours)
+    bonus ||= Report.by_project(project).where(reportee: reportee).sum do |report| 
+      [(INDEX - report.fee), report.fee].min * bonus_percent * report.time_in_hours
+    end
   end
 
   def total
-    bonus + (hours * reportee.salary)
+    bonus + salary
   end
 end

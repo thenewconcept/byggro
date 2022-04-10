@@ -22,6 +22,10 @@ class Bonus::Calculator
     @klass.for(project, reportee).salary
   end
 
+  def bonus_for_report(report)
+    @klass.for(project, report.reportee).bonus_for_report(report)
+  end
+
   def bonus_for(reportee)
     @klass.for(project, reportee).bonus
   end

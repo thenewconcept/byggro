@@ -38,4 +38,5 @@ class Bonus::Fixed
   def total
     bonus
   end
+  def salary;total;end
 end

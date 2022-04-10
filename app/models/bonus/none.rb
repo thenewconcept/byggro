@@ -21,4 +21,6 @@ class Bonus::None
   def salary_total
     salary
   end
+
+  def total; salary_total; end
 end

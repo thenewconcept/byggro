@@ -10,7 +10,7 @@ module Reportee
     has_many :fees, as: :reportee, dependent: :destroy
   end
 
-  delegate :email, :password, :roles, :first_name, :last_name, :full_name, :display_name, to: :user
+  delegate :email, :password, :roles, :primary_role, :first_name, :last_name, :full_name, :display_name, to: :user
 
   private
 

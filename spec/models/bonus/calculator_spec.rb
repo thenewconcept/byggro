@@ -49,7 +49,7 @@ RSpec.describe Bonus::Calculator do
 
   describe '#bonus_total' do
     it 'hourly return total bonus for all workers' do
-      expect(calc_hourly.bonus_total).to eq(750)
+      expect(calc_hourly.bonus_total).to eq(500)
     end
 
     it 'fixed returns total bonus for the project' do
@@ -59,7 +59,7 @@ RSpec.describe Bonus::Calculator do
 
   it '#bonus_for' do
     expect(calc_hourly.bonus_for(jim)).to eq(250)
-    expect(calc_hourly.bonus_for(john)).to eq(500)
+    expect(calc_hourly.bonus_for(john)).to eq(250)
 
     expect(calc_fixed.bonus_for(jim)).to eq(1750)
     expect(calc_fixed.bonus_for(john)).to eq(1750)
@@ -67,7 +67,7 @@ RSpec.describe Bonus::Calculator do
 
   it '#total_for' do
     expect(calc_hourly.total_for(jim)).to eq(750)
-    expect(calc_hourly.total_for(john)).to eq(1500)
+    expect(calc_hourly.total_for(john)).to eq(1250)
 
     create(:report, time_in_hours: 5, reportable: fixed_checklist, reportee: john)
     expect(calc_fixed.total_for(jim)).to be_within(0.1).of(1166.6)

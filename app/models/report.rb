@@ -10,8 +10,13 @@ class Report < ApplicationRecord
   validates :time_in_minutes, numericality: true, allow_blank: false, presence: true
   validates :date, presence: true
 
+  scope :by_reportees, -> (type) { where(reportee_type: type) } 
   scope :by_checklist, -> (checklist) { where(reportable: checklist) }
   scope :by_project,   -> (project) { where(reportable: project).or(self.where(reportable_type: 'Checklist', reportable_id: project.checklists.pluck(:id))) }
+
+  def total
+    time_in_hours * fee
+  end
 
   def project
     return reportable if reportable.is_a?(Project)

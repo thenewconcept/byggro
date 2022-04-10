@@ -14,7 +14,7 @@ class ProjectsController < ProtectedController
 
   # GET /projects/1 or /projects/1.json
   def show
-    @reports = policy_scope(Report).by_project(@project).order(date: :desc, created_at: :desc)
+    @reports   = policy_scope(Report).by_project(@project).order(date: :desc, created_at: :desc)
     @calculator = Bonus::Calculator.for(@project)
 
     # TODO: Hide salaries for now.

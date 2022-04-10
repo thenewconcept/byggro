@@ -22,7 +22,11 @@ class Project < ApplicationRecord
   end
 
   def workers
-    reports.where.not(reportee_type: 'Contractor').map(&:reportee).uniq
+    reports.where.not(reportee_type: 'contractor').map(&:reportee).uniq
+  end
+
+  def reportees
+    reports.map(&:reportee).uniq
   end
 
   def primary_date

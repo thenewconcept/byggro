@@ -1,0 +1,114 @@
+<h3 class="text-xl leading-6 font-medium text-gray-900">
+  <%= t("project.bonus." + project.bonus) %>
+</h3>
+
+  <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+
+    <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
+      <dt class="text-sm font-medium text-gray-500 truncate">
+        <%= heroicon('clock', variant: :outline) %> Timmål
+      </dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900">
+        <%= project.hours_target %> tim 
+      </dd>
+    </div>
+
+    <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
+      <dt class="text-sm font-medium text-gray-500 truncate">
+        <%= heroicon('clock', variant: :outline) %> Teamets timmar
+      </dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900">
+        <%= project.hours_reported %> tim 
+      </dd>
+    </div>
+
+    <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
+      <dt class="text-sm font-medium text-gray-500 truncate">
+        <%= heroicon('clock', variant: :outline) %> Projektbonus
+      </dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900">
+        <%= number_to_percentage @calculator.bonus_percent(Current.user.employee) * 100 %>
+      </dd>
+    </div>
+
+    <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
+      <dt class="text-sm font-medium text-gray-500 truncate">
+        <%= heroicon('clock', variant: :outline) %> Dina timmar
+      </dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900">
+        <%= @calculator.hours_for(Current.user.employee) %> tim 
+      </dd>
+    </div>
+
+    <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
+      <dt class="text-sm font-medium text-gray-500 truncate">
+        <%= heroicon('cash', variant: :outline) %> Din bonus
+      </dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900">
+        <%= number_to_currency @calculator.bonus_for(Current.user.employee) %> 
+      </dd>
+    </div>
+
+    <div class="px-4 py-5 bg-slate-800 shadow rounded-lg overflow-hidden sm:p-6">
+      <dt class="text-sm font-medium text-white truncate">
+        <%= heroicon('cash', variant: :outline) %> Din lön för detta projekt
+      </dt>
+      <dd class="mt-1 text-3xl font-semibold text-white">
+        <%= number_to_currency @calculator.salary_for(Current.user.employee) %>
+      </dd>
+    </div>
+
+  </dl>
+
+  <hr class="my-5" />
+
+  <div class="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+    <table class="table-auto min-w-full divide-y divide-gray-300 text-sm bg-white">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="whitespace-nowrap px-4 py-3 text-left font-semibold text-gray-900">Datum</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3 text-left font-semibold text-gray-900">Tid</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3 text-left font-semibold text-gray-900">Lön</th>
+          <th scope="col" class="whitespace-nowrap px-4 py-3 font-semibold text-gray-900 text-right">Totalt</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3 font-semibold text-gray-900 text-right">Bonus</th>
+        </tr>
+      </thead>
+      <tbody class=" align-top">
+          <% @reports.where(reportee: Current.user.employee).each do |report| %>
+          <tr class="border-t border-gray-100"> 
+            <td class="whitespace-nowrap px-4 py-2 text-gray-600">
+              <%= l report.date  %>
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 text-gray-600">
+              <%= format_hours(report.time_in_hours) %> tim
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 text-gray-600">
+              <%= number_to_currency(report.fee) %>
+            </td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-600 text-right">
+              <%= number_to_currency(report.total) %>
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 text-gray-600 text-right">
+              <%= number_to_currency @calculator.bonus_for_report(report).round(2) %>
+            </td>
+          </tr>
+            <% if report.note.present? %>
+              <tr>
+                <td colspan="5" class="px-4 pb-3 text-sm">
+                  <span class="text-gray-500"><%= report.note %></span>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+      </tbody>
+      <tfoot class="bg-gray-50">
+        <tr class="font-medium text-md text-gray-900 text-right"> 
+          <td class="whitespace-nowrap px-4 py-3.5 text-left">Summa</td>
+          <td class="whitespace-nowrap px-2 py-3.5 text-left"> <%= format_hours(@calculator.hours_for(Current.user.employee)) %> tim </td>
+          <td class="whitespace-nowrap px-2 py-3.5"></td>
+          <td class="whitespace-nowrap px-4 py-3.5"> <%= number_to_currency(@calculator.salary_for(Current.user.employee)) %> </td>
+          <td class="whitespace-nowrap px-4 py-3.5"> <%= number_to_currency(@calculator.bonus_for(Current.user.employee)) %> </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>

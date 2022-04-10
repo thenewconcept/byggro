@@ -46,8 +46,6 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def salary?
-    user.is_employee? and 
-      record.try(:status_completed?) and
-      record.try(:bonus_fixed?)
+    user.is_employee? and record.try(:status_completed?)
   end
 end

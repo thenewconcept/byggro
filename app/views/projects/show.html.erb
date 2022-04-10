@@ -6,18 +6,19 @@
         <%= link_to 'Uppdrag', project_path(@project), class: tab_classes(params[:tab].blank?) %>
         <%= link_to 'Tidrapport', project_path(@project, tab: 'time'), class: tab_classes(params[:tab] == 'time') %>
         <%= link_to 'Lönerapport', project_path(@project, tab: 'employee'), class: tab_classes(params[:tab] == 'employee') if policy(@project).salary? %>
+
+        <!-- Admin Section -->
         <%= link_to icon_text('Admin', 'shield-check'), project_path(@project, tab: 'internal'), class: tab_classes(params[:tab] == 'internal') if Current.user.is_manager? %>
         <%= link_to icon_text('Lönerapport', 'shield-check'), project_path(@project, tab: 'bonus'), class: tab_classes(params[:tab] == 'bonus') if Current.user.is_manager? %>
-        <%= link_to icon_text('ROT', 'shield-check'), project_path(@project, tab: 'rot'), class: tab_classes(params[:tab] == 'rot') if Current.user.is_manager? && @project.is_rot? %>
       </nav>
     </div>
     <div class="p-4">
       <%= render 'description', project: @project if params[:tab].blank? %>
       <%= render 'employee', project: @project, employee: Current.user.employee if params[:tab] == 'employee' && policy(:report).show? && @project.status_completed? %>
+      <%= render 'time', project: @project if params[:tab] == 'time' %>
+
       <!-- Admin Section -->
       <%= render 'internal', project: @project if params[:tab] == 'internal' && policy(:project).edit? %>
-      <%= render 'time', project: @project if params[:tab] == 'time' %>
-      <%= render 'projects/bonus/admin', project: @project if params[:tab] == 'bonus' && policy(:project).edit? %>
-      <%= render 'rot', project: @project if params[:tab] == 'rot' && policy(:project).edit? %>
+      <%= render 'admin', project: @project if params[:tab] == 'bonus' && policy(:project).edit? %>
     </div>
   </div>

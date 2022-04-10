@@ -25,6 +25,10 @@ class User < ApplicationRecord
     return roles.join(', ')
   end
 
+  def primary_role
+    roles.split(', ').first
+  end
+
   def title
     profile&.title || ''
   end
