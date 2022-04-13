@@ -25,6 +25,16 @@ RSpec.describe Report, type: :model do
     end
   end
 
+  describe 'when missing fee on date' do
+    it 'raises an error' do
+      travel_to Time.parse('2022-01-01')
+      employee = create(:employee, fee: 100)
+      report = build(:report, reportee: employee, date: '2021-01-01')
+      expect(report).to_not be_valid
+      expect(report.errors[:fee].first).to eq('cannot be nil')
+    end
+  end
+
   describe 'creating with hours' do
     it 'accepst hours as an attribute' do
       report = create(:report, time_in_hours: 1)
