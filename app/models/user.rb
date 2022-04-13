@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_one_attached :avatar, dependent: :destroy
   has_secure_password
   
   before_create { self.email = email.downcase }

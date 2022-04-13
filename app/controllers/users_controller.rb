@@ -68,6 +68,7 @@ class UsersController < ProtectedController
       .permit(
         :first_name, 
         :last_name, 
+        :avatar,
         :email, 
         :password, 
         :password_confirmation,
