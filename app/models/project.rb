@@ -1,6 +1,11 @@
 class Project < ApplicationRecord
   include Bonusable
 
+  BONUS_FIXED = ENV['BONUS_FIXED']&.to_f || 0.30
+  HOURLY_RATE = ENV['HOURLY_RATE']&.to_i || 500
+  ROT_PERCENT = ENV['ROT_PERCENT']&.to_f || 0.3
+  TARGET_MARGIN = ENV['TARGET_MARGIN']&.to_f || 0.2
+
   enum bonus: [ :none, :hourly, :fixed ], _prefix: true
   enum status: { draft: 'draft', upcoming: 'upcoming', started: 'started', completed: 'completed' }, _prefix: true
 
@@ -62,7 +67,7 @@ class Project < ApplicationRecord
   end
 
   def rot
-    inc_vat(amount) * 0.3
+    inc_vat(amount) * ROT_PERCENT
   end
 
   def client_costs
@@ -88,8 +93,8 @@ class Project < ApplicationRecord
   private
 
   def defaults
-    self.fixed_fee ||= 0.35
-    self.hourly_rate ||= 500
+    self.fixed_fee   ||= BONUS_FIXED
+    self.hourly_rate ||= HOURLY_RATE
   end
 
   def generate_checklists

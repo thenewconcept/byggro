@@ -1,6 +1,10 @@
 require 'rails_helper'
 
+
 RSpec.describe Bonus::Calculator do
+
+  ENV['BONUS_FIXED'] = '0.35'
+
   let(:normal_project)  { create(:project, hourly_rate: 500, bonus: :none) }
   let(:hourly_project)  { create(:project, hourly_rate: 500, bonus: :hourly) }
   let(:fixed_project)   { create(:project, bonus: :fixed) }
@@ -17,6 +21,7 @@ RSpec.describe Bonus::Calculator do
   let(:calc_fixed)  { Bonus::Calculator.for(fixed_project) }
 
   before do
+
     # Hourly project has an hourly target of 20 hours
     create(:report, time_in_hours: 5, reportable: hourly_checklist, reportee: john)
     create(:report, time_in_hours: 5, reportable: hourly_checklist, reportee: jim)
