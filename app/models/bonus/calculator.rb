@@ -10,6 +10,14 @@ class Bonus::Calculator
     new(project)
   end
 
+  def bonus_salary(salary)
+    @klass.for(project, nil).bonus_salary(salary)
+  end
+
+  def bonus_base(salary)
+    @klass.for(project, nil).bonus_base(salary)
+  end
+
   def bonus_percent(reportee=nil)
     @klass.for(project, reportee).bonus_percent
   end
