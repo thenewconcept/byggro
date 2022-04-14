@@ -28,4 +28,8 @@ class UserPolicy < ApplicationPolicy
   def switch?
     user.is_admin?
   end
+
+  def employment?
+    user.is_employee? and ( (record == user and user.profile_complete?) or user.is_admin? )
+  end
 end

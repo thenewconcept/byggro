@@ -37,19 +37,19 @@
 <%= form.fields_for(:employee, user.employee) do | employee_fields | %>
   <div class="bg-white rounded-md py-1 px-4 my-4 border-2 border-slate-200">
     <div class="my-4 grid grid-cols-6 gap-6">
-      <div class="col-span-2 sm:col-span-2">
+      <div class="col-span-3 sm:col-span-2">
         <%= employee_fields.label :pid, 'Personnummer', class: 'label' %>
-        <%= employee_fields.text_field :pid, class: "input", placeholder: 't.ex. XXXX02034567' %>
+        <%= employee_fields.text_field :pid, class: "input", placeholder: 't.ex. XXXX02034567', disabled: !policy(user.employee).edit? %>
       </div>
 
-      <div class="col-span-2 sm:col-span-2">
+      <div class="col-span-3 sm:col-span-2">
         <%= employee_fields.label :bank, 'Bank', class: 'label' %>
-        <%= employee_fields.text_field :bank, class: "input", placeholder: 't.ex. SEB' %>
+        <%= employee_fields.text_field :bank, class: "input", placeholder: 't.ex. SEB', disabled: !policy(user.employee).edit? %>
       </div>
 
-      <div class="col-span-2 sm:col-span-2">
+      <div class="col-span-6 sm:col-span-2">
         <%= employee_fields.label :account, 'Kontonummer', class: 'label' %>
-        <%= employee_fields.text_field :account, class: "input", placeholder: 't.ex. 1244-112233-44' %>
+        <%= employee_fields.text_field :account, class: "input", placeholder: 't.ex. 1244-112233-44', disabled: !policy(user.employee).edit? %>
       </div>
     </div>
   </div>

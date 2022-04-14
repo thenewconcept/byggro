@@ -19,41 +19,16 @@
       <div class="border-b border-gray-200">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-            <!-- Current: "border-pink-500 text-gray-900", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
-            <a href="#" class="border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" aria-current="page"> Information </a>
-            <!-- <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"> Rapporter </a> -->
+            <%= link_to "Presentation", user_path(@user), class: tab_classes(params[:tab].blank?) %>
+            <%= link_to "Anställning", user_path(@user, tab: 'employee'), class: tab_classes(params[:tab] == 'employee') if policy(@user).employment? %>
           </nav>
         </div>
       </div>
     </div>
 
     <div class="mt-6 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <dl class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4">
-
-        <div class="sm:col-span-1">
-          <dt class="text-sm font-medium text-gray-500">Epost</dt>
-          <dd class="mt-1 text-sm text-indigo-800"><%= mail_to @user.email %></dd>
-        </div>
-
-        <div class="sm:col-span-1">
-          <dt class="text-sm font-medium text-gray-500">Mobil</dt>
-          <dd class="mt-1 text-sm text-indigo-800"><%= link_to @user.phone, "tel:#{@user.phone}" %></dd>
-        </div>
-
-        <div class="sm:col-span-1">
-          <dt class="text-sm font-medium text-gray-500">Placering</dt>
-          <dd class="mt-1 text-sm text-gray-900">Göteborg</dd>
-        </div>
-
-        <div class="col-span-2 sm:col-span-4">
-          <dt class="text-sm font-medium text-gray-500">Presentation</dt>
-          <dd class="my-1 max-w-prose text-sm text-gray-900 space-y-5">
-            <p><%= simple_format @user.presentation %></p>
-          </dd>
-        </div>
-
-
-      </dl>
+      <%= render 'presentation', project: @project if params[:tab].blank? %>
+      <%= render 'employee', project: @project if params[:tab] == 'employee' and policy(@user).employment? %>
     </div>
   </article>
 </div>
