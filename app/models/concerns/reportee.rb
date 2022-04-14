@@ -12,6 +12,10 @@ module Reportee
 
   delegate :email, :password, :roles, :primary_role, :first_name, :last_name, :full_name, :display_name, to: :user
 
+  def current_bonus_base
+    [Bonus::Hourly::BONUS_INDEX - self.salary, self.salary].min  
+  end
+
   private
 
   def log_fee_changes
