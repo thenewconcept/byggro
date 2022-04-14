@@ -18,6 +18,13 @@
   </div>
 </div>
 
+<div class="bg-white rounded-md py-1 px-4 my-4 border-2 border-slate-200">
+  <div class="my-4">
+    <%= form.label :presentation, 'Presentation', class: 'label' %>
+    <%= form.text_area :presentation, class: "input" %>
+  </div>
+</div>
+
 <%= form.fields_for(:employee, user.employee) do | employee_fields | %>
 <div class="bg-white rounded-md py-1 px-4 my-4 border-2 border-slate-200">
   <div class="my-4 grid grid-cols-6 gap-6">
