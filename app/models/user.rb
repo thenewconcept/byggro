@@ -47,6 +47,14 @@ class User < ApplicationRecord
     (full_name || email)
   end
 
+  def complete?
+    first_name.present? && last_name.present? && email.present?
+  end
+
+  def profile_complete?
+    complete? && profile.complete?
+  end
+
   def is_worker?
     profile.present?
   end
