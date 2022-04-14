@@ -16,6 +16,7 @@ module Bonusable
   end
 
   def hourly_percent
+    return 0 if hours_reported.zero? or hours_target.zero?
     hours_reported / hours_target
   end
 

@@ -1,6 +1,8 @@
 <div class="bg-gray-100 overflow-hidden shadow rounded-lg divide-y divide-gray-200">
-  <div class="px-4 py-5 sm:px-6">   
-  <h1 class="text-3xl"> <%= @user.display_name %> </h1>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+  <h1 class="mt-8 text-2xl font-bold text-gray-900 truncate"><%= @user.display_name %></h1>
+  <span class="text-gray-800 text-1xl"> <%= @user&.profile&.title %> </span>
+
   <%= render partial: "form", locals: { user: @user } %>
   </div>
 </div>

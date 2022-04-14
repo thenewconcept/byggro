@@ -2,6 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Bonus::Fixed, type: :model do
   describe 'a project with 10000' do
+
+    ENV['BONUS_FIXED'] = '0.35'
+
     let(:project)   { create(:project, hourly_rate: 500) }
     let(:checklist) { create(:checklist, amount: 10000, project: project) }
     let(:john)    { create(:employee) }

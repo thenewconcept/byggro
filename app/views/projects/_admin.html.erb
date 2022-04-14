@@ -2,8 +2,8 @@
   
 <hr/>
 
-<div class="p-4 mt-4 rounded-md bg-slate-300">
-<% (%w{none fixed hourly} - [project.bonus]).each do |bonus| %>
-  <%= render partial: "projects/admin/#{bonus}", locals: { project: project } %>
-<% end %>
+<div class="py-1 px-4 mt-4 rounded-md bg-slate-300">
+  <% (%w{none fixed hourly} - [project.bonus]).each do |bonus| %>
+    <%= render partial: "projects/admin/#{bonus}", locals: { project: project } %>
+  <% end %>
 </div>

@@ -1,5 +1,4 @@
 class Bonus::Fixed
-  BASE = ENV['FIXED_BASE']&.to_f || 0.35
   attr_reader :project, :reportee, :total_bonus, :total_hours
 
   def initialize(project, reportee)

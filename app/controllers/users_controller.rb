@@ -38,8 +38,9 @@ class UsersController < ProtectedController
 
   # PATCH/PUT /projects/1 or /projects/1.json
   def update
+    authorize(@user)
     if @user.update(user_params)
-      redirect_to edit_user_url(@user), notice: "Uppgifter uppdaterade."
+      redirect_to user_url(@user), notice: "Uppgifter uppdaterade."
     else
       flash.now[:alert] = "Uppgifterna kunde inte uppdateras."
       render :edit, status: :unprocessable_entity
@@ -70,9 +71,11 @@ class UsersController < ProtectedController
         :last_name, 
         :avatar,
         :email, 
+        :presentation,
+        :phone,
         :password, 
         :password_confirmation,
-        employee_attributes: [ :id, :title, :salary ]
+        employee_attributes: [ :id, :title, :pid, :account, :bank, :salary ]
       )
   end
 end

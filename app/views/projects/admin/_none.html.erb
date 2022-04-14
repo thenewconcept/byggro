@@ -34,7 +34,7 @@
                 <tr class="border-t border-gray-100"> 
                   <td class="whitespace-nowrap px-4 py-2.5 text-gray-600">
                     <%= reportee.user.display_name  %>
-                    <span><%= reportee.primary_role %></span>
+                    <span class="text-xs text-gray-400"><%= reportee.title %></span>
                   </td>
                   <td class="whitespace-nowrap px-2 py-2.5 text-gray-600">
                     <p><%= @calculator.hours_for(reportee) %> tim</p>
@@ -55,111 +55,113 @@
           </table>
         </div>
 
-        <h3 class="mt-8 text-md mb-1 ml-2 leading-6 text-gray-900"> Detaljerat </h3>
-        <div class="py-4 px-4 border-2 rounded-md bg-gray-100">
-          <h3 class="text-md mb-1 ml-2 leading-6 text-gray-900"> Anställda </h3>
-          <div class="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-            <table class="table-auto min-w-full divide-y divide-gray-300 text-sm bg-white">
-              <thead class="bg-gray-50">
-                <tr>
-                  <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left font-semibold text-gray-900">Datum</th>
-                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Person</th>
-                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Tid</th>
-                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Arvode</th>
-                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Totalt</th>
-                  <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-6"> <span class="sr-only">Edit</span> </th>
-                </tr>
-              </thead>
-              <tbody class=" align-top">
-                  <% @reports.by_reportees(['Employee', 'Intern']).each do |report| %>
-                  <tr class="border-t border-gray-100"> 
-                    <td class="whitespace-nowrap px-4 py-2 text-gray-600">
-                      <%= l report.date  %>
-                    </td>
-                    <td class="whitespace-nowrap px-4 py-2.5 text-gray-600">
-                      <%= report.reportee.user.display_name  %>
-                      <span class="text-xs text-gray-400"><%= report.reportee.title %></span>
-                    </td>
-                    <td class="whitespace-nowrap px-2 py-2 text-gray-600">
-                      <p> <%= format_hours(report.time_in_hours) %> </p>
-                    </td>
-                    <td class="whitespace-nowrap px-2 py-2 text-gray-600">
-                      <p> <%= number_to_currency(report.fee) %> </p>
-                    </td>
-                    <td class="whitespace-nowrap px-2 py-2 text-gray-600">
-                      <p> <%= number_to_currency(report.total) %> </p>
-                    </td>
-                    <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right font-medium sm:pr-6">
-                      <%= link_to 'Ändra', edit_report_path(report), class: "text-sm inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-100" if policy(report).edit? %>
-                    </td>
+        <% if (params[:detailed]) %>
+          <h3 class="mt-8 text-md mb-1 ml-2 leading-6 text-gray-900"> Detaljerat </h3>
+          <div class="py-4 px-4 border-2 rounded-md bg-gray-100">
+            <h3 class="text-md mb-1 ml-2 leading-6 text-gray-900"> Anställda </h3>
+            <div class="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+              <table class="table-auto min-w-full divide-y divide-gray-300 text-sm bg-white">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left font-semibold text-gray-900">Datum</th>
+                    <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Person</th>
+                    <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Tid</th>
+                    <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Arvode</th>
+                    <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Totalt</th>
+                    <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-6"> <span class="sr-only">Edit</span> </th>
                   </tr>
-                  <% end %>
-              </tbody>
-              <tfoot class="bg-gray-50">
-                <tr class="font-medium text-md text-gray-900"> 
-                    <td class="whitespace-nowrap px-4 py-3.5">Summa</td>
-                    <td class="whitespace-nowrap px-2 py-3.5"></td>
-                    <td class="whitespace-nowrap px-2 py-3.5"> <%= format_hours(@reports.by_reportees(['Employee', 'Intern']).sum(&:time_in_hours)) %> tim </td>
-                    <td class="whitespace-nowrap px-2 py-3.5"></td>
-                    <td class="whitespace-nowrap px-2 py-3.5"> <%= number_to_currency(@reports.by_reportees(['Employee', 'Intern']).sum(&:total)) %> </td>
-                    <td class="whitespace-nowrap px-2 py-3.5"></td>
-                  </tr>
-              </tfoot>
-            </table>
-          </div>
+                </thead>
+                <tbody class=" align-top">
+                    <% @reports.by_reportees(['Employee', 'Intern']).each do |report| %>
+                    <tr class="border-t border-gray-100"> 
+                      <td class="whitespace-nowrap px-4 py-2 text-gray-600">
+                        <%= l report.date  %>
+                      </td>
+                      <td class="whitespace-nowrap px-4 py-2.5 text-gray-600">
+                        <%= report.reportee.user.display_name  %>
+                        <span class="text-xs text-gray-400"><%= report.reportee.title %></span>
+                      </td>
+                      <td class="whitespace-nowrap px-2 py-2 text-gray-600">
+                        <p> <%= format_hours(report.time_in_hours) %> </p>
+                      </td>
+                      <td class="whitespace-nowrap px-2 py-2 text-gray-600">
+                        <p> <%= number_to_currency(report.fee) %> </p>
+                      </td>
+                      <td class="whitespace-nowrap px-2 py-2 text-gray-600">
+                        <p> <%= number_to_currency(report.total) %> </p>
+                      </td>
+                      <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right font-medium sm:pr-6">
+                        <%= link_to 'Ändra', edit_report_path(report), class: "text-sm inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-100" if policy(report).edit? %>
+                      </td>
+                    </tr>
+                    <% end %>
+                </tbody>
+                <tfoot class="bg-gray-50">
+                  <tr class="font-medium text-md text-gray-900"> 
+                      <td class="whitespace-nowrap px-4 py-3.5">Summa</td>
+                      <td class="whitespace-nowrap px-2 py-3.5"></td>
+                      <td class="whitespace-nowrap px-2 py-3.5"> <%= format_hours(@reports.by_reportees(['Employee', 'Intern']).sum(&:time_in_hours)) %> tim </td>
+                      <td class="whitespace-nowrap px-2 py-3.5"></td>
+                      <td class="whitespace-nowrap px-2 py-3.5"> <%= number_to_currency(@reports.by_reportees(['Employee', 'Intern']).sum(&:total)) %> </td>
+                      <td class="whitespace-nowrap px-2 py-3.5"></td>
+                    </tr>
+                </tfoot>
+              </table>
+            </div>
  
-          <h3 class="mt-8 text-md mb-1 ml-2 leading-6 text-gray-900"> Underentrepenörer </h3>
-          <div class="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-            <table class="table-auto min-w-full divide-y divide-gray-300 text-sm bg-white">
-              <thead class="bg-gray-50">
-                <tr>
-                  <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left font-semibold text-gray-900">Datum</th>
-                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Person</th>
-                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Tid</th>
-                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Arvode</th>
-                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Totalt</th>
-                  <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-6"> <span class="sr-only">Edit</span> </th>
-                </tr>
-              </thead>
-              <tbody class=" align-top">
-                  <% @reports.by_reportees('Contractor').each do |report| %>
-                  <tr class="border-t border-gray-100"> 
-                    <td class="whitespace-nowrap px-4 py-2 text-gray-600">
-                      <%= l report.date  %>
-                    </td>
-                    <td class="whitespace-nowrap px-2 py-2 text-gray-600">
-                      <%= report.reportee.user.display_name  %>
-                    </td>
-                    <td class="whitespace-nowrap px-2 py-2 text-gray-600">
-                      <p> <%= format_hours(report.time_in_hours) %> </p>
-                    </td>
-                    <td class="whitespace-nowrap px-2 py-2 text-gray-600">
-                      <p> <%= number_to_currency(report.fee) %> </p>
-                    </td>
-                    <td class="whitespace-nowrap px-2 py-2 text-gray-600">
-                      <p> <%= number_to_currency(report.total) %> </p>
-                    </td>
+            <h3 class="mt-8 text-md mb-1 ml-2 leading-6 text-gray-900"> Underentrepenörer </h3>
+            <div class="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+              <table class="table-auto min-w-full divide-y divide-gray-300 text-sm bg-white">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left font-semibold text-gray-900">Datum</th>
+                    <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Person</th>
+                    <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Tid</th>
+                    <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Arvode</th>
+                    <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Totalt</th>
+                    <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-6"> <span class="sr-only">Edit</span> </th>
+                  </tr>
+                </thead>
+                <tbody class=" align-top">
+                    <% @reports.by_reportees('Contractor').each do |report| %>
+                    <tr class="border-t border-gray-100"> 
+                      <td class="whitespace-nowrap px-4 py-2 text-gray-600">
+                        <%= l report.date  %>
+                      </td>
+                      <td class="whitespace-nowrap px-2 py-2 text-gray-600">
+                        <%= report.reportee.user.display_name  %>
+                      </td>
+                      <td class="whitespace-nowrap px-2 py-2 text-gray-600">
+                        <p> <%= format_hours(report.time_in_hours) %> </p>
+                      </td>
+                      <td class="whitespace-nowrap px-2 py-2 text-gray-600">
+                        <p> <%= number_to_currency(report.fee) %> </p>
+                      </td>
+                      <td class="whitespace-nowrap px-2 py-2 text-gray-600">
+                        <p> <%= number_to_currency(report.total) %> </p>
+                      </td>
 
-                    <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right font-medium sm:pr-6">
-                      <%= link_to 'Ändra', edit_report_path(report), class: "text-sm inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-100" if policy(report).edit? %>
-                    </td>
-                  </tr>
-                  <% end %>
-              </tbody>
-              <tfoot class="bg-gray-50">
-                <tr class="font-medium text-md text-gray-900"> 
-                    <td class="whitespace-nowrap px-4 py-3.5">Summa</td>
-                    <td class="whitespace-nowrap px-2 py-3.5"></td>
-                    <td class="whitespace-nowrap px-2 py-3.5"> <%= format_hours(@reports.by_reportees('Contractor').sum(&:time_in_hours)) %> tim </td>
-                    <td class="whitespace-nowrap px-2 py-3.5"></td>
-                    <td class="whitespace-nowrap px-2 py-3.5"> <%= number_to_currency(@reports.by_reportees('Contractor').sum(&:total)) %> </td>
-                    <td class="whitespace-nowrap px-2 py-3.5"></td>
-                  </tr>
-              </tfoot>
-            </table>
+                      <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right font-medium sm:pr-6">
+                        <%= link_to 'Ändra', edit_report_path(report), class: "text-sm inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-100" if policy(report).edit? %>
+                      </td>
+                    </tr>
+                    <% end %>
+                </tbody>
+                <tfoot class="bg-gray-50">
+                  <tr class="font-medium text-md text-gray-900"> 
+                      <td class="whitespace-nowrap px-4 py-3.5">Summa</td>
+                      <td class="whitespace-nowrap px-2 py-3.5"></td>
+                      <td class="whitespace-nowrap px-2 py-3.5"> <%= format_hours(@reports.by_reportees('Contractor').sum(&:time_in_hours)) %> tim </td>
+                      <td class="whitespace-nowrap px-2 py-3.5"></td>
+                      <td class="whitespace-nowrap px-2 py-3.5"> <%= number_to_currency(@reports.by_reportees('Contractor').sum(&:total)) %> </td>
+                      <td class="whitespace-nowrap px-2 py-3.5"></td>
+                    </tr>
+                </tfoot>
+              </table>
+            </div>
+
           </div>
-
-        </div>
+        <% end %>
       </div>
     </dl>
   </div>

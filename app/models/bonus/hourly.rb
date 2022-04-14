@@ -1,5 +1,5 @@
 class Bonus::Hourly
-  INDEX = ENV['BONUS_INDEX'] || 300
+  BONUS_INDEX = ENV['BONUS_INDEX']&.to_i || 300
   attr_reader :project, :reportee, :hours
 
   def initialize(project, reportee)
@@ -14,7 +14,7 @@ class Bonus::Hourly
 
   # TODO: Move these to a separate concern, not attached to a reportee
   def bonus_base(salary)
-    [(INDEX - salary), salary].min
+    [(BONUS_INDEX - salary), salary].min
   end
 
   def bonus_salary(salary)
@@ -40,12 +40,13 @@ class Bonus::Hourly
   end
   
   def bonus_for_report(report)
-    [(INDEX - report.fee), report.fee].min * bonus_percent * report.time_in_hours
+    [(BONUS_INDEX - report.fee), report.fee].min * bonus_percent * report.time_in_hours
   end
   
   def bonus
+    return 0 if reportee.is_a?(Contractor)
     bonus ||= Report.by_project(project).where(reportee: reportee).sum do |report| 
-      [(INDEX - report.fee), report.fee].min * bonus_percent * report.time_in_hours
+      [(BONUS_INDEX - report.fee), report.fee].min * bonus_percent * report.time_in_hours
     end
   end
 

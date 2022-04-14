@@ -7,38 +7,69 @@
       <%= form.file_field :avatar, class: 'btn-silver' %>
     </div>
 
-    <div class="col-span-3 sm:col-span-2">
+    <div class="col-span-3 sm:col-span-3">
       <%= form.label :first_name, 'Förnamn', class: 'label' %>
       <%= form.text_field :first_name, class: "input" %>
     </div>
 
-    <div class="col-span-3 sm:col-span-2">
+    <div class="col-span-3 sm:col-span-3">
       <%= form.label :last_name, 'Efternamn', class: 'label' %>
       <%= form.text_field :last_name, class: "input" %>
     </div>
 
-    <div class="col-span-3 sm:col-span-2">
+    <div class="col-span-3 sm:col-span-3">
       <%= form.label :email, 'Epost', class: 'label' %>
       <%= form.email_field :email, class: "input" %>
+    </div>
+
+    <div class="col-span-3 sm:col-span-3">
+      <%= form.label :phone, 'Mobilnummer', class: 'label' %>
+      <%= form.text_field :phone, class: "input" %>
+    </div>
+
+    <div class="col-span-6 sm:col-span-6">
+      <%= form.label :presentation, 'Presentation', class: 'label' %>
+      <%= form.text_area :presentation, class: "input" %>
     </div>
   </div>
 </div>
 
 <%= form.fields_for(:employee, user.employee) do | employee_fields | %>
-<div class="bg-white rounded-md py-1 px-4 my-4 border-2 border-slate-200">
-  <div class="my-4 grid grid-cols-6 gap-6">
-    <div class="col-span-3 sm:col-span-3">
-      <%= employee_fields.label :title, 'Titel', class: 'label' %>
-      <%= employee_fields.text_field :title, class: "input" %>
-    </div>
+  <div class="bg-white rounded-md py-1 px-4 my-4 border-2 border-slate-200">
+    <div class="my-4 grid grid-cols-6 gap-6">
+      <div class="col-span-2 sm:col-span-2">
+        <%= employee_fields.label :pid, 'Personnummer', class: 'label' %>
+        <%= employee_fields.text_field :pid, class: "input", placeholder: 't.ex. XXXX02034567' %>
+      </div>
 
-    <div class="col-span-3 sm:col-span-3">
-      <%= employee_fields.label :salary, 'Lön (kr)', class: 'label' %>
-      <%= employee_fields.number_field :salary, class: "input" %>
+      <div class="col-span-2 sm:col-span-2">
+        <%= employee_fields.label :bank, 'Bank', class: 'label' %>
+        <%= employee_fields.text_field :bank, class: "input", placeholder: 't.ex. SEB' %>
+      </div>
+
+      <div class="col-span-2 sm:col-span-2">
+        <%= employee_fields.label :account, 'Kontonummer', class: 'label' %>
+        <%= employee_fields.text_field :account, class: "input", placeholder: 't.ex. 1244-112233-44' %>
+      </div>
     </div>
   </div>
-</div>
-<% end if user.is_employee? and policy(:user).create? %>
+
+  <% if policy(:user).create? %>
+  <div class="bg-white rounded-md py-1 px-4 my-4 border-2 border-slate-200">
+    <div class="my-4 grid grid-cols-6 gap-6">
+      <div class="col-span-3 sm:col-span-3">
+        <%= employee_fields.label :title, 'Arbetsroll', class: 'label' %>
+        <%= employee_fields.text_field :title, class: "input" %>
+      </div>
+
+      <div class="col-span-3 sm:col-span-3">
+        <%= employee_fields.label :salary, 'Lön (kr)', class: 'label' %>
+        <%= employee_fields.number_field :salary, class: "input" %>
+      </div>
+    </div>
+  </div>
+  <% end %>
+<% end %>
 
 <div class="bg-white rounded-md py-1 px-4 my-4 border-2 border-slate-200">
   <div class="my-4 grid grid-cols-6 gap-6">

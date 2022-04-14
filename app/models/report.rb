@@ -1,7 +1,7 @@
 class Report < ApplicationRecord
   attr_accessor :time_in_hours, :time_formated
 
-  before_save :set_fee
+  before_validation :set_fee
 
   belongs_to :reportee, polymorphic: true
   belongs_to :reportable, polymorphic: true
@@ -34,6 +34,8 @@ class Report < ApplicationRecord
   private
 
   def set_fee
-    self.fee = reportee.fees.at_date(self.date)&.amount
+    unless self.fee = reportee.fees.at_date(self.date)&.amount
+      self.errors.add(:fee, 'cannot be nil', message: 'cannot find valid fee for this date')
+    end
   end
 end
