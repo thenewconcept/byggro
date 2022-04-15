@@ -3,14 +3,16 @@ test:
   root: <%= Rails.root.join("tmp/storage") %>
 
 local:
-  service: Disk
-  root: <%= Rails.root.join("storage") %>
+  service: GCS
+  project: byggro
+  bucket: byggro-development
+  credentials: <%= Rails.application.encrypted('config/secrets/google-cloud.json.enc').read %>
 
 production:
   service: GCS
   project: byggro
   bucket: byggro-production
-  credentials: <%= Rails.application.encrypted('config/credentials/google-cloud.json.enc').read %>
+  credentials: <%= Rails.application.encrypted('config/secrets/google-cloud.json.enc').read %>
 
 
 # mirror:
