@@ -26,12 +26,12 @@ module ApplicationHelper
   end
 
   def avatar_for(user, options={})
-    options[:size] ||= 'w-32 h-32'
+    options[:size] ||= 'w-28 h-28'
     options[:font] ||= 'text-5xl'
     if user.avatar.attached?
-      image_tag(user.avatar.variant(:thumb), class: "w-32 h-32 flex-shrink-0 mx-auto rounded-full #{options[:size]}")
+      image_tag(user.avatar.variant(:thumb), class: "inline-flex items-center justify-center rounded-full #{options[:size]}")
     else
-      tag.span class: "inline-flex items-center justify-center h-32 w-32 rounded-full bg-amber-600 #{options[:size]}" do
+      tag.span class: "inline-flex items-center justify-center rounded-full bg-amber-600 #{options[:size]}" do
         tag.span initials_for(user), class: "#{options[:font]} font-medium leading-none text-white"
       end
     end

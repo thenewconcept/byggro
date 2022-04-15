@@ -6,24 +6,20 @@
     <img class="h-32 w-full object-cover lg:h-48" src="https://images.unsplash.com/photo-1563628721908-e8b1ec51027b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY0OTk1MzI4OQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080" alt="">
   </div>
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
-      <div class="flex">
+
+    <div class="-mt-12 sm:-mt-16">
+      <div class="flex justify-between">
         <%= avatar_for @user %>
-      </div>
-      <div class="mt-6 sm:flex-1 sm:min-w-0 sm:flex sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">
-        <div class="sm:hidden 2xl:block mt-6 min-w-0 flex-1">
-          <h1 class="text-2xl font-bold text-gray-900 truncate">
-            <%= @user.display_name %>
-          </h1>
-        </div>
-        <div class="mt-6 flex flex-col justify-stretch space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
+        <div class="mt-16 sm:mt-20">
           <%= link_to edit_user_path(@user), class: 'btn-silver' do %>
             <%= icon_text 'Uppdatera', 'pencil' %>
           <% end if policy(@user).update? %>
         </div>
       </div>
+
     </div>
-    <div class="hidden sm:block 2xl:hidden mt-6 min-w-0 flex-1">
+
+    <div class="sm:block 2xl:hidden mt-6 min-w-0 flex-1">
       <h1 class="text-2xl font-bold text-gray-900 truncate">
         <%= @user.display_name %>
       </h1>
