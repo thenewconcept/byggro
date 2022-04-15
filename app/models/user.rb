@@ -1,5 +1,8 @@
 class User < ApplicationRecord
-  has_one_attached :avatar, dependent: :destroy
+  has_one_attached :avatar, dependent: :destroy do |attachable|
+    attachable.variant :thumb, resize_to_fill: [500, 500]
+  end
+
   has_secure_password
   
   before_create { self.email = email.downcase }
