@@ -21,19 +21,13 @@
     @apply relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-gray-500 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-400 focus:ring-gray-100
   }
 
-  .label {
-    @apply block text-sm font-medium text-gray-700 my-1
-  }
+  .label { @apply block text-sm font-medium text-gray-700 my-1 }
+  .input { @apply shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full text-sm border-gray-300 rounded-md }
+  .checkbox { @apply focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded }
 
-  .input {
-    @apply shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full text-sm border-gray-300 rounded-md
-  }
+  .active { @apply bg-red-700 text-white !important }
 
-  .checkbox {
-    @apply focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded
-  }
-
-  .silver   { @apply bg-gray-100 border-gray-300 text-gray-500 }
+  .silver { @apply bg-gray-100 border-gray-300 text-gray-500 }
   .gray   { @apply bg-gray-100 border-gray-300 text-gray-800 }
   .green  { @apply bg-green-100 border-green-300 text-green-800 }
   .indigo { @apply bg-indigo-100 border-indigo-300 text-indigo-800 }

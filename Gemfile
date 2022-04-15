@@ -55,3 +55,5 @@ group :test do
   gem 'webdrivers'
 end
 
+
+gem "active_link_to", "~> 1.0"
