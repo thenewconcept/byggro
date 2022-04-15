@@ -1,4 +1,4 @@
-class HarvestController < ApplicationController
+class HarvestController < ProtectedController
   def index
     @client = Harvesting::Client.new(
       account_id: Rails.application.credentials.harvest.account_id,
