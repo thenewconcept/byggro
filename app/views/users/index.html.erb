@@ -1,4 +1,7 @@
 <div class="bg-slate-50 overflow-hidden shadow rounded-lg divide-y divide-gray-200">
+  <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">Teamet</h3>
+  </div>
   <div class="px-4 py-5 sm:px-6">   
     <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       <% @users.each do |user| %>
@@ -9,9 +12,10 @@
 
           <%= avatar_for(user) %>
 
-          <h3 class="mt-6 text-gray-900 text-sm font-medium">
+          <h3 class="mt-6 text-gray-900 text-md font-medium">
             <%= user.display_name %>
           </h3>
+
           <dl class="mt-1 flex-grow flex flex-col justify-between">
             <dt class="sr-only">Title</dt>
             <dd class="text-gray-500 text-sm"><%= user.title %></dd>
