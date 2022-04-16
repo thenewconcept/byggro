@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_14_122409) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_16_080351) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -95,6 +95,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_14_122409) do
     t.index ["user_id"], name: "index_employees_on_user_id"
   end
 
+  create_table "expenses", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "project_id"
+    t.date "spent_on"
+    t.string "category"
+    t.string "description"
+    t.integer "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_expenses_on_project_id"
+    t.index ["user_id"], name: "index_expenses_on_user_id"
+  end
+
   create_table "fees", force: :cascade do |t|
     t.string "reportee_type", null: false
     t.bigint "reportee_id", null: false
@@ -174,6 +187,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_14_122409) do
   add_foreign_key "checklists", "projects"
   add_foreign_key "contractors", "users"
   add_foreign_key "employees", "users"
+  add_foreign_key "expenses", "projects"
+  add_foreign_key "expenses", "users"
   add_foreign_key "interns", "users"
   add_foreign_key "todos", "checklists"
 end
