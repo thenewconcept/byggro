@@ -22,6 +22,11 @@ class Project < ApplicationRecord
   has_many :assignments
   has_many :users, through: :assignments
 
+  def progress
+    return 0 if todos.blank?
+    (todos.completed.count.to_f / todos.count.to_f).round(2)
+  end
+
   def reports
     @reports ||= Report.by_project(self)
   end

@@ -1,4 +1,4 @@
-<div class="px-4 pb-4">
+<div class="px-4">
   <div class="pb-1 pt-3 text-gray-500 text-sm">
     <%= t("project.bonus." + project.bonus) %> > <%= t("project.status." + project.status) %>
   </div>
@@ -12,5 +12,11 @@
   <div class="mt-2">
     <%= icon_badge(project.adress, 'map', class: 'badge gray') if project.adress.present? %>
     <%= render "projects/meta/#{project.bonus}", reportable: project if policy(project).meta? %>
+    <%= link_to icon_badge('Redigera', 'pencil', class: 'badge gray'), edit_project_path(project) if policy(project).update? and current_page?(project_path(project)) %>
+  </div>
+
+  <div class="h-2 my-3 relative rounded-full overflow-hidden">
+      <div class="w-full h-full bg-gray-200 absolute"></div>
+      <div class="h-full bg-green-500 absolute" style="width:<%= project.progress*100 %>%"></div>
   </div>
 </div>

@@ -11,8 +11,8 @@ RSpec.describe Project, type: :model do
     @checklist = create(:checklist, project: @project, title: 'Work', amount: 134700)
   end
 
-  describe 'General reports' do
-    it '#hours_reported' do
+  describe '#hours_reported' do
+    it 'returns hours tota for all checklists and project' do
       project   = create(:project, hourly_rate: 500)
       checklist = create(:checklist, amount: 10000, project: project)
 
@@ -21,6 +21,26 @@ RSpec.describe Project, type: :model do
 
       create(:report, time_in_hours: 5, reportable: checklist)
       expect(project.hours_reported).to eq(10.0)
+    end
+  end
+
+  describe '#progress' do
+    it 'should return the progress in percent' do
+      10.times { create(:todo, checklist: @checklist) } 
+      @project.todos.last.update(completed: true)
+      @project.todos.first.update(completed: true)
+      expect(@project.progress).to eq(0.2)
+    end
+
+    it 'should return the progress in percent' do
+      10.times { create(:todo, checklist: @checklist) } 
+      @project.todos.last.update(completed: true)
+      @project.todos.first.update(completed: true)
+      expect(@project.progress).to eq(0.2)
+    end
+
+    it 'should return 0 i no projects' do
+      expect(create(:project).progress).to eq(0)
     end
   end
 

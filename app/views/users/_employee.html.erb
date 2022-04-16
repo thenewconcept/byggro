@@ -12,35 +12,35 @@
   <section class="my-6">
     <h1 class="text-2xl font-bold"> Anställning </h1>
 
-    <div class="border-gray-300 border-dashed border-t border-b mt-2 py-5 sm:py-4 sm:px-2 sm:p-0">
+    <div class="border-gray-300 border-dashed border-t border-b mt-2 py-5 py-4 px-2 p-0">
       <dl>
-        <div class="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-2 ">
-          <dt class="text-sm font-medium text-gray-800"> Perssonnummer </dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"> <%= @user.employee.pid %> </dd>
+        <div class="py-1 grid grid-cols-3 gap-2 ">
+          <dt class="text-sm font-medium text-gray-800"> Personnr </dt>
+          <dd class="text-sm text-gray-900 mt-0 col-span-2"> <%= @user.employee.pid %> </dd>
         </div>
-        <div class="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-2">
+        <div class="py-1 grid grid-cols-3 gap-2">
           <dt class="text-sm font-medium text-gray-800"> Namn </dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"> <%= @user.full_name %> </dd>
+          <dd class="text-sm text-gray-900 mt-0 col-span-2"> <%= @user.full_name %> </dd>
         </div>
-        <div class="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-2">
+        <div class="py-1 grid grid-cols-3 gap-2">
           <dt class="text-sm font-medium text-gray-800"> Befattning </dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"> <%= @user.employee.title %> </dd>
+          <dd class="text-sm text-gray-900 mt-0 col-span-2"> <%= @user.employee.title %> </dd>
         </div>
-        <div class="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-2">
+        <div class="py-1 grid grid-cols-3 gap-2">
           <dt class="text-sm font-medium text-gray-800"> Arbetsplats </dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"> Göteborg </dd>
+          <dd class="text-sm text-gray-900 mt-0 col-span-2"> Göteborg </dd>
         </div>
-        <div class="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-2">
+        <div class="py-1 grid grid-cols-3 gap-2">
           <dt class="text-sm font-medium text-gray-800"> Lön </dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"> <%= number_to_currency @user.employee.salary %> </dd>
+          <dd class="text-sm text-gray-900 mt-0 col-span-2"> <%= number_to_currency @user.employee.salary %> </dd>
         </div>
-        <div class="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-2">
+        <div class="py-1 grid grid-cols-3 gap-2">
           <dt class="text-sm font-medium text-gray-800"> Bonusbas </dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"> <%= number_to_currency @user.employee.current_bonus_base %> </dd>
+          <dd class="text-sm text-gray-900 mt-0 col-span-2"> <%= number_to_currency @user.employee.current_bonus_base %> </dd>
         </div>
-        <div class="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-2">
+        <div class="py-1 grid grid-cols-3 gap-2">
           <dt class="text-sm font-medium text-gray-800"> Lönekonto </dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"> <%= @user.employee.bank %> <%= @user.employee.account %> </dd>
+          <dd class="text-sm text-gray-900 mt-0 col-span-2"> <%= @user.employee.bank %> <%= @user.employee.account %> </dd>
         </div>
       </dl>
     </div>
