@@ -15,6 +15,7 @@ class Project < ApplicationRecord
   before_save  :defaults
 
   has_rich_text :description
+  has_many :expenses, dependent: :destroy
   has_many :checklists, dependent: :destroy
   has_many :todos, through: :checklists
   has_many :reports, as: :reportable, dependent: :destroy
@@ -65,10 +66,6 @@ class Project < ApplicationRecord
 
   def total
     [amount, material_amount, misc_amount].sum
-  end
-
-  def expenses
-    material_amount * 0.20
   end
 
   def rot

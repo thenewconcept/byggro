@@ -14,7 +14,7 @@ module ProjectsHelper
   def icon_badge(text, icon, **options)
     options[:class].concat(' inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border-2')
     tag.p **options do
-      heroicon(icon, variant: :outline, options: { class: 'h-3 w-3 mr-1' }) + ' ' + text
+      icon_text(text, icon, icon_options: { options: { class: '-ml-1 -mt-[2px] h-[15px]' } })
     end 
   end
 
