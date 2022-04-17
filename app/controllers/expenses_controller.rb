@@ -20,7 +20,7 @@ class ExpensesController < ProtectedController
     authorize(@expense)
 
     if @expense.save!
-      redirect_to project_url(@project, tab: 'expenses', tab: 'expenses')
+      redirect_to project_url(@project, tab: 'expenses')
     else
       render :new
     end
