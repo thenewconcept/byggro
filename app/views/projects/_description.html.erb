@@ -5,6 +5,6 @@
 
 <%= render project.checklists.order(id: :asc) %>
 
-<%= button_to project_checklists_path(@project, method: :post), class: 'btn-admin' do %>
+<%= button_to project_checklists_path(@project, method: :post), class: 'btn-primary' do %>
   <%= icon_text('Ny checklista', 'plus') %>
 <% end if policy(@project).checklist?  %>

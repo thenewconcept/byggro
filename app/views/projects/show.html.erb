@@ -1,15 +1,7 @@
 <div id="<%= dom_id @project %>">
   <div class="bg-white overflow-hidden shadow rounded-md divide-y divide-gray-200">
 
-    <div class="grid grid-cols-2">
-      <%= render 'projects/project_header', project: @project %>
-
-      <div class="text-right my-2 mx-4 gap-2">
-        <%= link_to edit_project_path(@project), class: 'btn-admin' do %>
-          <%= icon_text('Redigera', 'pencil') %>
-        <% end if policy(@project).update? %>
-      </div>
-    </div>
+    <%= render 'projects/project_header', project: @project %>
 
     <div id="project-sections" class="px-4">
       <nav class="-mb-px flex space-x-6 overflow-y-auto" aria-label="Tabs">

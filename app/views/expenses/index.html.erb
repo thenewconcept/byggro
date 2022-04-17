@@ -1,9 +1,5 @@
 <turbo-frame id="expenses">
-  <turbo-frame id="new_expense">
-    <%= link_to icon_text('Ny utgift', 'plus'), new_project_expense_path(@project), class: 'btn-primary' %>
-  </turbo-frame>
-
-  <div class="mt-5 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+  <div class="mb-4 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
     <table class="table-auto min-w-full divide-y divide-gray-300 text-sm">
       <thead class="bg-gray-50">
         <tr>
@@ -55,4 +51,8 @@
       </tfoot>
     </table>
   </div>
+
+  <turbo-frame id="new_expense">
+    <%= link_to icon_text('Ny utgift', 'plus'), new_project_expense_path(@project), class: 'btn-primary' %>
+  </turbo-frame>
 </turbo-frame>
