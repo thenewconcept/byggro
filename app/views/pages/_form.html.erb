@@ -12,21 +12,28 @@
   <% end %>
 
   <div class="my-5">
-    <%= form.label :title %>
+    <%= form.label :title, 'Titel', class: 'label' %>
     <%= form.text_field :title, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="my-5">
-    <%= form.label :content %>
-    <%= form.rich_text_area :content, rows: 4, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.label :content, 'Innehåll', class: 'label' %>
+    <%= form.rich_text_area :content, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="my-5">
-    <%= form.label :access %>
-    <%= form.text_field :access, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+
+
+    <div class="text-sm">
+      <span class="label">Access</span>
+    </div>
+
+    <%= form.check_box :access, { multiple: true, id: 'page_employee', class: 'checkbox' }, 'Anställd', nil %> <%= form.label :employee, 'Anställda', class: 'text-sm' %> <br/>
+    <%= form.check_box :access, { multiple: true, id: 'page_intern', class: 'checkbox' }, 'Praktikant', nil %> <%= form.label :intern, 'Praktikant', class: 'text-sm' %> <br/>
+    <%= form.check_box :access, { multiple: true, id: 'page_contractor', class: 'checkbox' }, 'Underentrepenör', nil %> <%= form.label :contractor, 'Underentrepenör', class: 'text-sm' %> <br/>
   </div>
 
-  <div class="inline">
+  <div class="my-4">
     <%= form.submit 'Spara', class: "btn-primary" %>
   </div>
 <% end %>

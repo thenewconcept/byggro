@@ -4,12 +4,13 @@ class PagePolicy < ApplicationPolicy
       if user.is_admin? or user.is_manager?
         scope.all
       else
-        scope.by_role(user.profile.to_s)
+        scope.by_role(user.primary_role)
+      end
     end
   end
 
   def show?
-    true
+    user
   end
 
   def create?
@@ -18,7 +19,6 @@ class PagePolicy < ApplicationPolicy
 
   def edit?
     user.is_admin?
-  end
   end
 
   def update?

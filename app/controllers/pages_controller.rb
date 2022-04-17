@@ -3,7 +3,7 @@ class PagesController < ProtectedController
 
   # GET /pages or /pages.json
   def index
-    @pages = Page.all
+    @pages = policy_scope(Page).all
   end
 
   # GET /pages/1 or /pages/1.json
@@ -60,11 +60,11 @@ class PagesController < ProtectedController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_page
-      @page = Page.find(params[:id])
+      @page = policy_scope(Page).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def page_params
-      params.require(:page).permit(:title, :content, :access)
+      params.require(:page).permit(:title, :content, access: [])
     end
 end

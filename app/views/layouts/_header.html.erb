@@ -84,11 +84,11 @@
     </div>
 
     <!-- Mobile menu, show/hide based on menu state. -->
-    <div class="hidden md:hidden" id="mobile-menu">
+    <div id="mobile-nav" class="hidden md:hidden" id="mobile-menu">
       <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
         <%= link_to 'Start', root_path, class: 'text-white block px-3 py-2 text-base font-medium' %>
-        <%= link_to 'Dokument', pages_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:page).show? %>
+        <%= link_to 'Dokument', pages_path, class: 'text-white block px-3 py-2 text-base font-medium' if policy(:page).show? %>
         <%= link_to 'Teamet', users_path, class: 'text-white block px-3 py-2 text-base font-medium' %>
       </div>
     </div>

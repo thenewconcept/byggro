@@ -16,12 +16,11 @@
 
   <hr class="my-5"/>
 
-  <% if action_name != "show" %>
-    <%= link_to 'Uppdatera', edit_page_path(page), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" if policy(page).edit? %>
-  <% end %>
+  <% if action_name == "show" %>
+    <%= link_to 'Uppdatera', edit_page_path(@page), class: "text-indigo-800" %>
 
-  <%= link_to 'Uppdatera', edit_page_path(@page), class: "text-indigo-800" %>
-  <div class="inline-block ml-2">
-    <%= button_to 'Ta bort', page_path(@page), method: :delete, class: "text-red-800" %>
-  </div>
+    <div class="inline-block ml-2">
+      <%= button_to 'Ta bort', page_path(@page), method: :delete, class: "text-red-800" %>
+    </div>
+  <% end if policy(page).edit? %>
 </div>
