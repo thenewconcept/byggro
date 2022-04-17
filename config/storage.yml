@@ -13,9 +13,3 @@ production:
   project: byggro
   bucket: byggro-production
   credentials: <%= Rails.application.encrypted('config/secrets/google-cloud.json.enc').read %>
-
-
-# mirror:
-#   service: Mirror
-#   primary: local
-#   mirrors: [ amazon, google, microsoft ]
