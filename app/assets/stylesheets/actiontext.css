@@ -44,6 +44,19 @@ trix-editor h1,
 trix-editor h2,
 .trix-content h2 {
   font-size: 1.3rem;
+  font-weight: bold !important;
+  margin: .8rem 0 .4rem 0;
   color: rgb(35, 35, 35);
-  font-weight: 300 !important;
+}
+
+trix-toolbar {
+  margin-top: 5px;
+}
+
+trix-editor li, .trix-content li {
+  margin: .2em 2em;
+}
+
+trix-editor a, .trix-content a {
+  color: darkslateblue;
 }

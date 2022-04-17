@@ -13,15 +13,3 @@
  *= require_tree .
  *= require_self
  */
-
-trix-toolbar {
-  margin-top: 5px;
-}
-
-trix-editor li, .trix-content li {
-  margin: .2em 2em;
-}
-
-trix-editor a, .trix-content a {
-  color: darkslateblue;
-}
