@@ -7,9 +7,9 @@
           <!-- Mobile menu button -->
           <div class="-ml-2 mr-2 flex items-center md:hidden">
             <button data-action="click->toggle#switch" 
-              data-toggle-id-param="mobile-menu" 
+              data-toggle-id-param="mobile-nav" 
               type="button" 
-              class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+              class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-nav" aria-expanded="false">
 
               <span class="sr-only">Open main menu</span>
               <!--
@@ -84,7 +84,7 @@
     </div>
 
     <!-- Mobile menu, show/hide based on menu state. -->
-    <div id="mobile-nav" class="hidden md:hidden" id="mobile-menu">
+    <div id="mobile-nav" class="hidden md:hidden">
       <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
         <%= link_to 'Start', root_path, class: 'text-white block px-3 py-2 text-base font-medium' %>
