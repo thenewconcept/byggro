@@ -15,12 +15,18 @@ class Project < ApplicationRecord
   before_save  :defaults
 
   has_rich_text :description
+  has_many :expenses, dependent: :destroy
   has_many :checklists, dependent: :destroy
   has_many :todos, through: :checklists
   has_many :reports, as: :reportable, dependent: :destroy
 
   has_many :assignments
   has_many :users, through: :assignments
+
+  def progress
+    return 0 if todos.blank?
+    (todos.completed.count.to_f / todos.count.to_f).round(2)
+  end
 
   def reports
     @reports ||= Report.by_project(self)
@@ -60,10 +66,6 @@ class Project < ApplicationRecord
 
   def total
     [amount, material_amount, misc_amount].sum
-  end
-
-  def expenses
-    material_amount * 0.20
   end
 
   def rot

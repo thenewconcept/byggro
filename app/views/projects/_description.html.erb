@@ -1,29 +1,10 @@
-<div class="bg-gray-100 rounded-md border-4 border-gray-200 p-3 pb-1 mb-5">
-  <div class="flex justify-between">
-    <h6 class="font-bold text-gray-800"> 
-      Information 
-    </h6>
-    <%= link_to "https://www.google.com/maps?saddr=My+Location&daddr=#{project.adress}", target: :new, class: 'bg-slate-200 px-2 py-1 rounded-md text-gray-500' do %>
-     <%= heroicon('map', options: { class: 'h-3 w-3'} ) %> 
-     <span class="text-sm py-1">Vägbeskrivning</span> 
-    <% end %>
-  </div>
-
+<div class="bg-gray-100 rounded-md ring-2 ring-gray-200 p-3 pb-1 mb-5">
+  <h6 class="font-bold text-gray-800"> Information </h6>
   <div class="py-2 text-gray-700 text-sm"> <%= project.description %> </div>
-
 </div>
 
 <%= render project.checklists.order(id: :asc) %>
 
-<%= tag.div(id: 'project-actions', class: 'flex justify-start') do %>
-
-  <%= link_to edit_project_path(project), class: 'btn-primary mr-2' do %>
-    <%= heroicon("pencil", options: { class: 'mr-1 -ml-2' }) %>
-    <span>Uppdatera</span>
-  <% end if policy(project).update? %>
-
-  <%= button_to project_checklists_path(project, method: :post), class: 'btn-primary' do %>
-    <%= heroicon('clipboard-list', variant: :outline, options: { class: 'mr-1 -ml-2' }) %> Ny arbetslista
-  <% end if policy(project).checklist?  %>
-
-<% end %>
+<%= button_to project_checklists_path(@project, method: :post), class: 'btn-primary' do %>
+  <%= icon_text('Ny checklista', 'plus') %>
+<% end if policy(@project).checklist?  %>

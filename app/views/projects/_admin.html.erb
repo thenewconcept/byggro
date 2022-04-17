@@ -1,1 +1,9 @@
-  <%= render partial: "projects/admin/#{project.bonus}", locals: { project: project } %>
+<%= render partial: "projects/admin/#{project.bonus}", locals: { project: project } %>
+  
+<hr/>
+
+<div class="py-1 px-4 mt-4 rounded-md bg-slate-300">
+  <% (%w{none fixed hourly} - [project.bonus]).each do |bonus| %>
+    <%= render partial: "projects/admin/#{bonus}", locals: { project: project } %>
+  <% end %>
+</div>

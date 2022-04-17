@@ -12,11 +12,28 @@ module ApplicationHelper
   end
 
   def icon_text(text, icon, options={})
-    tag_options = options[:tag_options] || {}
-    icon_options = options[:icon_options] || {}
+    tag_options  = options[:tag_options] || {}
+    icon_options = options[:icon_options] || { options: { class: '-ml-1 -mt-[2px] h-[18px]' } }
     tag.span **tag_options do
       heroicon(icon, **icon_options) + text
     end
   end
 
+  def initials_for(user)
+   return user.full_name.split(' ').map { |n| n[0] }.join.upcase if user.first_name.present? and user.last_name.present?
+   return user.first_name[0..2].upcase if user.first_name.present?
+   user.email[0..2].upcase
+  end
+
+  def avatar_for(user, options={})
+    options[:size] ||= 'w-28 h-28'
+    options[:font] ||= 'text-5xl'
+    if user.avatar.attached?
+      image_tag(user.avatar.variant(:thumb), class: "inline-flex items-center justify-center rounded-full #{options[:size]}")
+    else
+      tag.span class: "inline-flex items-center justify-center rounded-full bg-amber-600 #{options[:size]}" do
+        tag.span initials_for(user), class: "#{options[:font]} font-medium leading-none text-white"
+      end
+    end
+  end
 end

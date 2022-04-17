@@ -1,0 +1,55 @@
+<div class="border-[1px] drop-shadow-md border-amber-100 px-6 bg-amber-50">
+  <section class="my-6">
+    <h1 class="text-2xl font-bold"> Arbetsgivare </h1>
+    <p class="text-sm mt-2">
+      Bullerby Sunshine AB<br/>
+      Orgnummer: 559096-1867<br/>
+      Adress: Viktoriagatan 8<br/>
+      SE-411 25 Göteborg
+    </p>
+  </section>
+
+  <section class="my-6">
+    <h1 class="text-2xl font-bold"> Anställning </h1>
+
+    <div class="border-gray-300 border-dashed border-t border-b mt-2 py-5 py-4 px-2 p-0">
+      <dl>
+        <div class="py-1 grid grid-cols-3 gap-2 ">
+          <dt class="text-sm font-medium text-gray-800"> Personnr </dt>
+          <dd class="text-sm text-gray-900 mt-0 col-span-2"> <%= @user.employee.pid %> </dd>
+        </div>
+        <div class="py-1 grid grid-cols-3 gap-2">
+          <dt class="text-sm font-medium text-gray-800"> Namn </dt>
+          <dd class="text-sm text-gray-900 mt-0 col-span-2"> <%= @user.full_name %> </dd>
+        </div>
+        <div class="py-1 grid grid-cols-3 gap-2">
+          <dt class="text-sm font-medium text-gray-800"> Befattning </dt>
+          <dd class="text-sm text-gray-900 mt-0 col-span-2"> <%= @user.employee.title %> </dd>
+        </div>
+        <div class="py-1 grid grid-cols-3 gap-2">
+          <dt class="text-sm font-medium text-gray-800"> Arbetsplats </dt>
+          <dd class="text-sm text-gray-900 mt-0 col-span-2"> Göteborg </dd>
+        </div>
+        <div class="py-1 grid grid-cols-3 gap-2">
+          <dt class="text-sm font-medium text-gray-800"> Lön </dt>
+          <dd class="text-sm text-gray-900 mt-0 col-span-2"> <%= number_to_currency @user.employee.salary %> </dd>
+        </div>
+        <div class="py-1 grid grid-cols-3 gap-2">
+          <dt class="text-sm font-medium text-gray-800"> Bonusbas </dt>
+          <dd class="text-sm text-gray-900 mt-0 col-span-2"> <%= number_to_currency @user.employee.current_bonus_base %> </dd>
+        </div>
+        <div class="py-1 grid grid-cols-3 gap-2">
+          <dt class="text-sm font-medium text-gray-800"> Lönekonto </dt>
+          <dd class="text-sm text-gray-900 mt-0 col-span-2"> <%= @user.employee.bank %> <%= @user.employee.account %> </dd>
+        </div>
+      </dl>
+    </div>
+
+    <section class="px-2 my-4 text-gray-600 text-sm">
+      Vi är glada att ha dig som anställd på Bullerby. Våra värderingar är trygghet, harmoni och välstånd för våra anställda och trygghet, kvalitet, och service mot våra kunder. Vi värderar teamet före individen och din förmåga att stötta dina kollegor är av största vikt i din utvekling i bolaget.
+      Som anställd åtar du dig att följa företagets, och därmed teamets, arbets- och kulturpolicy och att företräda Bullerby med professionellt anseende. Företaget har noll-tolerans mot diskriminering och förtal.</p>
+    </section>
+      
+  </section>
+
+</div>

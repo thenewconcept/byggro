@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_13_115617) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_16_080351) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -79,6 +79,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_13_115617) do
     t.integer "fee"
     t.datetime "updated_at", null: false
     t.datetime "created_at", null: false
+    t.string "cid"
     t.index ["user_id"], name: "index_contractors_on_user_id"
   end
 
@@ -88,7 +89,23 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_13_115617) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "pid"
+    t.string "bank"
+    t.string "account"
     t.index ["user_id"], name: "index_employees_on_user_id"
+  end
+
+  create_table "expenses", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "project_id"
+    t.date "spent_on"
+    t.string "category"
+    t.string "description"
+    t.integer "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_expenses_on_project_id"
+    t.index ["user_id"], name: "index_expenses_on_user_id"
   end
 
   create_table "fees", force: :cascade do |t|
@@ -167,6 +184,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_13_115617) do
     t.boolean "is_admin", default: false
     t.string "first_name"
     t.string "last_name"
+    t.string "presentation"
+    t.string "phone"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -176,6 +195,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_13_115617) do
   add_foreign_key "checklists", "projects"
   add_foreign_key "contractors", "users"
   add_foreign_key "employees", "users"
+  add_foreign_key "expenses", "projects"
+  add_foreign_key "expenses", "users"
   add_foreign_key "interns", "users"
   add_foreign_key "todos", "checklists"
 end

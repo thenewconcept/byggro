@@ -3,6 +3,10 @@ class Intern < ApplicationRecord
 
   alias_attribute :fee, :salary
 
+  def complete?
+    true
+  end
+
   def salary_changed?
     false
   end

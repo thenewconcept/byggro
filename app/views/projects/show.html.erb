@@ -1,10 +1,13 @@
 <div id="<%= dom_id @project %>">
   <div class="bg-white overflow-hidden shadow rounded-md divide-y divide-gray-200">
+
     <%= render 'projects/project_header', project: @project %>
+
     <div id="project-sections" class="px-4">
       <nav class="-mb-px flex space-x-6 overflow-y-auto" aria-label="Tabs">
         <%= link_to 'Uppdrag', project_path(@project), class: tab_classes(params[:tab].blank?) %>
         <%= link_to 'Tidrapport', project_path(@project, tab: 'time'), class: tab_classes(params[:tab] == 'time') %>
+        <%= link_to 'Utgifter', project_path(@project, tab: 'expenses'), class: tab_classes(params[:tab] == 'expenses') %>
         <%= link_to 'Lönerapport', project_path(@project, tab: 'employee'), class: tab_classes(params[:tab] == 'employee') if policy(@project).salary? %>
 
         <!-- Admin Section -->
@@ -15,6 +18,7 @@
     <div class="p-4">
       <%= render 'description', project: @project if params[:tab].blank? %>
       <%= render 'employee', project: @project, employee: Current.user.employee if params[:tab] == 'employee' && policy(:report).show? && @project.status_completed? %>
+      <%= render 'expenses', project: @project if params[:tab] == 'expenses' %>
       <%= render 'time', project: @project if params[:tab] == 'time' %>
 
       <!-- Admin Section -->

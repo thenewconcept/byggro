@@ -1,0 +1,48 @@
+<div class="bg-white overflow-hidden shadow rounded-md divide-y divide-gray-200 pb-5">
+  <article>
+
+<div>
+  <div>
+    <img class="h-32 w-full object-cover lg:h-48" src="https://images.unsplash.com/photo-1563628721908-e8b1ec51027b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY0OTk1MzI4OQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080" alt="">
+  </div>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="-mt-12 sm:-mt-16">
+      <div class="flex justify-between">
+        <%= avatar_for @user %>
+        <div class="mt-16 sm:mt-20">
+          <%= link_to edit_user_path(@user), class: 'btn-silver' do %>
+            <%= icon_text 'Uppdatera', 'pencil' %>
+          <% end if policy(@user).update? %>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sm:block 2xl:hidden mt-6 min-w-0 flex-1">
+      <h1 class="text-2xl font-bold text-gray-900 truncate">
+        <%= @user.display_name %>
+      </h1>
+      <span class="text-gray-800 text-1xl"> <%= @user&.profile&.title %> </span>
+    </div>
+  </div>
+</div>
+
+    <!-- Tabs -->
+    <div class="mt-6 sm:mt-2 2xl:mt-5">
+      <div class="border-b border-gray-200">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+            <%= link_to "Presentation", user_path(@user), class: tab_classes(params[:tab].blank?) %>
+            <%= link_to heroicon('lock-closed', variant: :outline, options: { class: 'h-[18px]' }) + "Anställning", user_path(@user, tab: 'employee'), class: tab_classes(params[:tab] == 'employee') if policy(@user).employment? %>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-6 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <%= render 'presentation', project: @project if params[:tab].blank? %>
+      <%= render 'employee', project: @project if params[:tab] == 'employee' and policy(@user).employment? %>
+    </div>
+  </article>
+</div>

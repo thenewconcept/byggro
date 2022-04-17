@@ -39,12 +39,11 @@
           </div>
 
           <div class="hidden md:ml-6 md:flex md:items-center md:space-x-4">
-            <!--  Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <%= link_to 'Start', root_path, class: 'bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium' %>
-            <%= link_to 'Dokument', pages_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' %>
-            <%= link_to 'Användare', users_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:user).create? %>
-            <%= link_to 'Lönelogg', fees_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:fee).show? %>
-            <%= link_to 'Harvest', harvest_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:project).create? %>
+            <%= active_link_to 'Start', root_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium', active: :exact %>
+            <%= active_link_to 'Dokument', pages_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' %>
+            <%= active_link_to 'Teamet', users_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' %>
+            <%= active_link_to 'Lönelogg', fees_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:fee).show? %>
+            <%= active_link_to 'Harvest', harvest_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:project).create? %>
           </div>
         </div>
 
@@ -76,7 +75,7 @@
             -->
             <div id="profile-menu" class="z-50 hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
               <!-- Active: "bg-gray-100", Not Active: "" -->
-              <%= link_to 'Din profil', edit_user_path(Current.user), class: 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %>
+              <%= link_to 'Din profil', user_path(Current.user), class: 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %>
               <%= link_to 'Logga ut', signout_path, data: { 'turbo-method': :delete }, class: 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %>
             </div>
           </div>
@@ -90,8 +89,7 @@
         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
         <%= link_to 'Start', root_path, class: 'text-white block px-3 py-2 text-base font-medium' %>
         <%= link_to 'Dokument', pages_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:page).show? %>
-        <%= link_to 'Lönelogg', fees_path, class: 'text-white block px-3 py-2 text-base font-medium' if policy(:fee).show? %>
-        <%= link_to 'Användare', users_path, class: 'text-white block px-3 py-2 text-base font-medium' if policy(:user).create? %>
+        <%= link_to 'Teamet', users_path, class: 'text-white block px-3 py-2 text-base font-medium' %>
       </div>
     </div>
   </nav>

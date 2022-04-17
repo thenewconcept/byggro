@@ -7,6 +7,7 @@ gem "rails", "~> 7.0.1"
 
 gem "acts_as_list", "~> 1.0"
 gem "sprockets-rails"
+gem "google-cloud-storage"
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 gem "pundit", "~> 2.1"
@@ -53,3 +54,6 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
+
+
+gem "active_link_to", "~> 1.0"

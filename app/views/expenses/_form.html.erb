@@ -1,0 +1,33 @@
+<div class="bg-gray-100 rounded-md ring-1 ring-gray-200 p-3 pb-4 mb-5">
+  <%= form_with(model: [expense.project, expense], class: "contents", data: { 'turbo-frame': '_top' }) do |f| %>
+
+    <div class="grid grid-cols-3 gap-2">
+
+      <div class="col-span-3 sm:col-span-1 mb-0">
+        <%= f.date_field :spent_on, required: true, class: 'input' %>
+      </div>
+      <div class="col-span-3 sm:col-span-1 mb-0">
+        <%= f.select(:category, Expense::CATEGORIES, {}, { class: 'input' }) %>
+      </div>
+      <div class="col-span-3 sm:col-span-1 mb-0">
+        <div class="relative rounded-md shadow-sm">
+          <%= f.text_field :amount, placeholder: 'Belopp', required: true, class: 'input' %>
+          <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+            <span class="text-gray-500 text-sm"> Kr </span>
+          </div>
+        </div>
+        <div class="text-xs text-gray-500 px-2 py-1"> Ange 0 om du inte har fått något belopp.  </div>
+      </div>
+      <div class="col-span-3 sm:-mt-6 mt-0 mb-3">
+        <%= f.text_area :description, placeholder: 'Vad är innefattar utgiften?', class: 'input' %>
+      </div>
+    </div>
+
+    <%= f.submit 'Spara', class: "text-sm inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+    <%= link_to 'Avbryt', project_path(expense.project, tab: 'expenses'), target: '_top', class: "text-sm inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200" if expense.project %>
+  <% end %>
+
+  <div class="float-right">
+    <%= button_to icon_text('Ta bort', 'trash'), [expense.project, expense], method: :delete, class: "text-xs text-gray-400 hover:text-gray-500" if policy(expense).destroy? %>
+  </div>
+</div>

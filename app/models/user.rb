@@ -1,4 +1,8 @@
 class User < ApplicationRecord
+  has_one_attached :avatar do |attachable|
+    attachable.variant :thumb, resize_to_fill: [500, 500]
+  end
+
   has_secure_password
   
   before_create { self.email = email.downcase }
@@ -45,6 +49,14 @@ class User < ApplicationRecord
 
   def display_name
     (full_name || email)
+  end
+
+  def complete?
+    first_name.present? && last_name.present? && email.present?
+  end
+
+  def profile_complete?
+    complete? && profile.complete?
   end
 
   def is_worker?

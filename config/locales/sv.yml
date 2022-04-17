@@ -1,6 +1,10 @@
 ---
 sv:
   project:
+    expenses:
+      material: Materialinköp
+      car: Bilkostnader
+      other: 'Övrigt'
     status:
       draft: Utkast
       upcoming: Kommande

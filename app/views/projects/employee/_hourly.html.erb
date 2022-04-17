@@ -24,19 +24,19 @@
 
     <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
       <dt class="text-sm font-medium text-gray-500 truncate">
-        <%= heroicon('clock', variant: :outline) %> Projektbonus
+        <%= heroicon('clock', variant: :outline) %> Dina timmar
       </dt>
       <dd class="mt-1 text-3xl font-semibold text-gray-900">
-        <%= number_to_percentage @calculator.bonus_percent(Current.user.employee) * 100 %>
+        <%= @calculator.hours_for(Current.user.employee) %> tim 
       </dd>
     </div>
 
     <div class="px-4 py-5 bg-slate-100 shadow rounded-lg overflow-hidden sm:p-6">
       <dt class="text-sm font-medium text-gray-500 truncate">
-        <%= heroicon('clock', variant: :outline) %> Dina timmar
+        <%= heroicon('clock', variant: :outline) %> Projektbonus
       </dt>
       <dd class="mt-1 text-3xl font-semibold text-gray-900">
-        <%= @calculator.hours_for(Current.user.employee) %> tim 
+        <%= number_to_percentage @calculator.bonus_percent(Current.user.employee) * 100 %>
       </dd>
     </div>
 
@@ -68,9 +68,10 @@
         <tr>
           <th scope="col" class="whitespace-nowrap px-4 py-3 text-left font-semibold text-gray-900">Datum</th>
           <th scope="col" class="whitespace-nowrap px-2 py-3 text-left font-semibold text-gray-900">Tid</th>
-          <th scope="col" class="whitespace-nowrap px-2 py-3 text-left font-semibold text-gray-900">Lön</th>
-          <th scope="col" class="whitespace-nowrap px-4 py-3 font-semibold text-gray-900 text-right">Totalt</th>
-          <th scope="col" class="whitespace-nowrap px-2 py-3 font-semibold text-gray-900 text-right">Bonus</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3 text-left font-semibold text-gray-900">Lön / tim</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3 text-left font-semibold text-gray-900">Bonuslön / tim</th>
+          <th scope="col" class="whitespace-nowrap px-4 py-3 font-semibold text-gray-900 text-right">Total Lön</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3 font-semibold text-gray-900 text-right">Total Bonus</th>
         </tr>
       </thead>
       <tbody class=" align-top">
@@ -84,6 +85,13 @@
             </td>
             <td class="whitespace-nowrap px-2 py-2 text-gray-600">
               <%= number_to_currency(report.fee) %>
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 text-gray-600">
+              <%= number_to_currency(@calculator.bonus_salary(report.fee)) %>
+              <span class="text-gray-400 text-xs">
+                <%= (@calculator.bonus_percent(Current.user.employee) * 100).round %>%
+                av <%= number_to_currency(@calculator.bonus_base(report.fee)) %>
+              </span>
             </td>
             <td class="whitespace-nowrap px-4 py-2 text-gray-600 text-right">
               <%= number_to_currency(report.total) %>
@@ -105,6 +113,7 @@
         <tr class="font-medium text-md text-gray-900 text-right"> 
           <td class="whitespace-nowrap px-4 py-3.5 text-left">Summa</td>
           <td class="whitespace-nowrap px-2 py-3.5 text-left"> <%= format_hours(@calculator.hours_for(Current.user.employee)) %> tim </td>
+          <td class="whitespace-nowrap px-2 py-3.5"></td>
           <td class="whitespace-nowrap px-2 py-3.5"></td>
           <td class="whitespace-nowrap px-4 py-3.5"> <%= number_to_currency(@calculator.salary_for(Current.user.employee)) %> </td>
           <td class="whitespace-nowrap px-4 py-3.5"> <%= number_to_currency(@calculator.bonus_for(Current.user.employee)) %> </td>
