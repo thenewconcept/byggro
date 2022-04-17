@@ -10,7 +10,7 @@ RSpec.describe 'User management' do
       fill_in :email, with: admin.email
       fill_in :password, with: admin.password
       click_button 'Logga in'
-      find('#mobile-menu').click_link('Användare')
+      find('#mobile-nav').click_link('Teamet')
     end
 
     it 'can list all users' do
@@ -19,13 +19,12 @@ RSpec.describe 'User management' do
     end
 
     it 'can edit a user' do
-      within("#user_#{user.id}") do
-        click_on('Uppdatera')
-      end
+      click_link 'John Doe'
+      click_on('Uppdatera')
 
       fill_in 'Efternamn', with: 'Dae'
       click_button 'Spara'
-      find('#mobile-menu').click_link('Användare')
+      find('#mobile-nav').click_link('Teamet')
 
       expect(page).to have_content('John Dae')
     end
