@@ -71,7 +71,7 @@
                     <%= number_to_currency Bonus::Hourly.for(project, reportee).salary %>
                   </td>
                   <td class="whitespace-nowrap text-sm px-2 py-2.5 text-gray-600">
-                    <%= Bonus::Hourly.for(project, reportee).total %>
+                    <%= number_to_currency Bonus::Hourly.for(project, reportee).total %>
                   </td>
                 </tr>
                 <% end %>

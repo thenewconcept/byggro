@@ -45,6 +45,7 @@ class Bonus::Hourly
   
   def bonus
     return 0 if reportee.is_a?(Contractor)
+    return 0 if project.hours_reported > project.hours_estimated
     bonus ||= Report.by_project(project).where(reportee: reportee).sum do |report| 
       [(BONUS_INDEX - report.fee), report.fee].min * bonus_percent * report.time_in_hours
     end

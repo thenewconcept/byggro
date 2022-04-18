@@ -82,13 +82,19 @@ RSpec.describe Bonus::Hourly, type: :model do
       let(:john)    { create(:employee, salary: 200) }
       let(:jim)     { create(:employee, salary: 100) }
 
-      it 'returns total bonus for project' do
+      it 'returns total bonus for reportee' do
         stub_const('Bonus::Hourly::BONUS_INDEX', 300)
         create(:report, time_in_hours: 5, reportable: checklist, reportee: john)
         create(:report, time_in_hours: 10, reportable: checklist, reportee: jim)
 
         expect(Bonus::Hourly.for(project, john).bonus).to eq(125)
         expect(Bonus::Hourly.for(project, jim).bonus).to eq(250)
+      end
+
+      it 'cannot be negative' do
+        stub_const('Bonus::Hourly::BONUS_INDEX', 300)
+        create(:report, time_in_hours: 40, reportable: checklist, reportee: john)
+        expect(Bonus::Hourly.for(project, john).bonus).to eq(0)
       end
     end
 
