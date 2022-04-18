@@ -15,8 +15,8 @@
     <%= render "projects/meta/#{project.bonus}", reportable: project if policy(project).meta? %>
   </div>
 
-  <div class="h-2 my-3 relative rounded-full overflow-hidden">
-      <div class="w-full h-full bg-gray-200 absolute"></div>
+  <div class="h-1.5 my-3 relative rounded-full overflow-hidden">
+      <div class="h-full w-full bg-gray-200 absolute"></div>
       <div class="h-full bg-green-500 absolute" style="width:<%= project.progress*100 %>%"></div>
   </div>
 </div>
