@@ -3,8 +3,8 @@
     <div>
       <%= t("project.bonus." + project.bonus) %> > <%= t("project.status." + project.status) %>
     </div>
-    <div class="font-bold capitalize text-gray-800">
-      <%= heroicon('calendar', options: { class: 'h-4 -mt-1' }) %> 
+    <div class="capitalize">
+      <%= heroicon('calendar', variant: :outline, options: { class: 'h-4 -mt-1 -mr-0.5' }) %> 
       <%= l project.starts_at, format: :short if project.starts_at %> 
       <%= " — " + l(project.due_at, format: :short) if project.due_at %>
     </div>
