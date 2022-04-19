@@ -98,10 +98,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_16_080351) do
   create_table "expenses", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "project_id"
-    t.date "spent_on"
-    t.string "category"
+    t.date "spent_on", null: false
+    t.string "category", null: false
     t.string "description"
-    t.integer "amount"
+    t.integer "amount", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["project_id"], name: "index_expenses_on_project_id"

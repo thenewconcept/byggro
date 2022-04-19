@@ -30,7 +30,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def switch?
-    user.is_admin?
+    user.is_manager? and !record.is_admin?
   end
 
   def employment?
