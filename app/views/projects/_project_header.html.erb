@@ -1,13 +1,18 @@
 <div class="px-4">
-  <div class="pb-1 pt-3 text-gray-500 text-sm">
-    <%= t("project.bonus." + project.bonus) %> > <%= t("project.status." + project.status) %>
+  <div class="flex justify-between pb-1 pt-3 text-gray-500 text-sm">
+    <div>
+      <%= t("project.bonus." + project.bonus) %> > <%= t("project.status." + project.status) %>
+    </div>
+    <div class="font-bold capitalize text-gray-800">
+      <%= heroicon('calendar', options: { class: 'h-4 -mt-1' }) %> 
+      <%= l project.starts_at, format: :short if project.starts_at %> 
+      <%= " — " + l(project.due_at, format: :short) if project.due_at %>
+    </div>
   </div>
 
-  <div class="flex justify-between">
     <h2 class="text-2xl font-bold text-gray-900">
       <%= project.title %>
     </h2>
-  </div>
 
   <div class="mt-2">
     <%= link_to_if current_page?(project_path(project)), icon_badge(project.adress, 'map', class: 'badge gray'), "https://www.google.com/maps?saddr=My+Location&daddr=#{project.adress}", target: '_blank' if project.adress.present? %>
