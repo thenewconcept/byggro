@@ -14,7 +14,7 @@ module ProjectsHelper
   def icon_badge(text, icon, **options)
     options[:class].concat(' mb-1.5 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border-2')
     tag.p **options do
-      icon_text(text, icon, icon_options: { options: { class: '-ml-1 -mr-0.5 -mt-[2px] h-[14px]' } })
+      icon_text(text, icon, icon_options: { options: { class: '-ml-1 -mr-0.5 -mt-[2px] h-[15px]' } })
     end 
   end
 
@@ -32,5 +32,4 @@ module ProjectsHelper
 
     icon_badge(t("project.status.#{status}"), icon, class: color)
   end
-
 end
