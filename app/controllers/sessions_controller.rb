@@ -16,8 +16,9 @@ class SessionsController < ApplicationController
 
   def switch
     current_user = User.find_by(id: session[:user_id])
-    if current_user.is_admin?
-      user = User.find(params[:id])
+    user = User.find(params[:id])
+
+    if current_user.is_manager? && !user.is_admin?
       session[:user_id] = user.id
       redirect_to root_path, alert: 'Du har bytt användare.'
     else
