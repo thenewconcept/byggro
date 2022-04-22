@@ -1,0 +1,66 @@
+<div class="bg-white shadow overflow-hidden rounded-md">
+  <div class="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg p-5">
+
+    <h1 class="text-2xl font-bold mb-4"> 
+      Rapporter
+      <small class="text-sm"> <%= l @from.to_date %> — <%= l @to.to_date %> </small>
+    </h1>
+
+    <table class="table-auto min-w-full divide-y divide-gray-300 text-sm border-2 border-slate-100 ring-offset-slate-100 ">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left font-semibold text-gray-900">Datum</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Person</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Tid</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Projekt</th>
+          <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-6"> <span class="sr-only">Edit</span> </th>
+        </tr>
+      </thead>
+      <tbody class=" align-top">
+        <% @reports.group_by(&:reportee).each do |reportee, reports| %>
+          <tr class="font-medium border-t-2 border-gray-400 text-md text-gray-900"> 
+            <td class="whitespace-nowrap px-4 py-2 text-gray-600 bg-slate-50">
+              <%= reportee.display_name %>
+              <small><%= reportee.primary_role %></small>
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 text-gray-600 bg-slate-50">
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 text-gray-600 bg-slate-50">
+              <%= format_hours reports.sum(&:time_in_hours) %>
+            </td>
+            <td colspan="2" class="whitespace-nowrap px-2 py-2 text-gray-600 bg-slate-50">
+            </td>
+          <tr>
+          <% reports.each do |report| %>
+            <tr class="border-t border-gray-100"> 
+              <td class="whitespace-nowrap px-4 py-2 text-gray-600">
+                <%= l report.date  %>
+              </td>
+              <td class="whitespace-nowrap px-2 py-2 text-gray-600">
+                <%= report.reportee.user.display_name  %>
+              </td>
+              <td class="whitespace-nowrap px-2 py-2 text-gray-600">
+                <p> <%= format_hours(report.time_in_hours) %> </p>
+              </td>
+              <td class="whitespace-nowrap text-sm px-2 py-2 text-gray-600">
+                <%= link_to report.project.title, report.project %>
+              </td>
+              <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right font-medium sm:pr-6">
+                <%= link_to 'Ändra', edit_report_path(report), class: "text-sm inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-100" if policy(report).edit? %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+      <tfoot class="bg-gray-50">
+        <tr class="font-medium text-md text-gray-900"> 
+            <td class="whitespace-nowrap px-4 py-3.5">Summa</td>
+            <td class="whitespace-nowrap px-2 py-3.5"></td>
+            <td class="whitespace-nowrap px-2 py-3.5"></td>
+            <td class="whitespace-nowrap px-2 py-3.5"></td>
+            <td class="whitespace-nowrap px-2 py-3.5"></td>
+          </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

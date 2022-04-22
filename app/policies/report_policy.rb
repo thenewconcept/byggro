@@ -5,6 +5,10 @@ class ReportPolicy < ApplicationPolicy
     end
   end
 
+  def index?
+    user.is_admin?
+  end
+
   def show?
     user.is_worker?
   end

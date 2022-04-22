@@ -1,4 +1,12 @@
 class ReportsController < ProtectedController
+  def index
+    authorize(:report)
+    @from = params[:from] ? Time.zone.parse(params[:from]) : Time.zone.now.beginning_of_month
+    @to = params[:to] ? Time.zone.parse(params[:to]) : Time.zone.now.end_of_month
+
+    @reports = policy_scope(Report).where(date: @from..@to).all
+  end
+
   def new
     @report = Report.new(
       date: Date.today,
