@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_16_080351) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_24_074528) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -98,10 +98,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_16_080351) do
   create_table "expenses", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "project_id"
-    t.date "spent_on", null: false
-    t.string "category", null: false
+    t.date "spent_on"
+    t.string "category"
     t.string "description"
-    t.integer "amount", null: false
+    t.integer "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["project_id"], name: "index_expenses_on_project_id"
@@ -147,6 +147,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_16_080351) do
     t.date "starts_at"
     t.date "due_at"
     t.float "fixed_fee"
+    t.date "completed_at"
     t.index ["status"], name: "index_projects_on_status"
   end
 

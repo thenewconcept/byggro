@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Project, type: :model do
   before do
+    @employee = create(:employee)
     @project = create(:project,
       title: "Askims 12", 
       adress: "Askims Kyrkåsväg 12",
@@ -9,6 +10,25 @@ RSpec.describe Project, type: :model do
       material_amount: 32000, 
       misc_amount: 500) 
     @checklist = create(:checklist, project: @project, title: 'Work', amount: 134700)
+  end
+
+  describe '#reports' do
+    it 'returns all reports for the project' do
+      report1 = create(:report, reportable: @project, reportee: @employee)
+
+      travel_to(Date.tomorrow)
+      report2 = create(:report, reportable: @checklist, reportee: @employee)
+      travel_back
+
+      report3 = create(:report)
+
+      expect(@project.reports.count).to eq(2)
+      expect(@project.reports).to eq([report1, report2])
+      expect(@project.reports).to eq(Report.by_project(@project))
+
+      @project.update(status: 'completed')
+      expect(@project.completed_at).to eq(report2.date)
+    end
   end
 
   describe '#hours_reported' do

@@ -10,15 +10,16 @@ class Project < ApplicationRecord
   enum status: { draft: 'draft', upcoming: 'upcoming', started: 'started', completed: 'completed' }, _prefix: true
 
   validates :material_amount, :misc_amount, numericality: true
+  validates :completed_at, presence: true, if: :status_completed?
 
   after_create :generate_checklists
-  before_save  :defaults
+  before_create :set_defaults
+  before_validation :set_completed_at, if: -> { status_changed?(to: 'completed') }
 
   has_rich_text :description
   has_many :expenses, dependent: :destroy
   has_many :checklists, dependent: :destroy
   has_many :todos, through: :checklists
-  has_many :reports, as: :reportable, dependent: :destroy
 
   has_many :assignments
   has_many :users, through: :assignments
@@ -94,7 +95,11 @@ class Project < ApplicationRecord
 
   private
 
-  def defaults
+  def set_completed_at
+    self.completed_at = self.reports.last.date
+  end
+
+  def set_defaults
     self.fixed_fee   ||= BONUS_FIXED
     self.hourly_rate ||= HOURLY_RATE
   end

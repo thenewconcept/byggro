@@ -24,6 +24,9 @@ sv:
       project: Projekt
       checklist: Lista
       todo: Uppgift
+    attributes:
+      project:
+        completed_at: 'Avslutad datum'
     errors:
       messages:
         record_invalid: 'Ett fel uppstod: %{errors}'

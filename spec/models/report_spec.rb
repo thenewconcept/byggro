@@ -31,7 +31,7 @@ RSpec.describe Report, type: :model do
       employee = create(:employee, fee: 100)
       report = build(:report, reportee: employee, date: '2021-01-01')
       expect(report).to_not be_valid
-      expect(report.errors[:fee].first).to eq('cannot be nil')
+      expect(report.errors[:fee].first).to eq('kunde inte hittas')
     end
   end
 
@@ -48,6 +48,7 @@ RSpec.describe Report, type: :model do
       checklist = create(:checklist, project: project)
       p_report  = create(:report, reportable: checklist)
       c_report  = create(:report, reportable: project)
+      create(:report)
 
       expect(Report.by_project(project)).to eq([p_report, c_report])
     end

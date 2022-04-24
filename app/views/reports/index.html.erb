@@ -21,7 +21,10 @@
           <tr class="font-medium border-t-2 border-gray-400 text-md text-gray-900"> 
             <td class="whitespace-nowrap px-4 py-2 text-gray-600 bg-slate-50">
               <%= reportee.display_name %>
-              <small><%= reportee.primary_role %></small>
+              <small><%= reportee.primary_role %></small> <br/>
+              Lön: <%= number_to_currency reports.sum(&:total) %>
+              | 
+              Kostnad: <%= number_to_currency reports.sum(&:total) * 1.33 %>
             </td>
             <td class="whitespace-nowrap px-2 py-2 text-gray-600 bg-slate-50">
             </td>

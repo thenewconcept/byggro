@@ -28,6 +28,10 @@ class ProjectPolicy < ApplicationPolicy
   def administer?
     user.is_admin?
   end
+
+  def complete?
+    user.is_admin? or !record.status_completed?
+  end
   
   def report?
     user.is_worker? and !record.status_completed?

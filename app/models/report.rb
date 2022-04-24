@@ -12,7 +12,7 @@ class Report < ApplicationRecord
 
   scope :by_reportees, -> (type) { where(reportee_type: type) } 
   scope :by_checklist, -> (checklist) { where(reportable: checklist) }
-  scope :by_project,   -> (project) { where(reportable: project).or(self.where(reportable_type: 'Checklist', reportable_id: project.checklists.pluck(:id))) }
+  scope :by_project,   -> (project) { where(reportable: project).or(self.where(reportable: project.checklists)).order(id: :asc, date: :asc) }
 
   def total
     time_in_hours * fee
@@ -35,7 +35,7 @@ class Report < ApplicationRecord
 
   def set_fee
     unless self.fee = reportee.fees.at_date(self.date)&.amount
-      self.errors.add(:fee, 'cannot be nil', message: 'cannot find valid fee for this date')
+      self.errors.add(:fee, 'kunde inte hittas', message: 'rapporterare saknar en lön på rapportens datum')
     end
   end
 end

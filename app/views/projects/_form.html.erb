@@ -11,6 +11,7 @@
     </div>
   <% end %>
 
+  <% if policy(project).complete? %>
   <div class="my-5">
     <label class="text-base font-medium text-gray-900">Status</label>
     <fieldset class="mt-4">
@@ -25,6 +26,7 @@
       </div>
     </fieldset>
   </div> 
+  <% end %>
 
   <div class="my-5">
     <label class="text-base font-medium text-gray-900">Bonusmetod</label>
@@ -60,12 +62,12 @@
 
   <div class="grid grid-cols-2 gap-2">
     <div class="my-2">
-      <%= form.label :title, 'Startdatum', class: 'label' %>
+      <%= form.label :starts_at, 'Startdatum', class: 'label' %>
       <%= form.date_field :starts_at, class: 'input' %>
     </div>
 
     <div class="my-2">
-      <%= form.label :title, 'Leveransdatum', class: 'label' %>
+      <%= form.label :due_at, 'Leveransdatum', class: 'label' %>
       <%= form.date_field :due_at, class: 'input' %>
     </div>
   </div>
