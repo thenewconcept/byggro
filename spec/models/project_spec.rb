@@ -10,6 +10,12 @@ RSpec.describe Project, type: :model do
       material_amount: 32000, 
       misc_amount: 500) 
     @checklist = create(:checklist, project: @project, title: 'Work', amount: 134700)
+    @todo = create(:todo, checklist: @checklist, description: 'Måla köket.')
+  end
+
+  it 'can not be completed if not all todos are completed' do
+    @project.update(status: 'completed')
+    expect(@project).to_not be_valid
   end
 
   describe '#reports' do
@@ -26,6 +32,7 @@ RSpec.describe Project, type: :model do
       expect(@project.reports).to eq([report1, report2])
       expect(@project.reports).to eq(Report.by_project(@project))
 
+      @todo.update(completed: true)
       @project.update(status: 'completed')
       expect(@project.completed_at).to eq(report2.date)
     end
@@ -46,17 +53,13 @@ RSpec.describe Project, type: :model do
 
   describe '#progress' do
     it 'should return the progress in percent' do
-      10.times { create(:todo, checklist: @checklist) } 
-      @project.todos.last.update(completed: true)
-      @project.todos.first.update(completed: true)
-      expect(@project.progress).to eq(0.2)
-    end
+      # There is one @todo already created
+      create(:todo, checklist: @checklist)
+      create(:todo, checklist: @checklist)
 
-    it 'should return the progress in percent' do
-      10.times { create(:todo, checklist: @checklist) } 
-      @project.todos.last.update(completed: true)
-      @project.todos.first.update(completed: true)
-      expect(@project.progress).to eq(0.2)
+      expect(@project.progress).to eq(0.0)
+      @todo.update(completed: true)
+      expect(@project.progress).to eq(0.33)
     end
 
     it 'should return 0 i no projects' do

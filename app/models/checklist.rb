@@ -10,6 +10,10 @@ class Checklist < ApplicationRecord
 
   delegate :status_completed?, :fixed_fee, :hourly_rate, to: :project
 
+  def completed?
+    todos.all?(&:completed?)
+  end
+
   def hours_reported
     Report.by_checklist(self).sum(&:time_in_hours)
   end

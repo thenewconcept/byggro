@@ -9,12 +9,14 @@ class Project < ApplicationRecord
   enum bonus: [ :none, :hourly, :fixed ], _prefix: true
   enum status: { draft: 'draft', upcoming: 'upcoming', started: 'started', completed: 'completed' }, _prefix: true
 
+  scope :status_ongoing, -> { where(status: ['draft', 'upcoming', 'started']) }
+
   validates :material_amount, :misc_amount, numericality: true
   validates :completed_at, presence: true, if: :status_completed?
 
   after_create :generate_checklists
   before_create :set_defaults
-  before_validation :set_completed_at, if: -> { status_changed?(to: 'completed') }
+  before_validation :check_completion, if: -> { status_changed?(to: 'completed') }
 
   has_rich_text :description
   has_many :expenses, dependent: :destroy
@@ -95,8 +97,12 @@ class Project < ApplicationRecord
 
   private
 
-  def set_completed_at
-    self.completed_at = self.reports.last.date
+  def check_completion
+    unless self.checklists.all?(&:completed?)
+      errors.add(:base, 'Alla checklistor måste vara klara för avslut')
+    else
+      self.completed_at = self.reports.last&.date || Time.zone.now.to_date
+    end
   end
 
   def set_defaults
