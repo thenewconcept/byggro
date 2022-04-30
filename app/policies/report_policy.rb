@@ -3,7 +3,7 @@ class ReportPolicy < ApplicationPolicy
     def resolve
       if user.is_worker?
         scope.where(reportee: user.profile)
-      elsif user.admin?
+      elsif user.is_admin?
         scope.all
       end
     end
