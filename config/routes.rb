@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :payments, only: :index
   resources :reports
   resources :fees
 
