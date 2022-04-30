@@ -31,7 +31,7 @@ class Bonus::Fixed
   end
 
   def bonus
-    return contractor_hours * reportee.salary if reportee.is_a?(Contractor)
+    return worker_hours * reportee.salary if reportee.is_a?(Contractor)
     total_bonus * bonus_percent
   end
 
