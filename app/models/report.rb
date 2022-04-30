@@ -10,7 +10,7 @@ class Report < ApplicationRecord
   validates :time_in_minutes, numericality: true, allow_blank: false, presence: true
   validates :date, presence: true
 
-  default_scope { order(date: :desc) }
+  default_scope { order(date: :desc, created_at: :desc) }
 
   scope :by_reportees, -> (type) { where(reportee_type: type) } 
   scope :by_checklist, -> (checklist) { where(reportable: checklist) }
