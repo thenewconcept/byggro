@@ -1,5 +1,9 @@
 ---
 sv:
+  salary:
+    contractor: 'Arvode'
+    employee: 'Lön'
+    intern: 'Lön'
   project:
     expenses:
       material: Materialinköp

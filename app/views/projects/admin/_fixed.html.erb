@@ -36,7 +36,7 @@
                     <span class="text-xs text-gray-400"><%= reportee.title %></span>
                   </td>
                   <td class="whitespace-nowrap px-2 py-2.5 text-gray-600">
-                    <%= Bonus::Fixed.for(project, reportee).employee_hours %> tim
+                    <%= Bonus::Fixed.for(project, reportee).worker_hours %> tim
                   </td>
                   <td class="whitespace-nowrap text-sm px-2 py-2.5 text-gray-600">
                     <%= number_to_percentage Bonus::Fixed.for(project, reportee).bonus_percent * 100 %>

@@ -17,8 +17,8 @@ RSpec.describe Bonus::Fixed, type: :model do
 
     describe '#employee_hours' do
       it 'returns hours worked by employee' do
-        expect(Bonus::Fixed.for(project, john).employee_hours).to eq(6)
-        expect(Bonus::Fixed.for(project, jim).employee_hours).to eq(4)
+        expect(Bonus::Fixed.for(project, john).worker_hours).to eq(6)
+        expect(Bonus::Fixed.for(project, jim).worker_hours).to eq(4)
       end
     end
 

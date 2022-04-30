@@ -24,7 +24,7 @@
             <td class="whitespace-nowrap px-4 py-2 text-gray-600 bg-slate-50">
               <%= reportee.display_name %>
               <small><%= reportee.primary_role %></small> <br/>
-              Arvode/Lön: <%= number_to_currency reports.sum(&:total) %>
+              <%= t("salary.#{reportee.class.name.downcase}") %>: <%= number_to_currency reports.sum(&:total) %>
             </td>
             <td class="whitespace-nowrap px-2 py-2 text-gray-600 bg-slate-50">
             </td>
@@ -43,7 +43,10 @@
                 <%= report.reportee.user.display_name  %>
               </td>
               <td class="whitespace-nowrap px-2 py-2 text-gray-600">
-                <p> <%= format_hours(report.time_in_hours) %> <span class="text-xs text-gray-400">á <%= number_to_currency(report.fee) %></span></p>
+                <p> 
+                <%= format_hours(report.time_in_hours) %> <span class="text-xs text-gray-400">
+                á <%= number_to_currency(report.fee) %></span>
+                </p>
               </td>
               <td class="whitespace-nowrap text-sm px-2 py-2 text-gray-600">
                 <%= link_to report.project.title, report.project %>

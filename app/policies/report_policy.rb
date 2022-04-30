@@ -10,11 +10,11 @@ class ReportPolicy < ApplicationPolicy
   end
 
   def index?
-    user.is_worker?
+    user.is_worker? or user.is_admin?
   end
 
   def show?
-    user.is_worker?
+    user.is_worker? or user.is_admin?
   end
 
   def create?

@@ -13,7 +13,7 @@ class Bonus::Fixed
     new(project, reportee)
   end
   
-  def employee_hours
+  def worker_hours
     Report.by_project(project).where(reportee: reportee).sum(&:time_in_hours)
   end
 
@@ -23,7 +23,7 @@ class Bonus::Fixed
 
   def bonus_percent
     return 0 if reportee.is_a?(Intern)
-    bonus_percent = employee_hours / (total_hours - intern_hours)
+    bonus_percent = worker_hours / (total_hours - intern_hours)
   end
 
   def bonus_total
@@ -31,11 +31,10 @@ class Bonus::Fixed
   end
 
   def bonus
+    return contractor_hours * reportee.salary if reportee.is_a?(Contractor)
     total_bonus * bonus_percent
   end
 
-  def total
-    bonus
-  end
-  def salary;total;end
+  def total; bonus; end
+  def salary; total; end
 end
