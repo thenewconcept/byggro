@@ -10,6 +10,18 @@ FactoryBot.define do
     is_rot { false }
   end
 
+  trait :none do
+    bonus { 'none' }
+  end
+
+  trait :fixed do
+    bonus { 'fixed' }
+  end
+
+  trait 'hourly' do
+    bonus { 'hourly' }
+  end
+
   trait :upcoming do
     status { 'completed' }
   end

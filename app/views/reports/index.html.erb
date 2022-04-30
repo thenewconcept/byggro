@@ -6,6 +6,8 @@
       <small class="text-sm"> <%= l @from.to_date %> — <%= l @to.to_date %> </small>
     </h1>
 
+    <h2 class="text-1xl font-bold mb-4"> Tidrapporter </h2>
+
     <table class="table-auto min-w-full divide-y divide-gray-300 text-sm border-2 border-slate-100 ring-offset-slate-100 ">
       <thead class="bg-gray-50">
         <tr>
@@ -17,7 +19,7 @@
         </tr>
       </thead>
       <tbody class=" align-top">
-        <% @reports.group_by(&:reportee).each do |reportee, reports| %>
+        <% @reports.each do |reportee, reports| %>
           <tr class="font-medium border-t-2 border-gray-400 text-md text-gray-900"> 
             <td class="whitespace-nowrap px-4 py-2 text-gray-600 bg-slate-50">
               <%= reportee.display_name %>
@@ -47,6 +49,7 @@
               </td>
               <td class="whitespace-nowrap text-sm px-2 py-2 text-gray-600">
                 <%= link_to report.project.title, report.project %>
+                <small class="capitalize"><%= report.project.bonus %></small>
               </td>
               <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right font-medium sm:pr-6">
                 <%= link_to 'Ändra', edit_report_path(report), class: "text-sm inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-100" if policy(report).edit? %>
