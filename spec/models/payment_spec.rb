@@ -13,7 +13,7 @@ RSpec.describe Payment, type: :model do
   let(:ongoing_hourly) { create(:project, :none) }
   let(:ongoing_fixed)  { create(:project, :fixed) }
   let(:ongoing_bonus)  { create(:project, :hourly) }
-  let(:finished_fixed)  { create(:project, :fixed, status: 'completed', completed_at: '2020-01-29') }
+  let(:finished_fixed)  { create(:project, :fixed, status: 'completed', completed_at: '2020-02-01') }
 
   # Reports for an hourly projects
   let!(:contractor_report) { create(:report, reportable: ongoing_hourly, reportee: @contractor, date: '2020-01-03', time_in_hours: 5) }
@@ -40,7 +40,7 @@ RSpec.describe Payment, type: :model do
 
     it 'returns payable projects' do
       expect(subject.payable_hourly_projects).to include(ongoing_hourly, ongoing_bonus)
-      expect(subject.payable_bonus_projects).to include(finished_fixed)
+      expect(subject.payable_bonus_projects).to_not include(finished_fixed)
     end
 
     it 'returns the payable hours' do
@@ -60,6 +60,13 @@ RSpec.describe Payment, type: :model do
       expect(subject.payable_hours).to eq(5)
       expect(subject.payable_hourly_reports).to eq([february_report])
       expect(subject.payable_bonus_projects).to eq([finished_fixed])
+    end
+
+
+    it 'catches new completed projects' do
+      ongoing_bonus.update(status: 'completed', completed_at: '2020-02-28')
+      payment = Payment.new(from: '2020-02-01', to: '2020-02-28')
+      expect(payment.payable_bonus_projects).to eq([finished_fixed, ongoing_bonus])
     end
   end
 end

@@ -29,7 +29,7 @@ RSpec.describe Project, type: :model do
       report3 = create(:report)
 
       expect(@project.reports.count).to eq(2)
-      expect(@project.reports).to eq([report1, report2])
+      expect(@project.reports).to include(report1, report2)
       expect(@project.reports).to eq(Report.by_project(@project))
 
       @todo.update(completed: true)

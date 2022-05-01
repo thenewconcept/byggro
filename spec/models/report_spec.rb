@@ -50,7 +50,8 @@ RSpec.describe Report, type: :model do
       c_report  = create(:report, reportable: project)
       create(:report)
 
-      expect(Report.by_project(project)).to eq([p_report, c_report])
+      expect(Report.by_project(project).count).to be(2)
+      expect(Report.by_project(project)).to include(p_report, c_report)
     end
   end
 end

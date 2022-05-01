@@ -81,6 +81,7 @@ class ProjectsController < ProtectedController
     def project_params
       params.require(:project).permit(:title, 
         :description, 
+        :completed_at,
         :starts_at,
         :due_at,
         :adress, 

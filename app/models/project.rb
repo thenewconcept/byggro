@@ -101,7 +101,7 @@ class Project < ApplicationRecord
     unless self.checklists.all?(&:completed?)
       errors.add(:base, 'Alla checklistor måste vara klara för avslut')
     else
-      self.completed_at = self.reports.last&.date || Time.zone.now.to_date
+      self.completed_at = self.reports.first&.date || Time.zone.now.to_date unless completed_at.present?
     end
   end
 

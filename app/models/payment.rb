@@ -15,7 +15,7 @@ class Payment
   end
 
   def payable_bonus_projects
-    @payable_bonus_projects ||= Project.where(bonus: 'fixed').or(Project.where(bonus: 'hourly')).status_completed
+    @payable_bonus_projects ||= Project.where(bonus: 'fixed', completed_at: @from..@to).or(Project.where(bonus: 'hourly', completed_at: @from..@to)).status_completed
   end
 
   def payable_hourly_reports
