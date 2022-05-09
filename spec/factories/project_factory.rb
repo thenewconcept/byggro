@@ -7,7 +7,6 @@ FactoryBot.define do
     hourly_rate { 500 }
     material_amount { 1000 } 
     misc_amount { 500  }
-    is_rot { false }
   end
 
   trait :none do

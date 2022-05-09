@@ -9,8 +9,9 @@ RSpec.describe Project, type: :model do
       description: "En beskrivning av projektet.",
       material_amount: 32000, 
       misc_amount: 500) 
-    @checklist = create(:checklist, project: @project, title: 'Work', amount: 134700)
-    @todo = create(:todo, checklist: @checklist, description: 'Måla köket.')
+    @checklist = create(:checklist, project: @project, title: 'Work', amount: 134700, is_rot: true)
+    @checklist = create(:checklist, project: @project, title: 'ÄTA', amount: 5000, is_rot: false)
+    @todo      = create(:todo, checklist: @checklist, description: 'Måla köket.')
   end
 
   it 'can not be completed if not all todos are completed' do
@@ -69,10 +70,9 @@ RSpec.describe Project, type: :model do
 
   describe 'ROT calculations' do
     it 'proper calculations' do
-      expect(@project.total).to eq(167200)
-      expect(@project.client_costs).to eq(169000)
-      expect(@project.client_costs).to eq(169000)
-      expect(@project.client_payed).to eq(118487.5)
+      expect(@project.total).to eq(172200)
+      expect(@project.client_costs).to eq(175250.0)
+      expect(@project.client_payed).to eq(124737.5)
       expect(@project.rot).to eq(50512.5)
     end
   end

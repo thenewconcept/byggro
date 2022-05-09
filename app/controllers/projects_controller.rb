@@ -88,7 +88,6 @@ class ProjectsController < ProtectedController
         :material_amount, 
         :fixed_fee, 
         :misc_amount, 
-        :is_rot, 
         :bonus, 
         :status, 
         :hourly_rate)

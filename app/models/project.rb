@@ -26,6 +26,10 @@ class Project < ApplicationRecord
   has_many :assignments
   has_many :users, through: :assignments
 
+  def is_rot?
+    checklists.any?(&:is_rot?)
+  end
+
   def progress
     return 0 if todos.blank?
     (todos.completed.count.to_f / todos.count.to_f).round(2)
@@ -67,12 +71,16 @@ class Project < ApplicationRecord
     checklists&.sum(&:amount)
   end
 
+  def rot_amount
+    checklists.where(is_rot: true).sum(&:amount)
+  end
+
   def total
     [amount, material_amount, misc_amount].sum
   end
 
   def rot
-    inc_vat(amount) * ROT_PERCENT
+    inc_vat(rot_amount) * ROT_PERCENT
   end
 
   def client_costs
