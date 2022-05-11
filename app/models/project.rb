@@ -79,6 +79,10 @@ class Project < ApplicationRecord
     [amount, material_amount, misc_amount].sum
   end
 
+  def result
+    total - expenses.sum(&:amount)
+  end
+
   def rot
     inc_vat(rot_amount) * ROT_PERCENT
   end
