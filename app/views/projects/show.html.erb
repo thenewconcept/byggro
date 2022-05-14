@@ -12,7 +12,7 @@
 
         <!-- Admin Section -->
         <%= link_to icon_text('Admin', 'shield-check'), project_path(@project, tab: 'internal'), class: tab_classes(params[:tab] == 'internal') if Current.user.is_manager? %>
-        <%= link_to icon_text('Lönerapport', 'shield-check'), project_path(@project, tab: 'bonus'), class: tab_classes(params[:tab] == 'bonus') if Current.user.is_manager? %>
+        <%= link_to icon_text('Lönerapport', 'shield-check'), project_path(@project, tab: 'admin'), class: tab_classes(params[:tab] == 'bonus') if Current.user.is_manager? %>
       </nav>
     </div>
     <div class="p-4">
@@ -23,6 +23,6 @@
 
       <!-- Admin Section -->
       <%= render 'internal', project: @project if params[:tab] == 'internal' && policy(:project).edit? %>
-      <%= render 'admin', project: @project if params[:tab] == 'bonus' && policy(:project).edit? %>
+      <%= render 'admin', project: @project if params[:tab] == 'admin' && policy(:project).edit? %>
     </div>
   </div>

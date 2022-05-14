@@ -14,31 +14,57 @@ class Bonus::Fixed
   end
   
   def worker_hours
-    Report.by_project(project).where(reportee: reportee).sum(&:time_in_hours)
+    scope = Report.by_project(project).where(reportee_type: ['Employee', 'Contractor'])
+    scope = scope.where(reportee: reportee) if reportee
+    scope.sum(&:time_in_hours)
+  end
+
+  def employee_hours
+    scope = Report.by_project(project).where(reportee_type: 'Employee')
+    scope.sum(&:time_in_hours)
+  end
+
+  def hours
+    scope = Report.by_project(project).where(reportee_type: ['Employee', 'Contractor'])
+    scope = scope.where(reportee: reportee) if reportee
+    scope.sum(&:time_in_hours)
   end
 
   def intern_hours
-    Report.by_project(project).where(reportee_type: 'Intern').sum(&:time_in_hours)
+    scope = Report.by_project(project).where(reportee_type: 'Intern')
+    scope.sum(&:time_in_hours)
+  end
+
+  def contractor_hours
+    scope = Report.by_project(project).where(reportee_type: 'Contractor')
+    scope.sum(&:time_in_hours)
   end
 
   def bonus_percent
     return 0 if reportee.is_a?(Intern)
-    bonus_percent = worker_hours / (total_hours - intern_hours)
-  end
-
-  def bonus_total
-    project.bonus_fixed
+    return worker_hours / (total_hours - intern_hours) if reportee
+    employee_hours / worker_hours
   end
 
   def bonus
+    bonus_total
+  end
+
+  def bonus_total
     return 0 if reportee.is_a?(Contractor)
     total_bonus * bonus_percent
   end
 
-  def total; bonus; end
+  def total
+    return 0 if reportee.is_a?(Intern)
+    return bonus_total if reportee.is_a?(Employee)
+    return salary if reportee.is_a?(Contractor)
+    bonus_total + salary
+  end
 
   def salary
-    return worker_hours * reportee.salary if reportee.is_a?(Contractor)
-    total
+    scope = Report.by_project(project).where(reportee_type: 'Contractor')
+    scope = scope.where(reportee: reportee) if reportee
+    scope.sum(&:total)
   end
 end

@@ -101,15 +101,37 @@ RSpec.describe Bonus::Hourly, type: :model do
     describe '#total' do
       let(:john)    { create(:employee, salary: 200) }
       let(:jim)     { create(:employee, salary: 100) }
+      let(:jake)     { create(:contractor, fee: 500) }
+      let(:jill)     { create(:intern) }
 
-      it 'returns total bonus for project' do
-        create(:report, time_in_hours: 5, reportable: checklist, reportee: john)
-        create(:report, time_in_hours: 5, reportable: checklist, reportee: jim)
+      before do
+        stub_const('Bonus::Hourly::BONUS_INDEX', 300)
+
+        # Estimated hours 20h. Actual worked hours 16h. Bonus is 20%.
+        create(:report, time_in_hours: 4, reportable: checklist, reportee: john)
+        create(:report, time_in_hours: 4, reportable: checklist, reportee: jim)
+        create(:report, time_in_hours: 4, reportable: checklist, reportee: jill)
+        create(:report, time_in_hours: 4, reportable: checklist, reportee: jake)
 
         create(:report, time_in_hours: 5, reportable: checklist2, reportee: jim)
+      end
 
-        expect(Bonus::Hourly.for(project, john).total).to eq(1250)
-        expect(Bonus::Hourly.for(project, jim).total).to eq(750)
+      it 'returns total bonus for project' do
+        # 5h x 0 = 0.
+        expect(Bonus::Hourly.for(project, jill).total).to eq(0)
+
+        # (S: 4h x 200 = 800) + (B: 100 * 0.20 * 4 = 80) = 880 kr
+        expect(Bonus::Hourly.for(project, john).total).to eq(880)
+
+        # (S: 4h x 100 = 400) + (B: 100 * 0.20 * 4 = 80) = 480 kr
+        expect(Bonus::Hourly.for(project, jim).total).to eq(480)
+
+        # Jake is contractor, so fast fee.
+        expect(Bonus::Hourly.for(project, jake).total).to eq(2000)
+      end
+
+      it 'returns the total salaries for the project' do
+        expect(Bonus::Hourly.for(project, nil).total).to eq(3360)
       end
     end
   end

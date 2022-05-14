@@ -12,7 +12,6 @@ class Bonus::Hourly
     new(project, reportee)
   end
 
-  # TODO: Move these to a separate concern, not attached to a reportee
   def bonus_base(salary)
     [(BONUS_INDEX - salary), salary].min
   end
@@ -21,22 +20,18 @@ class Bonus::Hourly
     bonus_base(salary) * bonus_percent
   end
 
-  # TODO END
-
   def salary
-    salary ||= Report.by_project(project).where(reportee: reportee).sum do |report| 
-      report.fee * report.time_in_hours
-    end
+    scope = Report.by_project(project)
+    scope = scope.where(reportee: reportee) if reportee
+    salary ||= scope.sum { |report| report.fee * report.time_in_hours }
   end
 
   def bonus_total
-    project.workers.sum do |worker|
-      Bonus::Hourly.for(project, worker).bonus
-    end
+    project.workers.sum { |worker| Bonus::Hourly.for(project, worker).bonus }
   end
 
   def bonus_percent
-    (1.0 - project.hourly_percent)
+    (1.0 - project.hourly_percent).round(2)
   end
   
   def bonus_for_report(report)
@@ -44,9 +39,14 @@ class Bonus::Hourly
   end
   
   def bonus
-    return 0 if reportee.is_a?(Contractor)
-    return 0 if project.hours_reported > project.hours_estimated
-    bonus ||= Report.by_project(project).where(reportee: reportee).sum do |report| 
+    return 0 if reportee.is_a?(Contractor) \
+    or reportee.is_a?(Intern) \
+    or (project.hours_reported > project.hours_estimated)
+
+    scope = Report.by_project(project).where(reportee_type: ['Employee'])
+    scope = scope.where(reportee: reportee) if reportee
+
+    bonus ||= scope.sum do |report| 
       [(BONUS_INDEX - report.fee), report.fee].min * bonus_percent * report.time_in_hours
     end
   end

@@ -19,7 +19,7 @@ class Bonus::Calculator
   end
 
   def bonus_percent(reportee=nil)
-    @klass.for(project, reportee).bonus_percent
+    @klass.for(project, reportee).bonus_percent.round(2)
   end
 
   def hours_for(reportee)
@@ -35,14 +35,18 @@ class Bonus::Calculator
   end
 
   def bonus_for(reportee)
-    @klass.for(project, reportee).bonus
+    @klass.for(project, reportee).bonus.round(2)
   end
 
   def bonus_total
-    @klass.for(project, nil).bonus_total
+    @klass.for(project, nil).bonus_total.round(2)
   end
 
   def total_for(reportee)
-    @klass.for(project, reportee).total
+    @klass.for(project, reportee).total.round(2)
+  end
+
+  def total
+    @klass.for(project, nil).total.round(2)
   end
 end

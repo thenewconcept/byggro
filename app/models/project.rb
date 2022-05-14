@@ -80,7 +80,7 @@ class Project < ApplicationRecord
   end
 
   def result
-    total - expenses.sum(&:amount)
+    total - expenses.sum(&:amount) - Bonus::Calculator.for(self).total
   end
 
   def rot

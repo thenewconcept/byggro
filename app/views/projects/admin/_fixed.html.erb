@@ -30,19 +30,20 @@
             </thead>
             <tbody class=" align-top">
                 <% Report.by_project(project).map(&:reportee).uniq.each do |reportee| %>
+                <% calc = Bonus::Fixed.for(project, reportee) %>
                 <tr class="border-t border-gray-100"> 
                   <td class="whitespace-nowrap px-4 py-2.5 text-gray-600">
                     <%= reportee.user.display_name  %>
                     <span class="text-xs text-gray-400"><%= reportee.title %></span>
                   </td>
                   <td class="whitespace-nowrap px-2 py-2.5 text-gray-600">
-                    <%= Bonus::Fixed.for(project, reportee).worker_hours %> tim
+                    <%= calc.hours %> tim
                   </td>
                   <td class="whitespace-nowrap text-sm px-2 py-2.5 text-gray-600">
-                    <%= number_to_percentage Bonus::Fixed.for(project, reportee).bonus_percent * 100 %>
+                    <%= number_to_percentage calc.bonus_percent * 100 %>
                   </td>
                   <td class="whitespace-nowrap text-sm px-2 py-2.5 text-gray-600">
-                    <%= number_to_currency Bonus::Fixed.for(project, reportee).bonus.round(0) %>
+                    <%= number_to_currency calc.total.round(0) %>
                   </td>
                 </tr>
                 <% end %>
@@ -50,9 +51,9 @@
             <tfoot class="bg-gray-50">
               <tr class="font-medium text-md text-gray-900"> 
                   <td class="whitespace-nowrap px-4 py-3.5">Summa</td>
-                  <td class="whitespace-nowrap px-2 py-3.5"> <%= format_hours(project.hours_reported) %> tim </td>
+                  <td class="whitespace-nowrap px-2 py-3.5"> <%= format_hours(Bonus::Fixed.for(project, nil).worker_hours)%> tim </td>
                   <td class="whitespace-nowrap px-2 py-3.5"></td>
-                  <td class="whitespace-nowrap px-2 py-3.5"></td>
+                  <td class="whitespace-nowrap px-2 py-3.5"> <%= number_to_currency(Bonus::Fixed.for(project, nil).total) %> </td>
                 </tr>
             </tfoot>
           </table>

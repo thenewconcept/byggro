@@ -21,7 +21,7 @@ class Payment
   def payable_hourly_reports
     @payable_hourly_reports ||= Report
       .where(reportable: payable_hourly_projects, reportee_type: ['Employee'], date: @from..@to)
-      .or( Report.where(reportable: Checklist.where(project: payable_hourly_projects), reportee_type: ['Employee']) )
+      .or( Report.where(reportable: Checklist.where(project: payable_hourly_projects), reportee_type: ['Employee'], date: @from..@to) )
       .or( Report.where(reportee_type: 'Contractor', date: @from..@to) )
   end
 
