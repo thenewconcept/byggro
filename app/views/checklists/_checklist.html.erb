@@ -10,6 +10,7 @@
             <div>
               <%= render "projects/meta/#{@project.bonus}", reportable: checklist if policy(checklist).meta? %>
               <%= icon_badge("#{number_to_currency(checklist.amount)}", 'eye-off', class: 'silver') %>
+              <%= icon_badge "ROT", 'check', class: 'gray' if checklist.is_rot? %>
             </div>
           </div>
         <% end %>
@@ -18,6 +19,7 @@
           <h6 class="block font-bold"> <%= checklist.title %> </h6>
           <div>
             <%= render "projects/meta/#{@project.bonus}", reportable: checklist if policy(checklist).meta? %>
+              <%= icon_badge "ROT", 'check', class: 'gray' if checklist.is_rot? %>
           </div>
         </div>
       <% end  %>
