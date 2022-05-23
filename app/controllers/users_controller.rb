@@ -75,7 +75,8 @@ class UsersController < ProtectedController
         :phone,
         :password, 
         :password_confirmation,
-        employee_attributes: [ :id, :title, :pid, :account, :bank, :salary ]
+        employee_attributes: [ :id, :title, :pid, :account, :bank, :salary ],
+        client_attributes: [ :id, :nid, :company_name, :street_adress, :zipcode, :city ]
       )
   end
 end

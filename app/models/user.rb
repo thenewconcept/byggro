@@ -10,17 +10,20 @@ class User < ApplicationRecord
   has_one :contractor, dependent: :destroy
   has_one :employee, dependent: :destroy
   has_one :intern, dependent: :destroy
+  has_one :client, dependent: :destroy
 
   has_many :assignments
   has_many :projects, through: :assignments
 
   accepts_nested_attributes_for :employee
   accepts_nested_attributes_for :contractor
+  accepts_nested_attributes_for :client
 
   validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: 'Invalid email' }
 
   def roles
     roles = []
+    roles << 'Kund' if client.present?
     roles << 'Praktikant' if intern.present?
     roles << 'Anställd'   if employee.present?
     roles << 'Underentrepenör' if contractor.present?

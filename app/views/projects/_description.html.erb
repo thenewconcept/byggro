@@ -1,4 +1,20 @@
 <div class="bg-gray-100 rounded-md ring-2 ring-gray-200 p-3 pb-1 mb-5">
+  <h6 class="font-bold text-gray-800"> Kund </h6>
+  <div class="py-2 text-gray-700 text-sm"> 
+    <p class="my-2">
+      <b><%= link_to_if policy(project.client).edit?, project.client.display_name, edit_user_path(project.client.user) %></b> <br/>
+      <%= project.client.street_adress %> <br/>
+      <%= project.client.zipcode %> <%= project.client.city %> 
+    </p>
+
+    <p class="my-2">
+      Tel: <%= link_to project.client.phone, "tel:#{project.client.phone}" %><br/>
+      Epost: <%= mail_to project.client.email %>
+    </p>
+   </div>
+</div>
+
+<div class="bg-gray-100 rounded-md ring-2 ring-gray-200 p-3 pb-1 mb-5">
   <h6 class="font-bold text-gray-800"> Information </h6>
   <div class="py-2 text-gray-700 text-sm"> <%= project.description %> </div>
 </div>

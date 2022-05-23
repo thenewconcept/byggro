@@ -26,6 +26,8 @@ class Project < ApplicationRecord
   has_many :assignments
   has_many :users, through: :assignments
 
+  belongs_to :client
+
   def is_rot?
     checklists.any?(&:is_rot?)
   end
