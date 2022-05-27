@@ -1,3 +1,6 @@
+<div class="bg-white shadow overflow-hidden rounded-md p-5">
+<h1 class="mb-4 text-lg">Utgifter</h1>
+
 <turbo-frame id="expenses">
   <div class="mb-4 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
     <table class="table-auto min-w-full divide-y divide-gray-300 text-sm">
@@ -27,7 +30,7 @@
             </td>
             <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right font-medium sm:pr-6">
               <turbo-frame target="_top">
-                <%= link_to 'Ändra', edit_project_expense_path(@project, expense), class: "text-xs text-indigo-700 hover:underline hover:text-indigo-900" if policy(expense).edit? %>
+                <%= link_to 'Ändra', edit_project_expense_path(expense.project, expense), class: "text-xs text-indigo-700 hover:underline hover:text-indigo-900" if policy(expense).edit? %>
               </turbo-frame>
             </td>
           </tr>
@@ -53,6 +56,7 @@
   </div>
 
   <turbo-frame id="new_expense">
-    <%= link_to icon_text('Ny utgift', 'plus'), new_project_expense_path(@project), class: 'btn-primary' if policy(:expense).create? %>
+    <%#= link_to icon_text('Ny utgift', 'plus'), new_project_expense_path(@project), class: 'btn-primary' if policy(:expense).create? %>
   </turbo-frame>
 </turbo-frame>
+</div>

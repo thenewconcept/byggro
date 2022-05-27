@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :employees
   end
 
+  resources :expenses
   resources :projects do
     resources :expenses
     resources :checklists do

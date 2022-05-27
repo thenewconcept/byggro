@@ -1,7 +1,9 @@
 class ExpensesController < ProtectedController
   before_action :set_project
   def index
-    @expenses = @project.expenses.order(spent_on: :desc).all
+    scope = Expense.all.order(spent_on: :desc)
+    scope = scope.where(project: @project) if @project
+    @expenses = scope
   end
 
   def new
@@ -47,7 +49,7 @@ class ExpensesController < ProtectedController
   private
 
     def set_project
-      @project = policy_scope(Project).find(params[:project_id])
+      @project = policy_scope(Project).find(params[:project_id]) if params[:project_id]
     end
 
     def expense_params
