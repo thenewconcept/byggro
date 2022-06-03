@@ -26,6 +26,7 @@ travel_back
 
 # Creates two checklists after save.
 hourly_project = Project.create!(
+  client: client,
   status: "started",
   title: "Timbonus Projekt", 
   adress: "Viktoriagatan 8",
@@ -38,6 +39,7 @@ hourly_project = Project.create!(
 
 # Creates two checklists after save.
 fixed_project = Project.create!(
+  client: client,
   status: "started",
   title: "Fastlön Projekt",
   adress: "Elesbobacken 1",

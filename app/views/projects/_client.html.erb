@@ -23,12 +23,7 @@
         <span class="mr-1 text-muted"> Tel </span> <%= link_to project.client.phone, "tel:#{project.client.phone}" %><br/>
         <span class="mr-1 text-muted"> Epost </span> <%= mail_to project.client.email %>
       </div>
-
     </div>
   </div>
 </div>
-<% else %>
-  <div class="py-2 text-gray-700 text-sm"> 
-      Ingen kund
-  </div>
 <% end %>

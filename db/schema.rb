@@ -59,8 +59,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_21_211930) do
   create_table "assignments", force: :cascade do |t|
     t.bigint "project_id", null: false
     t.bigint "user_id", null: false
-    t.datetime "updated_at"
-    t.datetime "created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["project_id"], name: "index_assignments_on_project_id"
     t.index ["user_id"], name: "index_assignments_on_user_id"
   end
