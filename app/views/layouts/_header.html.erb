@@ -41,10 +41,10 @@
           <div class="hidden md:ml-6 md:flex md:items-center md:space-x-4">
             <%= active_link_to 'Start', root_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium', active: :exact %>
             <%= active_link_to 'Teamet', users_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' %>
+            <%= active_link_to 'Kunder', clients_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:client).edit? %>
             <%= active_link_to 'Dokument', pages_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' %>
             <%= active_link_to 'Rapporter', reports_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:report).index? %>
             <%= active_link_to 'Lönelogg', fees_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:fee).show? %>
-            <%= active_link_to 'Harvest', harvest_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:project).create? %>
           </div>
         </div>
 

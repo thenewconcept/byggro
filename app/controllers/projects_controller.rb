@@ -90,6 +90,7 @@ class ProjectsController < ProtectedController
         :misc_amount, 
         :bonus, 
         :status, 
-        :hourly_rate)
+        :hourly_rate,
+        :client_id)
     end
 end

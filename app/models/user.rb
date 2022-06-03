@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   has_secure_password
   
-  before_create { self.email = email.downcase }
+  before_create :sanitize
 
   has_one :contractor, dependent: :destroy
   has_one :employee, dependent: :destroy
@@ -62,6 +62,10 @@ class User < ApplicationRecord
     complete? && profile.complete?
   end
 
+  def is_client?
+    client.present?
+  end
+
   def is_worker?
     profile.present?
   end
@@ -80,5 +84,16 @@ class User < ApplicationRecord
 
   def is_manager?
     (is_manager || is_admin)
+  end
+
+  def generate_password
+    self.password = SecureRandom.hex(8)
+  end
+
+  private
+
+  def sanitize
+    self.email = email.downcase
+    self.password = '123456' if password.blank?
   end
 end

@@ -43,6 +43,15 @@
     </fieldset>
   </div> 
 
+
+  <div class="my-5">
+    <div class="flex justify-between">
+      <%= form.label :client_id, 'Kund', class: 'label' %>
+      <%= link_to "+ Ny kund", new_client_path, class: 'text-sm' %>
+    </div>
+    <%= form.collection_select(:client_id, Client.all, :id, :display_name, { prompt: "Välj kund ...", selected: project.client }, class: "input") %>
+  </div>
+
   <div class="grid grid-cols-2 gap-2">
     <div class="my-2">
       <%= form.label :title, 'Projektnamn', class: 'label' %>

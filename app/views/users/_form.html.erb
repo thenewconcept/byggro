@@ -1,4 +1,17 @@
 <%= form_with(model: user, class: "contents" ) do |form| %>
+
+<% if user.errors.any? %>
+  <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+    <h2 class="text-lg"><%= pluralize(user.errors.count, "fel") %> hindrar denna användare från att sparas:</h2>
+
+    <ul class="pl-8">
+      <% user.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <div class="bg-white rounded-md py-1 px-4 my-4 border-2 border-slate-200">
   <div class="my-4 grid grid-cols-8 gap-6">
     <div class="col-span-8 sm:col-span-8">
