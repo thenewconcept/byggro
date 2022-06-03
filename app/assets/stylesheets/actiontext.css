@@ -30,10 +30,6 @@
   max-width: 100% !important;
 }
 
-.trix-content {
-  margin: 20px 0 10px 0;
-}
-
 trix-editor h1,
 .trix-content h1 {
   font-size: 1.5rem;
