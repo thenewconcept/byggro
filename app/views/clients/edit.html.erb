@@ -4,6 +4,6 @@
   <span class="text-gray-800 text-1xl"> <%= @user&.profile&.title %> </span>
   <span class="text-gray-800 text-1xl"> <%= @user.primary_role %> </span>
 
-  <%= render partial: "form", locals: { user: @user } %>
+  <%= render partial: "users/form", locals: { user: @user } %>
   </div>
 </div>

@@ -1,0 +1,80 @@
+<%= form_with(model: @client, class: "contents" ) do |form| %>
+
+  <% if @client.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2 class="text-lg"><%= pluralize(@client.errors.count, "fel") %> hindrar denna användare från att sparas:</h2>
+
+      <ul class="pl-8">
+        <% @client.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="bg-white rounded-md py-1 px-4 my-4 border-2 border-slate-200">
+    <%= form.fields_for(:user, @client.user) do | user_fields | %>
+    <div class="my-4 grid grid-cols-8 gap-6">
+      <div class="col-span-4 sm:col-span-2">
+        <%= user_fields.label :email, 'Epost', class: 'label' %>
+        <%= user_fields.email_field :email, class: "input", required: true %>
+      </div>
+
+      <div class="col-span-4 sm:col-span-2">
+        <%= user_fields.label :first_name, 'Förnamn', class: 'label' %>
+        <%= user_fields.text_field :first_name, class: "input" %>
+      </div>
+
+      <div class="col-span-4 sm:col-span-2">
+        <%= user_fields.label :last_name, 'Efternamn', class: 'label' %>
+        <%= user_fields.text_field :last_name, class: "input" %>
+      </div>
+
+      <div class="col-span-4 sm:col-span-2">
+        <%= user_fields.label :phone, 'Mobilnummer', class: 'label' %>
+        <%= user_fields.text_field :phone, class: "input" %>
+      </div>
+
+      <div class="col-span-8 sm:col-span-8">
+        <%= user_fields.label :presentation, 'Presentation', class: 'label' %>
+        <%= user_fields.text_area :presentation, class: "input" %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+
+  <div class="bg-white rounded-md py-1 px-4 my-4 border-2 border-slate-200">
+    <div class="my-4 grid grid-cols-8 gap-4">
+      <div class="col-span-4 sm:col-span-4">
+        <%= form.label :nid, 'Person / Orgnr', class: 'label' %>
+        <%= form.text_field :nid, class: "input", placeholder: 't.ex. 112233-4455' %>
+      </div>
+
+      <div class="col-span-4 sm:col-span-4">
+        <%= form.label :company_name, 'Företag', class: 'label' %>
+        <%= form.text_field :company_name, class: "input", placeholder: '' %>
+      </div>
+    </div>
+
+    <div class="my-4 grid grid-cols-8 gap-4">
+      <div class="col-span-4 sm:col-span-2">
+        <%= form.label :street_adress, 'Gatuadress', class: 'label' %>
+        <%= form.text_field :street_adress, class: "input", placeholder: 't.ex. Viktoriagatan 8' %>
+      </div>
+
+      <div class="col-span-4 sm:col-span-2">
+        <%= form.label :zipcode, 'Postnummer', class: 'label' %>
+        <%= form.text_field :zipcode, class: "input" %>
+      </div>
+
+      <div class="col-span-4 sm:col-span-2">
+        <%= form.label :city, 'Stad', class: 'label' %>
+        <%= form.text_field :city, class: "input" %>
+      </div>
+    </div>
+  </div>
+
+<div class="bg-white rounded-md py-1 px-4 my-4 border-2 border-slate-200">
+  <%= form.submit 'Spara', class: "my-2 inline-flex items-center px-4 py-2 border border-transparent sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+</div>
+<% end %>

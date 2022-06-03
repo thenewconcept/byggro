@@ -1,0 +1,40 @@
+<div class="bg-white overflow-hidden shadow rounded-md divide-y divide-gray-200 p-5">
+  <%= link_to 'Ny kund', new_client_path, class: "btn-primary my-2" if policy(:client).new? %>
+  <div class="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+    <table class="table-auto min-w-full divide-y divide-gray-300 text-sm">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left font-semibold text-gray-900">ID</th>
+          <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left font-semibold text-gray-900">Namn</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Företag</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Adress</th>
+          <th></th>
+        </th>
+      </thead>
+      <tbody class=" align-top">
+        <% @clients.each do |client| %>
+          <tr class="border-t border-gray-100">
+            <td class="whitespace-nowrap px-4 py-2 text-gray-600">
+              <%= client.nid %>
+            </td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-600">
+              <%= client.display_name %>
+              <span class="text-xs"> <%= client.email %> </span>
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 text-gray-600">
+            <%= client.company_name %>
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 text-gray-600">
+              <%= client.street_adress  %>
+              <span class="text-xs"> <%= "#{client.zipcode} #{client.city}" %> </span>
+            </td>
+            <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right font-medium sm:pr-6">
+              <%= link_to 'Visa', client_path(client), class: "text-sm inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-100" if policy(client).edit? %>
+              <%= link_to 'Uppdatera', edit_client_path(client), class: "text-sm inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-100" if policy(client).edit? %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

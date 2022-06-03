@@ -30,7 +30,7 @@ class UsersController < ProtectedController
         format.html { redirect_to project_url(@user), notice: "User was successfully created." }
         format.json { render :show, status: :created, location: @user }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_entity, error: "Något saknas." }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -40,7 +40,7 @@ class UsersController < ProtectedController
   def update
     authorize(@user)
     if @user.update(user_params)
-      redirect_to user_url(@user), notice: "Uppgifter uppdaterade."
+      redirect_to user_redirect(@user)
     else
       flash.now[:alert] = "Uppgifterna kunde inte uppdateras."
       render :edit, status: :unprocessable_entity
@@ -59,8 +59,14 @@ class UsersController < ProtectedController
   end
 
   private
+
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def user_redirect(user)
+    return clients_url if user.is_client?
+    return user_url(user), notice: "Uppgifter uppdaterade."
   end
 
   def user_params
@@ -75,7 +81,8 @@ class UsersController < ProtectedController
         :phone,
         :password, 
         :password_confirmation,
-        employee_attributes: [ :id, :title, :pid, :account, :bank, :salary ]
+        employee_attributes: [ :id, :title, :pid, :account, :bank, :salary ],
+        client_attributes: [ :id, :nid, :company_name, :street_adress, :zipcode, :city ]
       )
   end
 end

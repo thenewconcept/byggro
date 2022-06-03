@@ -5,22 +5,25 @@ class User < ApplicationRecord
 
   has_secure_password
   
-  before_create { self.email = email.downcase }
+  before_create :sanitize
 
   has_one :contractor, dependent: :destroy
   has_one :employee, dependent: :destroy
   has_one :intern, dependent: :destroy
+  has_one :client, dependent: :destroy
 
   has_many :assignments
   has_many :projects, through: :assignments
 
   accepts_nested_attributes_for :employee
   accepts_nested_attributes_for :contractor
+  accepts_nested_attributes_for :client
 
   validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: 'Invalid email' }
 
   def roles
     roles = []
+    roles << 'Kund' if client.present?
     roles << 'Anställd'   if employee.present?
     roles << 'Praktikant' if intern.present?
 
@@ -61,6 +64,10 @@ class User < ApplicationRecord
     complete? && profile.complete?
   end
 
+  def is_client?
+    client.present?
+  end
+
   def is_worker?
     profile.present?
   end
@@ -79,5 +86,16 @@ class User < ApplicationRecord
 
   def is_manager?
     (is_manager || is_admin)
+  end
+
+  def generate_password
+    self.password = SecureRandom.hex(8)
+  end
+
+  private
+
+  def sanitize
+    self.email = email.downcase
+    self.password = '123456' if password.blank?
   end
 end
