@@ -1,5 +1,6 @@
 class ClientsController < ProtectedController
   def index
+    authorize(:client)
     @clients = policy_scope(Client).all
   end
 
