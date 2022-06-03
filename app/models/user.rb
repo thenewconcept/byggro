@@ -24,10 +24,12 @@ class User < ApplicationRecord
   def roles
     roles = []
     roles << 'Kund' if client.present?
-    roles << 'Praktikant' if intern.present?
     roles << 'Anställd'   if employee.present?
+    roles << 'Praktikant' if intern.present?
+
     roles << 'Underentrepenör' if contractor.present?
     roles << 'Arbetsledare' if is_manager?
+
     roles << 'Admin' if is_admin?
     return roles.join(', ')
   end
