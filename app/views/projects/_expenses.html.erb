@@ -1,2 +1,50 @@
-<turbo-frame id="expenses" src="<%= project_expenses_path(@project) %>">
-</turbo-frame>
+<div class="mb-4 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+  <table class="table-auto min-w-full divide-y divide-gray-300 text-sm">
+    <thead class="bg-gray-50">
+      <tr>
+        <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left font-semibold text-gray-900">Datum</th>
+        <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Person</th>
+        <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Typ</th>
+        <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Belopp</th>
+        <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-6"> <span class="sr-only">Edit</span> </th>
+      </tr>
+    </thead>
+    <tbody class=" align-top">
+      <% @project.expenses.each do |expense| %>
+        <tr class="border-t border-gray-100"> 
+          <td class="whitespace-nowrap px-4 py-2 text-gray-600">
+            <%= l expense.spent_on  %>
+          </td>
+          <td class="whitespace-nowrap px-2 py-2 text-gray-600">
+            <%= expense.user.display_name  %>
+          </td>
+          <td class="whitespace-nowrap px-2 py-2 text-gray-600">
+            <%= t 'project.expenses.' + expense.category %>
+          </td>
+          <td class="whitespace-nowrap text-sm px-2 py-2 text-gray-600">
+            <%= number_to_currency expense.amount %>
+          </td>
+          <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right font-medium sm:pr-6">
+            <%= link_to 'Ändra', edit_project_expense_path(@project, expense), class: "text-xs text-indigo-700 hover:underline hover:text-indigo-900" if policy(expense).edit? %>
+          </td>
+        </tr>
+        <% if expense.description.present? %>
+          <tr>
+            <td colspan="5" class="px-4 pb-3 text-sm">
+              <span class="text-gray-500"><%= expense.description %></span>
+            </td>
+          </tr>
+        <% end %>
+        <% end %>
+    </tbody>
+    <tfoot class="bg-gray-50">
+      <tr class="font-medium text-md text-gray-900"> 
+          <td class="whitespace-nowrap px-4 py-3.5">Summa</td>
+          <td class="whitespace-nowrap px-2 py-3.5"></td>
+          <td class="whitespace-nowrap px-2 py-3.5"></td>
+          <td class="whitespace-nowrap px-2 py-3.5"> <%= number_to_currency(@project.expenses.sum(&:amount)) %> </td>
+          <td class="whitespace-nowrap px-2 py-3.5"></td>
+        </tr>
+    </tfoot>
+  </table>
+</div>
