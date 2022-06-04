@@ -5,13 +5,11 @@
 
       <% if policy(:checklist).create? %>
         <%= link_to edit_project_checklist_path(checklist.project, checklist) do %>
-          <div class="flex justify-between">
-            <h6 class="font-bold"> <%= checklist.title %> </h6>
-            <div>
-              <%= render "projects/meta/#{@project.bonus}", reportable: checklist if policy(checklist).meta? %>
-              <%= icon_badge("#{number_to_currency(checklist.amount)}", 'eye-off', class: 'silver') %>
-              <%= icon_badge "ROT", 'check', class: 'gray' if checklist.is_rot? %>
-            </div>
+          <h6 class="font-bold mb-1"> <%= checklist.title %> </h6>
+          <div>
+            <%= render "projects/meta/#{@project.bonus}", reportable: checklist if policy(checklist).meta? %>
+            <%= icon_badge("#{number_to_currency(checklist.amount)}", 'eye-off', class: 'silver') %>
+            <%= icon_badge "ROT", 'check', class: 'gray' if checklist.is_rot? %>
           </div>
         <% end %>
       <% else %>

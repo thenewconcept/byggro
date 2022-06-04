@@ -3,7 +3,7 @@
   <div class="py-2 text-gray-700 text-sm col-"> 
     <div class="grid grid-cols-8 gap-2">
 
-      <div class="col-span-8 sm:col-span-2">
+      <div class="col-span-8 sm:col-span-3">
         <h6 class="my-2 font-bold text-gray-800"> Kund </h6>
         <b><%= link_to_if policy(project.client).edit?, project.client.display_name, edit_user_path(project.client.user) %></b>
         <br/>
@@ -11,14 +11,13 @@
         <span class="mr-1 text-muted"> Epost </span> <%= mail_to project.client.email %>
       </div>
 
-      <div class="col-span-8 sm:col-span-4">
+      <div class="col-span-8 sm:col-span-3">
         <h6 class="my-2 font-bold text-gray-800"> Om kunden </h6>
         <%= project.client.user.presentation.presence || tag.i("Ingen info …", class: 'text-muted') %>
 
         <h6 class="my-2 font-bold text-gray-800"> Om projektet </h6>
         <%= project.description.presence || tag.i("Ingen info …", class: 'text-muted') %>
       </div>
-
     </div>
   </div>
 </div>
