@@ -49,12 +49,13 @@
         <%= form.label :client_id, 'Kund', class: 'label' %>
       </div>
       <%= form.collection_select(:client_id, 
-        Client.all, 
-        :id, 
-        :display_name, 
+        Client.all, :id, :display_name, 
         { prompt: "Välj kund ...", selected: project.client&.id }, 
         class: "input") %>
-      <%= link_to "+ Ny kund", new_client_path, class: 'text-sm' %>
+        <div class="flex justify-between mx-2 my-1">
+          <%= link_to "Visa kund", edit_client_path(project.client), class: 'text-sm' if project.client %>
+          <%= link_to "+ Ny kund", new_client_path, class: 'text-sm' %>
+        </div>
     </div>
 
     <div class="my-2">
@@ -63,7 +64,7 @@
     </div>
 
     <div class="my-2">
-      <%= form.label :adress, 'Adress', class: 'label' %>
+      <%= form.label :adress, 'Objektadress', class: 'label' %>
       <%= form.text_field :adress, class: 'input' %>
     </div>
   </div>
