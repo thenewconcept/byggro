@@ -1,9 +1,36 @@
 <div class="bg-gray-100 overflow-hidden shadow rounded-lg divide-y divide-gray-200">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-  <h1 class="mt-8 text-2xl font-bold text-gray-900 truncate"><%= @user.display_name %></h1>
-  <span class="text-gray-800 text-1xl"> <%= @user&.profile&.title %> </span>
-  <span class="text-gray-800 text-1xl"> <%= @user.primary_role %> </span>
 
-  <%= render partial: "users/form", locals: { user: @user } %>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="mt-8 text-2xl font-bold text-gray-900 truncate"><%= @client.display_name %></h1>
+    <span class="text-gray-800 text-1xl"> <%= @client.user&.profile&.title %> </span>
+    <span class="text-gray-800 text-1xl"> <%= @client.user.primary_role %> </span>
+
+    <%= render partial: "clients/form" %>
+
+    <% if @client.projects.exists? %>
+    <div class="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg my-5">
+    <table class="table-auto min-w-full divide-y divide-gray-300 text-sm">
+      <thead class="bg-gray-50">
+        <tr>
+          <td class="whitespace-nowrap py-2 pl-2 pr-3 text-sm font-medium sm:pl-4"> ID</th>
+          <td class="whitespace-nowrap py-2 pl-2 pr-3 text-sm font-medium sm:pl-4"> Projekt</th>
+        </tr>
+      </thead>
+
+      <tbody class="divide-y divide-gray-200 bg-white">
+        <% @client.projects.each do |project| %>
+          <tr>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-600">
+              <%= link_to "##{project.id}", project %>
+            </td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-600">
+              <%= link_to project.title, project %>
+            </td>
+        <% end %>
+      </tbody>
+    </table>
+    </div>
+    <% end %>
   </div>
+
 </div>

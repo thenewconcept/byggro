@@ -1,7 +1,15 @@
 <% if project.client %>
 <div class="bg-gray-100 rounded-md ring-2 ring-gray-200 px-4 pb-2 mb-5">
   <div class="py-2 text-gray-700 text-sm col-"> 
-    <div class="grid grid-cols-8 gap-6">
+    <div class="grid grid-cols-8 gap-2">
+
+      <div class="col-span-8 sm:col-span-2">
+        <h6 class="my-2 font-bold text-gray-800"> Kund </h6>
+        <b><%= link_to_if policy(project.client).edit?, project.client.display_name, edit_user_path(project.client.user) %></b>
+        <br/>
+        <span class="mr-1 text-muted"> Tel </span> <%= link_to project.client.phone, "tel:#{project.client.phone}" %><br/>
+        <span class="mr-1 text-muted"> Epost </span> <%= mail_to project.client.email %>
+      </div>
 
       <div class="col-span-8 sm:col-span-4">
         <h6 class="my-2 font-bold text-gray-800"> Om kunden </h6>
@@ -11,18 +19,6 @@
         <%= project.description.presence || tag.i("Ingen info …", class: 'text-muted') %>
       </div>
 
-      <div class="col-span-4 sm:col-span-2">
-        <h6 class="my-2 font-bold text-gray-800"> Kund </h6>
-        <b><%= link_to_if policy(project.client).edit?, project.client.display_name, edit_user_path(project.client.user) %></b>
-        <br/>
-        <%= project.client.street_adress %> <br/>
-        <%= project.client.zipcode %> <%= project.client.city %> 
-      </div>
-
-      <div class="pt-9 col-span-4 sm:col-span-2">
-        <span class="mr-1 text-muted"> Tel </span> <%= link_to project.client.phone, "tel:#{project.client.phone}" %><br/>
-        <span class="mr-1 text-muted"> Epost </span> <%= mail_to project.client.email %>
-      </div>
     </div>
   </div>
 </div>

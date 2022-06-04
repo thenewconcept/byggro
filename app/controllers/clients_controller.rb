@@ -38,19 +38,30 @@ class ClientsController < ProtectedController
     authorize @client
   end
 
+  def update
+    @client = Client.find(params[:id])
+    authorize(@client)
+    if @client.update(client_params)
+      redirect_to edit_user_url(@client), notice: 'Kund uppdaterad'
+    else
+      flash.now[:alert] = "Uppgifterna kunde inte uppdateras."
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
 
   private
   def client_params
     params
       .require(:client)
       .permit(
-        :id, 
         :nid, 
         :company_name, 
         :street_adress, 
         :zipcode, 
         :city,
         user_attributes: [
+          :id,
           :first_name, 
           :last_name, 
           :avatar,
