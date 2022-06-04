@@ -53,6 +53,6 @@ class ExpensesController < ProtectedController
     end
 
     def expense_params
-      params.require(:expense).permit(:spent_on, :amount, :description, :category)
+      params.require(:expense).permit(:user_id, :spent_on, :amount, :description, :category)
     end
 end

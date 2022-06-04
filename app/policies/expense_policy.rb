@@ -5,6 +5,10 @@ class ExpensePolicy < ApplicationPolicy
     end
   end
 
+  def administer?
+    user.is_manager?
+  end
+
   def create?
     user.is_employee? or user.is_manager?
   end
