@@ -9,6 +9,10 @@ class ExpensePolicy < ApplicationPolicy
     user.is_manager?
   end
 
+  def index?
+    user.is_manager?
+  end
+
   def create?
     user.is_employee? or user.is_manager?
   end
