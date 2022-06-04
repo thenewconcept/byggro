@@ -42,7 +42,7 @@ class ClientsController < ProtectedController
     @client = Client.find(params[:id])
     authorize(@client)
     if @client.update(client_params)
-      redirect_to edit_user_url(@client), notice: 'Kund uppdaterad'
+      redirect_to edit_client_url(@client), notice: 'Kund uppdaterad'
     else
       flash.now[:alert] = "Uppgifterna kunde inte uppdateras."
       render :edit, status: :unprocessable_entity
