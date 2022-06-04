@@ -1,0 +1,48 @@
+<div class="bg-white overflow-hidden shadow rounded-md divide-y divide-gray-200 pb-5">
+
+<article>
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="sm:block 2xl:hidden mt-6 min-w-0 flex-1">
+      <div class="flex justify-between">
+      <h1 class="text-2xl font-bold text-gray-900 truncate">
+        <%= @client.display_name %>
+      </h1>
+
+      <div>
+        <%= link_to new_project_path(client_id: @client), class: 'btn-silver' do %>
+          <%= icon_text 'Nytt projekt', 'plus' %>
+        <% end if policy(:project).create? %>
+
+        <%= link_to edit_user_path(@client.user), class: 'btn-silver' do %>
+          <%= icon_text 'Uppdatera', 'pencil' %>
+        <% end if policy(@client).update? %>
+      </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-8 gap-6">
+      <div class="col-span-4 sm:col-span-2">
+        <b><%= link_to_if policy(@client).edit?, @client.display_name, edit_user_path(@client.user) %></b>
+        <br/>
+        <%= @client.street_adress %> <br/>
+        <%= @client.zipcode %> <%= @client.city %> 
+      </div>
+
+      <div class="col-span-4 sm:col-span-2">
+        <span class="mr-1 text-muted"> Tel </span> <%= link_to @client.phone, "tel:#{@client.phone}" %><br/>
+        <span class="mr-1 text-muted"> Epost </span> <%= mail_to @client.email %>
+      </div>
+
+      <div class="col-span-8 sm:col-span-4">
+        <%= @client.user.presentation.presence || tag.i("Ingen info …", class: 'text-muted') %>
+      </div>
+
+    </div>
+  </div>
+
+  </article>
+</div>

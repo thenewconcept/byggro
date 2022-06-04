@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_07_163743) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_21_211930) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -73,6 +73,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_07_163743) do
     t.integer "amount", default: 0, null: false
     t.boolean "is_rot"
     t.index ["project_id"], name: "index_checklists_on_project_id"
+  end
+
+  create_table "clients", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "nid"
+    t.string "company_name"
+    t.string "street_adress"
+    t.integer "zipcode"
+    t.string "city"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["nid"], name: "index_clients_on_nid"
+    t.index ["user_id"], name: "index_clients_on_user_id"
   end
 
   create_table "contractors", force: :cascade do |t|
@@ -148,6 +161,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_07_163743) do
     t.date "due_at"
     t.float "fixed_fee"
     t.date "completed_at"
+    t.bigint "client_id"
+    t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["status"], name: "index_projects_on_status"
   end
 
@@ -194,10 +209,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_07_163743) do
   add_foreign_key "assignments", "projects"
   add_foreign_key "assignments", "users"
   add_foreign_key "checklists", "projects"
+  add_foreign_key "clients", "users"
   add_foreign_key "contractors", "users"
   add_foreign_key "employees", "users"
   add_foreign_key "expenses", "projects"
   add_foreign_key "expenses", "users"
   add_foreign_key "interns", "users"
+  add_foreign_key "projects", "clients"
   add_foreign_key "todos", "checklists"
 end

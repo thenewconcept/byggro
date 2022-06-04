@@ -43,14 +43,28 @@
     </fieldset>
   </div> 
 
-  <div class="grid grid-cols-2 gap-2">
+  <div class="grid grid-cols-3 gap-2">
+    <div class="my-2">
+      <div class="flex justify-between">
+        <%= form.label :client_id, 'Kund', class: 'label' %>
+      </div>
+      <%= form.collection_select(:client_id, 
+        Client.all, :id, :display_name, 
+        { prompt: "Välj kund ...", selected: project.client&.id }, 
+        class: "input") %>
+        <div class="flex justify-between mx-2 my-1">
+          <%= link_to "Visa kund", edit_client_path(project.client), class: 'text-sm' if project.client %>
+          <%= link_to "+ Ny kund", new_client_path, class: 'text-sm' %>
+        </div>
+    </div>
+
     <div class="my-2">
       <%= form.label :title, 'Projektnamn', class: 'label' %>
       <%= form.text_field :title, class: 'input' %>
     </div>
 
     <div class="my-2">
-      <%= form.label :adress, 'Adress', class: 'label' %>
+      <%= form.label :adress, 'Objektadress', class: 'label' %>
       <%= form.text_field :adress, class: 'input' %>
     </div>
   </div>
@@ -60,16 +74,23 @@
     <%= form.rich_text_area :description, class: 'input' %>
   </div>
 
-  <div class="grid grid-cols-2 gap-2">
+  <div class="grid grid-cols-3 gap-2">
     <div class="my-2">
       <%= form.label :starts_at, 'Startdatum', class: 'label' %>
       <%= form.date_field :starts_at, class: 'input' %>
     </div>
 
     <div class="my-2">
-      <%= form.label :due_at, 'Leveransdatum', class: 'label' %>
+      <%= form.label :due_at, 'Deadline', class: 'label' %>
       <%= form.date_field :due_at, class: 'input' %>
     </div>
+
+    <% if policy(project).administer? %>
+      <div class="my-2">
+        <%= form.label :completed_at, 'Avslutat', class: 'label' %>
+        <%= form.date_field :completed_at, class: 'input' %>
+      </div>
+    <% end %>
   </div>
 
   <div class="grid grid-cols-2 gap-2">
@@ -85,13 +106,6 @@
   </div>
 
   <% if policy(project).administer? %>
-    <div class="grid grid-cols-2 gap-2">
-      <div class="my-2">
-        <%= form.label :completed_at, 'Avslutat', class: 'label' %>
-        <%= form.date_field :completed_at, class: 'input' %>
-      </div>
-    </div>
-
     <div class="grid grid-cols-2 gap-2">
       <div class="my-2">
         <%= form.label :hourly_rate, 'Timarvode', class: 'label' %>

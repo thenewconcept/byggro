@@ -1,7 +1,4 @@
-<div class="bg-gray-100 rounded-md ring-2 ring-gray-200 p-3 pb-1 mb-5">
-  <h6 class="font-bold text-gray-800"> Information </h6>
-  <div class="py-2 text-gray-700 text-sm"> <%= project.description %> </div>
-</div>
+<%= render partial: 'client', locals: { project: @project } %>
 
 <%= render project.checklists.order(id: :asc) %>
 

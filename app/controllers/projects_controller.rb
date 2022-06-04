@@ -21,7 +21,7 @@ class ProjectsController < ProtectedController
 
   # GET /projects/new
   def new
-    @project = Project.new
+    @project = Project.new(client_id: params[:client_id])
     authorize @project
   end
 
@@ -90,6 +90,7 @@ class ProjectsController < ProtectedController
         :misc_amount, 
         :bonus, 
         :status, 
-        :hourly_rate)
+        :hourly_rate,
+        :client_id)
     end
 end
