@@ -1,7 +1,11 @@
 class ExpensesController < ProtectedController
   before_action :set_project
   def index
-    @expenses = @project.expenses.order(spent_on: :desc).all
+    authorize(:expense)
+    @from = params[:from] ? Time.zone.parse(params[:from]) : Time.zone.now.beginning_of_month
+    @to   = params[:to] ? Time.zone.parse(params[:to]) : Time.zone.now.end_of_month
+
+    @expenses = Expense.where(spent_on: @from..@to).order(spent_on: :desc)
   end
 
   def new
@@ -47,10 +51,10 @@ class ExpensesController < ProtectedController
   private
 
     def set_project
-      @project = policy_scope(Project).find(params[:project_id])
+      @project = policy_scope(Project).find(params[:project_id]) if params[:project_id]
     end
 
     def expense_params
-      params.require(:expense).permit(:spent_on, :amount, :description, :category)
+      params.require(:expense).permit(:user_id, :spent_on, :amount, :description, :category)
     end
 end

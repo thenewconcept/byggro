@@ -2,10 +2,17 @@
   <%= form_with(model: [expense.project, expense], class: "contents", data: { 'turbo-frame': '_top' }) do |f| %>
 
     <div class="grid grid-cols-3 gap-2">
+      <% if policy(:expense).administer? %>
+      <div class="col-span-3 sm:col-span-3 mb-0">
+        <%= f.label :user_id, 'Inköpare', class: 'label' %>
+        <%= f.select(:user_id, User.all.collect { |u| [ u.display_name, u.id ] }, {}, { class: 'input' }) %>
+      </div>
+      <% end %>
 
       <div class="col-span-3 sm:col-span-1 mb-0">
         <%= f.date_field :spent_on, required: true, class: 'input' %>
       </div>
+
       <div class="col-span-3 sm:col-span-1 mb-0">
         <%= f.select(:category, Expense::CATEGORIES, {}, { class: 'input' }) %>
       </div>
