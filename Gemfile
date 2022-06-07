@@ -55,3 +55,5 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
+
+gem "where_exists", "~> 2.0"

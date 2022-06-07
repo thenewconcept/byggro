@@ -5,7 +5,7 @@
 
       <div class="col-span-8 sm:col-span-3">
         <h6 class="my-2 font-bold text-gray-800"> Kund </h6>
-        <b><%= link_to_if policy(project.client).edit?, project.client.display_name, edit_user_path(project.client.user) %></b>
+        <b><%= link_to_if policy(project.client).edit?, project.client.display_name, edit_client_path(project.client) %></b>
         <br/>
         <span class="mr-1 text-muted"> Tel </span> <%= link_to project.client.phone, "tel:#{project.client.phone}" %><br/>
         <span class="mr-1 text-muted"> Epost </span> <%= mail_to project.client.email %>
