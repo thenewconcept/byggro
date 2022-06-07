@@ -40,7 +40,7 @@ class UsersController < ProtectedController
   def update
     authorize(@user)
     if @user.update(user_params)
-      redirect_to user_redirect(@user)
+      redirect_to user_path(@user)
     else
       flash.now[:alert] = "Uppgifterna kunde inte uppdateras."
       render :edit, status: :unprocessable_entity
