@@ -7,7 +7,7 @@ class ProjectsController < ProtectedController
 
     if params[:status]
       @projects = @projects.where(status: params[:status])
-      @projects = @projects.order(completed_at: :asc) if params[:status] == 'completed'
+      @projects = @projects.order(completed_at: :desc) if params[:status] == 'completed'
     else
       @projects = @projects.status_started
     end
