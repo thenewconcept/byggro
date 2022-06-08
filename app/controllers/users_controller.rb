@@ -2,7 +2,7 @@ class UsersController < ProtectedController
   before_action :set_user, only: %i[ show edit update destroy ]
 
   def index
-    @users = policy_scope(User).all
+    @users = policy_scope(User).where_not_exists(:client)
   end
 
   # GET /projects/1 or /projects/1.json

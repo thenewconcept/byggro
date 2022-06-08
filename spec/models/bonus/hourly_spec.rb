@@ -78,6 +78,22 @@ RSpec.describe Bonus::Hourly, type: :model do
       end
     end
 
+    describe 'no bonus' do
+      it 'returns 0 and not negative values' do
+        stub_const('Bonus::Hourly::BONUS_INDEX', 300)
+        # 1 hour project.
+        overdrawn = create(:project, hourly_rate: 500)
+        overdrawn.checklists.first.update(amount: 500)
+
+        jill = create(:employee, salary: 200)
+        report = create(:report, time_in_hours: 2, reportable: overdrawn.checklists.first)
+
+        nobonus = Bonus::Hourly.for(overdrawn, jill)
+        expect(nobonus.bonus_salary(jill.salary)).to eq(0)
+        expect(nobonus.bonus_for_report(report)).to eq(0)
+      end
+    end
+
     describe '#bonus' do
       let(:john)    { create(:employee, salary: 200) }
       let(:jim)     { create(:employee, salary: 100) }

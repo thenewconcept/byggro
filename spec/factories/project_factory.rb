@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :project do
+    client
     title { "Vasa Målarjobb" }
     adress { "Viktoriagatan 1" }
     description  { "En beskrivning av projektet." }

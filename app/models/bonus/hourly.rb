@@ -17,7 +17,7 @@ class Bonus::Hourly
   end
 
   def bonus_salary(salary)
-    bonus_base(salary) * bonus_percent
+    [(bonus_base(salary) * bonus_percent), 0].max
   end
 
   def salary
@@ -35,7 +35,11 @@ class Bonus::Hourly
   end
   
   def bonus_for_report(report)
-    [(BONUS_INDEX - report.fee), report.fee].min * bonus_percent * report.time_in_hours
+    [bonus_base_for_report(report) * bonus_percent * report.time_in_hours, 0].max
+  end
+
+  def bonus_base_for_report(report)
+    [(BONUS_INDEX - report.fee), report.fee].min
   end
   
   def bonus
@@ -47,7 +51,7 @@ class Bonus::Hourly
     scope = scope.where(reportee: reportee) if reportee
 
     bonus ||= scope.sum do |report| 
-      [(BONUS_INDEX - report.fee), report.fee].min * bonus_percent * report.time_in_hours
+      bonus_base_for_report(report) * bonus_percent * report.time_in_hours
     end
   end
 
