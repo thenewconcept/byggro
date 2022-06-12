@@ -1,7 +1,7 @@
 class ClientPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user.is_admin?
+      if user.is_manager?
         scope.all
       end
     end
