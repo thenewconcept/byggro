@@ -13,7 +13,7 @@ RSpec.describe Payment, type: :model do
   let(:ongoing_hourly) { create(:project, :none) }
   let(:ongoing_fixed)  { create(:project, :fixed) }
   let(:ongoing_bonus)  { create(:project, :hourly) }
-  let(:finished_fixed)  { create(:project, :fixed, status: 'completed', completed_at: '2020-02-01') }
+  let(:finished_fixed)  { create(:project, :fixed, status: 'completed', completed_on: '2020-02-01') }
 
   # Reports for an hourly projects
   let!(:contractor_report) { create(:report, reportable: ongoing_hourly, reportee: @contractor, date: '2020-01-03', time_in_hours: 5) }
@@ -64,7 +64,7 @@ RSpec.describe Payment, type: :model do
 
 
     it 'catches new completed projects' do
-      ongoing_bonus.update(status: 'completed', completed_at: '2020-02-28')
+      ongoing_bonus.update(status: 'completed', completed_on: '2020-02-28')
       payment = Payment.new(from: '2020-02-01', to: '2020-02-28')
       expect(payment.payable_bonus_projects).to eq([finished_fixed, ongoing_bonus])
     end

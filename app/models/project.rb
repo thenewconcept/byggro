@@ -12,7 +12,7 @@ class Project < ApplicationRecord
   scope :status_ongoing, -> { where(status: ['draft', 'upcoming', 'started']) }
 
   validates :material_amount, :misc_amount, numericality: true
-  validates :completed_at, presence: true, if: :status_completed?
+  validates :completed_on, presence: true, if: :status_completed?
 
   after_create :generate_checklists
   before_create :set_defaults
@@ -50,7 +50,7 @@ class Project < ApplicationRecord
   end
 
   def primary_date
-    starts_at.present? ?  starts_at : created_at.to_date
+    starts_on.present? ?  starts_on : created_at.to_date
   end
 
   def hours_estimated
@@ -115,7 +115,7 @@ class Project < ApplicationRecord
     unless self.checklists.all?(&:completed?)
       errors.add(:base, 'Alla checklistor måste vara klara för avslut')
     else
-      self.completed_at = self.reports.first&.date || Time.zone.now.to_date unless completed_at.present?
+      self.completed_on = self.reports.first&.date || Time.zone.now.to_date unless completed_on.present?
     end
   end
 

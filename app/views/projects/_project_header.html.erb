@@ -1,12 +1,12 @@
 <div class="px-4">
   <div class="flex justify-between pb-1 pt-3 text-gray-500 text-sm">
     <div>
-      <%= t("project.bonus." + project.bonus) %> > <%= t("project.status." + project.status) %> <%= l(project.completed_at) if project.status_completed? %>
+      <%= t("project.bonus." + project.bonus) %> > <%= t("project.status." + project.status) %> <%= l(project.completed_on) if project.status_completed? %>
     </div>
     <div class="capitalize">
       <%= heroicon('calendar', variant: :outline, options: { class: 'h-4 -mt-1 -mr-0.5' }) %> 
-      <%= l project.starts_at, format: :short if project.starts_at %> 
-      <%= " — " + l(project.due_at, format: :short) if project.due_at %>
+      <%= l project.starts_on, format: :short if project.starts_on %> 
+      <%= " — " + l(project.due_on, format: :short) if project.due_on %>
     </div>
   </div>
 

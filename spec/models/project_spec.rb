@@ -35,7 +35,7 @@ RSpec.describe Project, type: :model do
 
       @todo.update(completed: true)
       @project.update(status: 'completed')
-      expect(@project.completed_at).to eq(report2.date)
+      expect(@project.completed_on).to eq(report2.date)
     end
   end
 

@@ -30,7 +30,7 @@ sv:
       todo: Uppgift
     attributes:
       project:
-        completed_at: 'Avslutad datum'
+        completed_on: 'Avslutad datum'
     errors:
       messages:
         record_invalid: 'Ett fel uppstod: %{errors}'

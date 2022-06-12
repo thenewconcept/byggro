@@ -74,21 +74,26 @@
     <%= form.rich_text_area :description, class: 'input' %>
   </div>
 
-  <div class="grid grid-cols-3 gap-2">
+  <div class="grid sm:grid-cols-4 grid-cols-2 gap-2">
     <div class="my-2">
-      <%= form.label :starts_at, 'Startdatum', class: 'label' %>
-      <%= form.date_field :starts_at, class: 'input' %>
+      <%= form.label :starts_on, 'Startdatum', class: 'label' %>
+      <%= form.date_field :starts_on, class: 'input' %>
     </div>
 
     <div class="my-2">
-      <%= form.label :due_at, 'Deadline', class: 'label' %>
-      <%= form.date_field :due_at, class: 'input' %>
+      <%= form.label :due_on, 'Deadline', class: 'label' %>
+      <%= form.date_field :due_on, class: 'input' %>
     </div>
 
     <% if policy(project).administer? %>
       <div class="my-2">
-        <%= form.label :completed_at, 'Avslutat', class: 'label' %>
-        <%= form.date_field :completed_at, class: 'input' %>
+        <%= form.label :completed_on, 'Avslutat', class: 'label' %>
+        <%= form.date_field :completed_on, class: 'input' %>
+      </div>
+
+      <div class="my-2">
+        <%= form.label :payed_on, 'Betald', class: 'label' %>
+        <%= form.date_field :payed_on, class: 'input' %>
       </div>
     <% end %>
   </div>

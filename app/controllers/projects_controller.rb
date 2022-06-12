@@ -3,7 +3,7 @@ class ProjectsController < ProtectedController
 
   # GET /projects or /projects.json
   def index
-    @projects  = policy_scope(Project).order(completed_at: :desc, starts_at: :asc)
+    @projects  = policy_scope(Project).order(completed_on: :desc, starts_on: :asc)
 
     if params[:status]
       @projects = @projects.where(status: params[:status])
@@ -81,9 +81,10 @@ class ProjectsController < ProtectedController
     def project_params
       params.require(:project).permit(:title, 
         :description, 
-        :completed_at,
-        :starts_at,
-        :due_at,
+        :completed_on,
+        :starts_on,
+        :payed_on,
+        :due_on,
         :adress, 
         :material_amount, 
         :fixed_fee, 

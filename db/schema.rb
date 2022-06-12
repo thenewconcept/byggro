@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_21_211930) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_12_140638) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -157,11 +157,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_21_211930) do
     t.integer "bonus", default: 0
     t.float "hourly_rate", default: 0.0, null: false
     t.enum "status", default: "draft", null: false, enum_type: "project_status"
-    t.date "starts_at"
-    t.date "due_at"
+    t.date "starts_on"
+    t.date "due_on"
     t.float "fixed_fee"
-    t.date "completed_at"
+    t.date "completed_on"
     t.bigint "client_id"
+    t.date "payed_on"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["status"], name: "index_projects_on_status"
   end
