@@ -6,6 +6,11 @@
       <small class="text-sm"> <%= l @from.to_date %> — <%= l @to.to_date %> </small>
     </h1>
 
+    <div class="mb-4 text-sm">
+      <%= link_to 'Förra månaden', url_for(last_month), class: 'mr-4' %>
+      <%= link_to 'Nästa månad', url_for(next_month) %>
+    </div>
+
     <h2 class="text-1xl font-bold mb-4"> Tidrapporter </h2>
 
     <table class="table-auto min-w-full divide-y divide-gray-300 text-sm border-2 border-slate-100 ring-offset-slate-100 ">
