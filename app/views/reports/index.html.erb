@@ -40,8 +40,8 @@
           <tr>
           <% reports.each do |report| %>
             <tr class="border-t border-gray-100"> 
-              <td class="whitespace-nowrap px-4 py-2 text-gray-600">
-                <%= l report.date  %>
+              <td class="whitespace-nowrap px-4 py-2 text-gray-600 capitalize">
+                <%= l report.date, format: :string  %>
               </td>
               <td class="whitespace-nowrap px-2 py-2 text-gray-600">
                 <%= report.reportee.user.display_name  %>

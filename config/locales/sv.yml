@@ -70,6 +70,7 @@ sv:
     - lördag
     formats:
       default: "%Y-%m-%d"
+      string: "%a %e %b"
       long: "%e %B %Y"
       short: "%e %b"
     month_names:

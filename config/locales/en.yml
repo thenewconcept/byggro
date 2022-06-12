@@ -13,3 +13,9 @@ en:
         none: None
         hourly: Hourly bonus
         fixed: Project salary
+  date:
+    formats:
+      default: "%F"
+      string: "%a %e %b"
+      long: "%e %B %Y"
+      short: "%e %b"
