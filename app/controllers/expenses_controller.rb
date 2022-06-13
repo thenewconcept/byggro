@@ -20,7 +20,7 @@ class ExpensesController < ProtectedController
 
   def create
     @expense = @project.expenses.new(expense_params)
-    @expense.user = Current.user
+    @expense.user_id = params[:expense][:user_id].presence || Current.user.id
     authorize(@expense)
 
     if @expense.save!
@@ -45,7 +45,7 @@ class ExpensesController < ProtectedController
     @expense = @project.expenses.find(params[:id])
     authorize(@expense)
     @expense.destroy!
-    redirect_to project_expenses_url
+    redirect_to project_url(@project, tab: 'expenses', status: 303)
   end
 
   private
