@@ -58,7 +58,7 @@ class Project < ApplicationRecord
   end
 
   def hours_reported
-    Report.by_project(self).sum(&:time_in_hours)
+    Report.by_project(self).sum(&:time_in_hours)&.round(2)
   end
 
   def hours_by_interns
