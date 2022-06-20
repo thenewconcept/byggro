@@ -155,7 +155,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_20_075853) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.bigint "client_id"
     t.string "title"
     t.string "adress"
     t.string "description"
@@ -165,12 +164,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_20_075853) do
     t.datetime "updated_at", null: false
     t.integer "bonus", default: 0
     t.float "hourly_rate", default: 0.0, null: false
-    t.float "fixed_fee"
     t.enum "status", default: "draft", null: false, enum_type: "project_status"
     t.date "starts_on"
     t.date "due_on"
+    t.float "fixed_fee"
     t.date "completed_on"
+    t.bigint "client_id"
     t.date "payed_on"
+    t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["status"], name: "index_projects_on_status"
   end
 
@@ -217,11 +218,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_20_075853) do
   add_foreign_key "assignments", "projects"
   add_foreign_key "assignments", "users"
   add_foreign_key "checklists", "projects"
+  add_foreign_key "clients", "users"
   add_foreign_key "contractors", "users"
   add_foreign_key "employees", "users"
   add_foreign_key "expenses", "projects"
   add_foreign_key "expenses", "users"
   add_foreign_key "interns", "users"
   add_foreign_key "payments", "projects"
+  add_foreign_key "projects", "clients"
   add_foreign_key "todos", "checklists"
 end
