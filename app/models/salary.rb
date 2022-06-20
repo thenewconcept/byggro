@@ -1,4 +1,4 @@
-class Payment
+class Salary
   attr_accessor :from, :to
   attr_reader :reports
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Payment, type: :model do
+RSpec.describe Salary, type: :model do
   before do
     travel_to(Time.parse('2019-10-01'))
       @employee = create(:employee)
@@ -31,7 +31,7 @@ RSpec.describe Payment, type: :model do
   let!(:non_payable_fixed_report) { create(:report, reportable: ongoing_fixed, reportee: @employee, date: '2020-01-03', time_in_hours: 5) } 
 
   describe 'for january' do
-    subject { Payment.new(from: '2020-01-01', to: '2020-01-31') }
+    subject { Salary.new(from: '2020-01-01', to: '2020-01-31') }
 
     it 'returns payable hourly reports a period' do
       expect(subject.payable_hourly_reports).to include(contractor_report, employee_report, employee_report_bonus, contractor_report_bonus)
@@ -54,7 +54,7 @@ RSpec.describe Payment, type: :model do
   end
 
   describe 'for february' do
-    subject { Payment.new(from: '2020-02-01', to: '2020-02-28') }
+    subject { Salary.new(from: '2020-02-01', to: '2020-02-28') }
     it 'scopes appropiatly' do
       expect(subject.reportees).to eq([@employee])
       expect(subject.payable_hours).to eq(5)
@@ -65,7 +65,7 @@ RSpec.describe Payment, type: :model do
 
     it 'catches new completed projects' do
       ongoing_bonus.update(status: 'completed', completed_on: '2020-02-28')
-      payment = Payment.new(from: '2020-02-01', to: '2020-02-28')
+      payment = Salary.new(from: '2020-02-01', to: '2020-02-28')
       expect(payment.payable_bonus_projects).to eq([finished_fixed, ongoing_bonus])
     end
   end

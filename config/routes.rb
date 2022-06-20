@@ -16,8 +16,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :payments, only: :index
-  resources :reports
+  resources :salaries, only: :index
+  resources :reports, only: :index
   resources :fees
 
   root "projects#index"
