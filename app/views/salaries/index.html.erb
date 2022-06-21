@@ -24,7 +24,7 @@
         </tr>
       </thead>
       <tbody class=" align-top">
-        <% policy_scope(@payment.payable_hourly_reports).group_by(&:reportee).each do |reportee, reports| %>
+        <% policy_scope(@salaries.payable_hourly_reports).group_by(&:reportee).each do |reportee, reports| %>
           <tr class="border-t-2 border-gray-400 text-md text-gray-900"> 
             <td class="whitespace-nowrap px-4 py-2 text-gray-600 bg-slate-50">
               <%= reportee.display_name %>
@@ -64,7 +64,7 @@
         </tr>
       </thead>
       <tbody class=" align-top">
-        <% @payment.payable_bonus_projects.each do |project| %>
+        <% @salaries.payable_bonus_projects.each do |project| %>
           <% project.reportees.each do |reportee| %>
             <% if (Current.user.is_admin? or Current.user.profile == reportee) %>
             <% @bonus = Bonus::Calculator.new(project).bonus_for(reportee) %>
@@ -104,7 +104,7 @@
         </tr>
       </thead>
       <tbody class=" align-top">
-        <% policy_scope(@payment.payable_hourly_reports).group_by(&:reportee).each do |reportee, reports| %>
+        <% policy_scope(@salaries.payable_hourly_reports).group_by(&:reportee).each do |reportee, reports| %>
           <tr class="font-medium border-t-2 border-gray-400 text-md text-gray-900"> 
             <td class="whitespace-nowrap px-4 py-2 text-gray-600 bg-slate-50">
               <%= reportee.display_name %>
