@@ -1,72 +1,88 @@
 <div class="bg-slate-50 ring-1 ring-gray-200 shadow overflow-hidden rounded-lg my-4">
-  <div class="px-4 py-5 sm:px-6">
-    <h3 class="text-lg leading-6 font-medium text-gray-900">Offert</h3>
+
+  <div class="px-2 py-3 sm:px-6">
+    <h3 class="leading-6 font-medium text-gray-900">Order</h3>
   </div>
-  <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+
+  <div class="border-t border-gray-200 px-2 py-3 sm:p-0">
     <dl class="text-sm sm:divide-y sm:divide-gray-200">
-      <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
-        <dt class=" font-medium text-gray-500">Arbetskostnader</dt>
+      <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
+        <dt class=" font-medium text-gray-500">Arbete</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency project.amount %></dd>
       </div>
-      <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
-        <dt class=" font-medium text-gray-500">Materialkostnader</dt>
+      <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
+        <dt class=" font-medium text-gray-500">Material</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency project.material_amount %></dd>
       </div>
-      <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
-        <dt class=" font-medium text-gray-500">Övriga kostnader</dt>
+      <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
+        <dt class=" font-medium text-gray-500">Övrigt</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency project.misc_amount %></dd>
       </div>
-      <div class="text-gray-800 font-bold py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-        <dt class="">Summa</dt>
+      <div class="text-gray-800 font-bold py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="leading-4">Summa</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency project.total %></dd>
       </div>
     </dl>
   </div>
 </div>
+
 <div class="bg-slate-50 ring-1 ring-gray-200 shadow overflow-hidden rounded-lg my-4">
-  <div class="px-4 py-5 sm:px-6">
-    <h3 class="text-lg leading-6 font-medium text-gray-900">Kostnadsrapport</h3>
+  <div class="px-2 py-3 sm:px-6">
+    <h3 class="leading-6 font-medium text-gray-900">Kostnader</h3>
   </div>
   <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
     <dl class="text-sm sm:divide-y sm:divide-gray-200">
-      <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
-        <dt class=" font-medium text-gray-500">Intäkt</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          <%= number_to_currency project.total %>
-        </dd>
-      </div>
-      <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
+      <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
         <dt class=" font-medium text-gray-500">Kostnader</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
         - <%= number_to_currency project.expenses.sum(&:amount) %></dd>
       </div>
-      <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
+      <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
         <dt class=" font-medium text-gray-500">Löner</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
         -  <%= number_to_currency Bonus::Calculator.for(project).total %></dd>
       </div>
-      <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
+      <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
         <dt class=" font-medium text-gray-500">Resultat</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          <%= number_to_currency project.result %></dd>
+          <%= number_to_currency project.result %>
+          <small class="ml-6"> <%= number_to_percentage (project.result.to_f/project.total.to_f) * 100 %> marginal</small>
+        </dd>
       </div>
-      <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
-        <dt class=" font-medium text-gray-500">Marginal</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          <%= number_to_percentage (project.result.to_f/project.total.to_f) * 100 %></dd>
-      </div>
+      
     </dl>
   </div>
 </div>
 
-<% if project.is_rot? %>
-  <div class="bg-slate-50 ring-1 ring-gray-200 shadow overflow-hidden rounded-lg">
-    <div class="px-4 py-5 sm:px-6">
-      <h3 class="text-lg leading-6 font-medium text-gray-900">ROT</h3>
+<% if policy(:payment).index? %>
+<div class="bg-green-50 ring-1 ring-gray-200 shadow overflow-hidden rounded-lg my-4">
+
+  <div class="px-2 py-3 sm:px-6 flex justify-between">
+    <h3 class="leading-6 font-medium text-gray-900">Inbetalningar</h3>
+    <%= link_to "Ny inbetalning", new_project_payment_path(project), class: 'btn-primary' if policy(:payment).create? %>
+  </div>
+
+  <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+    <dl class="text-sm sm:divide-y sm:divide-gray-200">
+      <% project.payments.each do |payment| %>
+      <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
+        <dt class=" font-medium text-gray-500"><%= payment.payed_on %></dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency payment.amount %></dd>
+      </div>
+      <% end %>
+    </dl>
+  </div>
+</div>
+<% end %>
+
+<% if true or project.is_rot? %>
+  <div class="bg-slate-200 ring-1 ring-gray-200 shadow overflow-hidden rounded-lg">
+    <div class="px-2 py-3 sm:px-6">
+      <h3 class="leading-6 font-medium text-gray-900">ROT</h3>
     </div>
     <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
       <dl class="text-sm sm:divide-y sm:divide-gray-200">
-        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
+        <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
           <dt class=" font-medium text-gray-500">Timmar</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
             <div data-controller="clipboard">
@@ -81,31 +97,31 @@
             </div>
           </dd>
         </div>
-        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
+        <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
           <dt class=" font-medium text-gray-500">Material inkl. moms</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
             <%= render partial: 'shared/clipboard_value', locals: { amount: project.inc_vat(project.material_amount) } %>
           </dd>
         </div>
-        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
+        <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
           <dt class=" font-medium text-gray-500">Övrigt inkl. moms</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
             <%= render partial: 'shared/clipboard_value', locals: { amount: project.inc_vat(project.misc_amount) } %>
           </dd>
         </div>
-        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
+        <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
           <dt class=" font-medium text-gray-500">Arbetskostnad Kund</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
             <%= render partial: 'shared/clipboard_value', locals: { amount: project.client_costs } %>
           </dd>
         </div>
-        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
+        <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
           <dt class=" font-medium text-gray-500">Inbetalt Kund</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
             <%= render partial: 'shared/clipboard_value', locals: { amount: project.client_payed } %>
           </dd>
         </div>
-        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
+        <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
           <dt class=" font-medium text-gray-500">ROT</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
             <%= render partial: 'shared/clipboard_value', locals: { amount: project.rot } %>

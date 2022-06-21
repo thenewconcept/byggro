@@ -19,6 +19,7 @@ class Project < ApplicationRecord
   before_validation :check_completion, if: -> { status_changed?(to: 'completed') }
 
   has_rich_text :description
+  has_many :payments, dependent: :destroy
   has_many :expenses, dependent: :destroy
   has_many :checklists, dependent: :destroy
   has_many :todos, through: :checklists

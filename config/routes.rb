@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :expenses
   resources :projects do
+    resources :payments
     resources :expenses
     resources :checklists do
       resources :todos
