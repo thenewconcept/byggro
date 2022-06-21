@@ -15,7 +15,7 @@ class Checklist < ApplicationRecord
   end
 
   def hours_reported
-    Report.by_checklist(self).sum(&:time_in_hours)
+    Report.by_checklist(self).sum(&:time_in_hours)&.round(2)
   end
 
   def hours_estimated
