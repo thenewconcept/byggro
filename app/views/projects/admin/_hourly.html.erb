@@ -15,12 +15,6 @@
         </dd>
       </div>
       <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-2 sm:px-4">
-        <dt class=" font-medium text-gray-500">Bonusindex</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          <%= number_to_currency Bonus::Hourly::BONUS_INDEX %>
-        </dd>
-      </div>
-      <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-2 sm:px-4">
         <dt class=" font-medium text-gray-500">Måltimmar</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
           <%= project.hours_target.round(2) %> timmar
