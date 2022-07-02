@@ -18,6 +18,10 @@ class Bonus::None
     end
   end
 
+  def bonus_total
+    0
+  end
+
   def salary_total
     salary
   end

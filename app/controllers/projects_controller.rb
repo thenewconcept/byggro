@@ -16,6 +16,7 @@ class ProjectsController < ProtectedController
   def show
     @reports    = Report.by_project(@project)
     @calculator = Bonus::Calculator.for(@project)
+    @costs      = Project::Cost.new(@project)
     authorize(@project, :salary?) if params[:tab] == 'employee'
   end
 

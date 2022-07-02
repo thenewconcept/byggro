@@ -76,4 +76,10 @@ RSpec.describe Project, type: :model do
       expect(@project.rot).to eq(50512.5)
     end
   end
+
+  describe 'Results' do
+    it 'returns the gross margin' do
+      expect(@project.result).to eq(172200)
+    end
+  end
 end
