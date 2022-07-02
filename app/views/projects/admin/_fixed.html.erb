@@ -37,7 +37,7 @@
                     <span class="text-xs text-gray-400"><%= reportee.title %></span>
                   </td>
                   <td class="whitespace-nowrap px-2 py-2.5 text-gray-600">
-                    <%= calc.hours %> tim
+                    <%= format_hours calc.hours %> tim
                   </td>
                   <td class="whitespace-nowrap text-sm px-2 py-2.5 text-gray-600">
                     <%= number_to_percentage calc.bonus_percent * 100 %>

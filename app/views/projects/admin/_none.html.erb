@@ -37,7 +37,7 @@
                     <span class="text-xs text-gray-400"><%= reportee.title %></span>
                   </td>
                   <td class="whitespace-nowrap px-2 py-2.5 text-gray-600">
-                    <p><%= @calculator.hours_for(reportee) %> tim</p>
+                    <p><%= format_hours @calculator.hours_for(reportee) %> tim</p>
                   </td>
                   <td class="whitespace-nowrap text-sm px-2 py-2.5 text-gray-600">
                     <%= number_to_currency Bonus::None.for(project, reportee).salary %>
