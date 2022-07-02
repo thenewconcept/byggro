@@ -75,8 +75,8 @@
                   <td class="whitespace-nowrap px-4 py-3.5">Summa</td>
                   <td class="whitespace-nowrap px-2 py-3.5"> <%= format_hours(project.hours_reported) %> tim </td>
                   <td class="whitespace-nowrap px-4 py-3.5"> <%= number_to_currency(Bonus::Hourly.for(project, nil).bonus_total) %> </td>
-                  <td class="whitespace-nowrap px-2 py-3.5"> <%= number_to_currency(@reports.sum(&:total)) %> </td>
-                  <td class="whitespace-nowrap px-2 py-3.5"> <%= number_to_currency(Bonus::Calculator.for(project).total) %></td>
+                  <td class="whitespace-nowrap px-2 py-3.5"> <%= number_to_currency(@costs.salaries) %> </td>
+                  <td class="whitespace-nowrap px-2 py-3.5"> <%= number_to_currency(@costs.salaries + @costs.bonuses) %></td>
                 </tr>
             </tfoot>
           </table>

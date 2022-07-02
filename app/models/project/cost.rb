@@ -4,10 +4,6 @@ class Project::Cost
     @project = project
   end
 
-  def bonuses
-    Bonus::Calculator.for(project).bonus_total
-  end
-
   def expenses
     project.expenses.sum(&:amount)
   end
@@ -16,12 +12,20 @@ class Project::Cost
     Report.by_project(project).by_reportees('Employee').sum(&:total)
   end
 
+  def bonuses
+    Bonus::Calculator.for(project).bonus_total
+  end
+
+  def salaries_including_bonuses
+    salaries + bonuses
+  end
+
   def fees
     Report.by_project(project).by_reportees('Contractor').sum(&:total)
   end
 
   def taxes
-    (salaries * 1.32 * 1.12).round(2)
+    (salaries_including_bonuses * 0.32) + (salaries_including_bonuses * 0.12).round(2)
   end
 
   def total

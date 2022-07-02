@@ -16,7 +16,7 @@ RSpec.describe Project::Cost do
 
     describe '#taxes' do
       it 'returns taxes for the project' do
-        expect(normal.taxes).to eq(4435.2)
+        expect(normal.taxes).to eq(1320.0)
       end
     end
 

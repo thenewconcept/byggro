@@ -43,7 +43,7 @@ class Project < ApplicationRecord
   end
 
   def workers
-    reports.where.not(reportee_type: 'contractor').map(&:reportee).uniq
+    reports.where.not(reportee_type: 'Contractor').map(&:reportee).uniq
   end
 
   def reportees
@@ -64,6 +64,10 @@ class Project < ApplicationRecord
 
   def hours_by_interns
     reports.where(reportee_type: 'Intern').sum(&:time_in_hours)
+  end
+
+  def hours_by_workers
+    reports.where.not(reportee_type: 'Contractor').sum(&:time_in_hours)
   end
 
   def hours_for(reportee)

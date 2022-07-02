@@ -30,7 +30,7 @@
               </tr>
             </thead>
             <tbody class=" align-top">
-                <% project.reportees.each do |reportee| %>
+                <% project.workers.each do |reportee| %>
                 <tr class="border-t border-gray-100"> 
                   <td class="whitespace-nowrap px-4 py-2.5 text-gray-600">
                     <%= reportee.user.display_name  %>
@@ -48,8 +48,8 @@
             <tfoot class="bg-gray-50">
               <tr class="font-medium text-md text-gray-900"> 
                   <td class="whitespace-nowrap px-4 py-3.5">Summa</td>
-                  <td class="whitespace-nowrap px-2 py-3.5"> <%= format_hours(project.hours_reported) %> tim </td>
-                  <td class="whitespace-nowrap px-2 py-3.5"> <%= number_to_currency(@reports.sum(&:total)) %> </td>
+                  <td class="whitespace-nowrap px-2 py-3.5"> <%= format_hours(project.hours_by_workers) %> tim </td>
+                  <td class="whitespace-nowrap px-2 py-3.5"> <%= number_to_currency( @costs.salaries ) %> </td>
                 </tr>
             </tfoot>
           </table>

@@ -24,7 +24,7 @@ class User < ApplicationRecord
   def roles
     roles = []
     roles << 'Kund' if client.present?
-    roles << 'Anställd'   if employee.present?
+    roles << 'Anställd' if employee.present?
     roles << 'Praktikant' if intern.present?
 
     roles << 'Underentrepenör' if contractor.present?

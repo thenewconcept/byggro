@@ -46,8 +46,19 @@
       <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
         <dt class=" font-medium text-gray-500">Löner</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          -  <%= number_to_currency @costs.salaries + @costs.bonuses + @costs.taxes %>
-          <small class="ml-6"> inkl. Arbetsgivaravgifter och semesterlön </small>
+          -  <%= number_to_currency @costs.salaries %>
+        </dd>
+      </div>
+      <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
+        <dt class=" font-medium text-gray-500">Bonusar</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          -  <%= number_to_currency @costs.bonuses %>
+        </dd>
+      </div>
+      <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
+        <dt class=" font-medium text-gray-500">Skatter</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          -  <%= number_to_currency @costs.taxes %>
         </dd>
       </div>
       <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
