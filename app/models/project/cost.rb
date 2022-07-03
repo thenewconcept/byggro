@@ -9,7 +9,8 @@ class Project::Cost
   end
 
   def salaries
-    Report.by_project(project).by_reportees('Employee').sum(&:total)
+    return 0 if project.bonus_fixed?
+    project.reports.by_reportees('Employee').sum(&:total)
   end
 
   def bonuses
@@ -21,7 +22,7 @@ class Project::Cost
   end
 
   def fees
-    Report.by_project(project).by_reportees('Contractor').sum(&:total)
+    project.reports.by_reportees('Contractor').sum(&:total)
   end
 
   def taxes
