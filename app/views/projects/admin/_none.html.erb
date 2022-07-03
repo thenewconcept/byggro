@@ -10,7 +10,7 @@
     <dl class="text-sm sm:divide-y sm:divide-gray-200">
       <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class=" font-medium text-gray-500">Summa</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency Report.by_project(project).sum(&:total) %></dd>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency project.reports.sum(&:total) %></dd>
       </div>
     </dl>
   </div>

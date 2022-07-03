@@ -14,29 +14,29 @@ class Bonus::Fixed
   end
   
   def worker_hours
-    scope = Report.by_project(project).where(reportee_type: ['Employee', 'Contractor'])
+    scope = project.reports.where(reportee_type: ['Employee', 'Contractor'])
     scope = scope.where(reportee: reportee) if reportee
     scope.sum(&:time_in_hours)
   end
 
   def employee_hours
-    scope = Report.by_project(project).where(reportee_type: 'Employee')
+    scope = project.reports.where(reportee_type: 'Employee')
     scope.sum(&:time_in_hours)
   end
 
   def hours
-    scope = Report.by_project(project).where(reportee_type: ['Employee', 'Contractor'])
+    scope = project.reports.where(reportee_type: ['Employee', 'Contractor'])
     scope = scope.where(reportee: reportee) if reportee
     scope.sum(&:time_in_hours)
   end
 
   def intern_hours
-    scope = Report.by_project(project).where(reportee_type: 'Intern')
+    scope = project.reports.where(reportee_type: 'Intern')
     scope.sum(&:time_in_hours)
   end
 
   def contractor_hours
-    scope = Report.by_project(project).where(reportee_type: 'Contractor')
+    scope = project.reports.where(reportee_type: 'Contractor')
     scope.sum(&:time_in_hours)
   end
 
@@ -63,7 +63,7 @@ class Bonus::Fixed
   end
 
   def salary
-    scope = Report.by_project(project).where(reportee_type: 'Contractor')
+    scope = project.reports.where(reportee_type: 'Contractor')
     scope = scope.where(reportee: reportee) if reportee
     scope.sum(&:total)
   end

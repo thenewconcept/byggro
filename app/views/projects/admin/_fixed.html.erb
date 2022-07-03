@@ -29,7 +29,7 @@
               </tr>
             </thead>
             <tbody class=" align-top">
-                <% Report.by_project(project).map(&:reportee).uniq.each do |reportee| %>
+                <% project.reports.map(&:reportee).uniq.each do |reportee| %>
                 <% calc = Bonus::Fixed.for(project, reportee) %>
                 <tr class="border-t border-gray-100"> 
                   <td class="whitespace-nowrap px-4 py-2.5 text-gray-600">

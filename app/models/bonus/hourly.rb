@@ -5,7 +5,7 @@ class Bonus::Hourly
   def initialize(project, reportee)
     @project  = project
     @reportee = reportee
-    @hours    = Report.by_project(project).where(reportee: reportee).sum(&:time_in_hours)
+    @hours    = project.reports.where(reportee: reportee).sum(&:time_in_hours)
   end
 
   def self.for(project, reportee)
@@ -21,7 +21,7 @@ class Bonus::Hourly
   end
 
   def salary
-    scope = Report.by_project(project)
+    scope = project.reports
     scope = scope.where(reportee: reportee) if reportee
     salary ||= scope.sum { |report| report.fee * report.time_in_hours }
   end
@@ -47,7 +47,7 @@ class Bonus::Hourly
     or reportee.is_a?(Intern) \
     or (project.hours_reported > project.hours_estimated)
 
-    scope = Report.by_project(project).where(reportee_type: ['Employee'])
+    scope = project.reports.where(reportee_type: ['Employee'])
     scope = scope.where(reportee: reportee) if reportee
 
     bonus ||= scope.sum do |report| 

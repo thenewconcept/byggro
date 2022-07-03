@@ -23,7 +23,7 @@ class Bonus::Calculator
   end
 
   def hours_for(reportee)
-    Report.by_project(project).where(reportee: reportee).sum(&:time_in_hours)
+    project.reports.where(reportee: reportee).sum(&:time_in_hours)
   end
 
   def salary_for(reportee)
