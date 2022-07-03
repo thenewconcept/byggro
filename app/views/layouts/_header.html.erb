@@ -44,7 +44,7 @@
             <%= active_link_to 'Kunder', clients_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:client).edit? %>
             <%= active_link_to 'Dokument', pages_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' %>
             <%= active_link_to 'Rapporter', reports_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:report).index? %>
-            <%= active_link_to 'Utgifter', expenses_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:expense).administer? %>
+            <%= active_link_to 'Utgifter', expenses_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:expense).index? %>
             <%= active_link_to 'Lönelogg', fees_path, class: 'text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium' if policy(:fee).show? %>
           </div>
         </div>

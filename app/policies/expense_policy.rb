@@ -1,7 +1,11 @@
 class ExpensePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.all
+      if user.is_worker?
+        scope.where(user: user)
+      elsif user.is_manager?
+        scope.all
+      end
     end
   end
 
@@ -10,7 +14,7 @@ class ExpensePolicy < ApplicationPolicy
   end
 
   def index?
-    user.is_manager?
+    user.is_employee? or user.is_manager?
   end
 
   def create?

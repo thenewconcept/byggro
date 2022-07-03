@@ -1,5 +1,13 @@
 <div class="bg-white shadow overflow-hidden rounded-md p-5">
-  <h1 class="mb-4 text-lg">Utgifter</h1>
+    <h1 class="text-2xl font-bold mb-2"> 
+      Utgifter
+      <small class="text-sm"> <%= l @from.to_date %> — <%= l @to.to_date %> </small>
+    </h1>
+
+    <div class="mb-4 text-sm">
+      <%= link_to 'Förra månaden', url_for(last_month), class: 'mr-4' %>
+      <%= link_to 'Nästa månad', url_for(next_month) %>
+    </div>
   <div class="mb-4 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
     <table class="table-auto min-w-full divide-y divide-gray-300 text-sm">
       <thead class="bg-gray-50">

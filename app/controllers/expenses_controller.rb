@@ -2,10 +2,11 @@ class ExpensesController < ProtectedController
   before_action :set_project
   def index
     authorize(:expense)
+
     @from = params[:from] ? Time.zone.parse(params[:from]) : Time.zone.now.beginning_of_month
     @to   = params[:to] ? Time.zone.parse(params[:to]) : Time.zone.now.end_of_month
 
-    @expenses = Expense.where(spent_on: @from..@to).order(spent_on: :desc)
+    @expenses = policy_scope(Expense).where(spent_on: @from..@to).order(spent_on: :desc)
   end
 
   def new
