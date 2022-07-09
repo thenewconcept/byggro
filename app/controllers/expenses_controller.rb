@@ -8,7 +8,7 @@ class ExpensesController < ProtectedController
     @from = params[:from] ? Time.zone.parse(params[:from]) : Time.zone.now.beginning_of_month
     @to   = params[:to] ? Time.zone.parse(params[:to]) : Time.zone.now.end_of_month
 
-    @expenses = policy_scope(Expense).where(spent_on: @from..@to).order(spent_on: :desc)
+    @expenses = policy_scope(Expense).search(params)
   end
 
   def new

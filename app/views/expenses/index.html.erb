@@ -5,8 +5,8 @@
     </h1>
 
     <div class="mb-4 text-sm">
-      <%= link_to 'Förra månaden', url_for(last_month), class: 'mr-4' %>
-      <%= link_to 'Nästa månad', url_for(next_month) %>
+      <%= link_to 'Förra månaden', url_for(request.query_parameters.merge(last_month)), class: 'mr-4' %>
+      <%= link_to 'Nästa månad', url_for(request.query_parameters.merge(next_month)) %>
     </div>
 
     <%= link_to 'Ny utgift', new_expense_path, class: 'btn-primary btn-sm my-2' if policy(:expense).create? %>
