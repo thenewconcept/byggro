@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_09_134351) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_09_145734) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -171,6 +171,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_09_134351) do
     t.date "completed_on"
     t.bigint "client_id"
     t.date "payed_on"
+    t.integer "seller_id"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["status"], name: "index_projects_on_status"
   end
@@ -211,6 +212,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_09_134351) do
     t.string "last_name"
     t.string "presentation"
     t.string "phone"
+    t.boolean "is_seller", default: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
