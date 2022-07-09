@@ -1,5 +1,5 @@
 <%= turbo_frame_tag 'new_expense' do %>
-  <%= link_to "Ny utgift", new_project_expense_path(@project), class: 'inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:text-white' if policy(:expense).create? %>
+  <%= link_to "Ny utgift", new_project_expense_path(@project), class: 'btn-primary btn-sm' if policy(:expense).create? %>
 <%  end %>
 
 <div class="my-4 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
