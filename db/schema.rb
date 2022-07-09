@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_09_145734) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_09_161406) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -187,6 +187,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_09_145734) do
     t.string "reportee_type"
     t.bigint "reportee_id"
     t.integer "fee"
+    t.boolean "payable", default: true, null: false
     t.index ["reportable_type", "reportable_id"], name: "index_reports_on_reportable"
     t.index ["reportee_type", "reportee_id"], name: "index_reports_on_reportee"
   end

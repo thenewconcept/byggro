@@ -12,6 +12,8 @@ class Report < ApplicationRecord
 
   default_scope { order(date: :desc, created_at: :desc) }
 
+  scope :payable, -> { where(payable: true) }
+
   scope :by_reportees, -> (type) { where(reportee_type: type) } 
   scope :by_checklist, -> (checklist) { where(reportable: checklist) }
   scope :by_project,   -> (project) { where(reportable: project).or(self.where(reportable: project.checklists)).order(id: :asc, date: :asc) }

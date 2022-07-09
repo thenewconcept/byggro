@@ -22,7 +22,7 @@ class Project::Cost
   end
 
   def fees
-    project.reports.by_reportees('Contractor').sum(&:total)
+    project.reports.by_reportees('Contractor').payable.sum(&:total)
   end
 
   def taxes

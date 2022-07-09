@@ -9,6 +9,11 @@
   </div>
 
   <%= f.text_field :note, placeholder: 'Notering', class: 'text-sm mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
+
+  <% if Current.user.is_admin? %>
+    <%= f.check_box :payable, class: "checkbox" %> <%= f.label :payable, 'Arvoderad?', class: 'text-sm my-1' %><br/>
+  <% end %>
+
   <%= f.submit 'Spara', class: "text-sm mt-2 inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
   <%= link_to 'Avbryt', project_path(report.project), target: '_top', class: "text-sm mt-2 inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200" if report.project %>
 <% end %>

@@ -57,6 +57,6 @@ class ReportsController < ProtectedController
 
   private
     def report_params
-      params.require(:report).permit(:date, :time_in_hours, :time_formated, :note, :reportable_type, :reportable_id) 
+      params.require(:report).permit(:date, :time_in_hours, :time_formated, :note, :payable, :reportable_type, :reportable_id) 
     end
 end

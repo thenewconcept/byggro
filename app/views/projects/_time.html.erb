@@ -11,7 +11,7 @@
     </thead>
     <tbody class=" align-top">
         <% @reports.each do |report| %>
-        <tr class="border-t border-gray-100"> 
+        <tr class="border-t border-gray-100 <%= 'text-muted' if !report.payable?%>"> 
           <td class="whitespace-nowrap px-4 py-2 text-gray-600">
             <%= l report.date  %>
           </td>

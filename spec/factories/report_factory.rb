@@ -5,5 +5,6 @@ FactoryBot.define do
     date { Date.today }
     time_in_minutes { 60 }
     note { Faker::Lorem.sentence }
+    payable { true }
   end
 end
