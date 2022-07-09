@@ -34,6 +34,8 @@ class ProjectsController < ProtectedController
   # POST /projects or /projects.json
   def create
     @project = Project.new(project_params)
+    @project.seller = Current.user
+
     authorize @project
 
     respond_to do |format|
@@ -93,6 +95,7 @@ class ProjectsController < ProtectedController
         :bonus, 
         :status, 
         :hourly_rate,
-        :client_id)
+        :client_id,
+        :seller_id)
     end
 end

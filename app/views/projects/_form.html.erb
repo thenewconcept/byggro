@@ -111,15 +111,22 @@
   </div>
 
   <% if policy(project).administer? %>
-    <div class="grid grid-cols-2 gap-2">
+    <div class="grid grid-cols-3 gap-2">
       <div class="my-2">
         <%= form.label :hourly_rate, 'Timarvode', class: 'label' %>
         <%= form.number_field :hourly_rate, class: 'input' %>
       </div>
 
       <div class="my-2">
-        <%= form.label :fixed_fee, 'Projektarvode', class: 'label' %>
+        <%= form.label :fixed_fee, 'Projektlön', class: 'label' %>
         <%= form.text_field :fixed_fee, class: 'input' %>
+      </div>
+
+      <div class="my-2">
+        <div class="flex justify-between">
+          <%= form.label :seller_id, 'Säljare', class: 'label' %>
+        </div>
+        <%= form.collection_select(:seller_id, User.sellers, :id, :display_name, { include_blank: true, selected: project.seller_id }, class: "input") %>
       </div>
     </div>
   <% end %>

@@ -21,6 +21,8 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: 'Invalid email' }
 
+  scope :sellers, -> { where(is_seller: true) }
+
   def roles
     roles = []
     roles << 'Kund' if client.present?
