@@ -109,7 +109,10 @@
           </td>
           <td class="whitespace-nowrap px-2 py-2 text-gray-600 bg-slate-50">
             <%= link_to project.title, project %>
-            <small class="capitalize">Sälj</small>
+            <small class="capitalize">
+            Sälj<br/>
+            Betald <%= l project.payed_on %>
+            </small>
           </td>
         <tr>
         <tr>
