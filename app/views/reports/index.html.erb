@@ -11,7 +11,7 @@
       <%= link_to 'Nästa månad', url_for(next_month) %>
     </div>
 
-    <small> <%= link_to 'Löner/Arvoden', salaries_path if Current.user.is_admin? %> </small>
+    <small> <%= link_to 'Löner/Arvoden', salaries_path %> </small>
     <h2 class="text-1xl font-bold mb-4"> Tidrapporter </h2>
 
     <table class="table-auto min-w-full divide-y divide-gray-300 text-sm border-2 border-slate-100 ring-offset-slate-100 ">
@@ -39,7 +39,7 @@
             </td>
           <tr>
           <% reports.each do |report| %>
-            <tr class="border-t border-gray-100"> 
+            <tr class="<%= class_names('text-muted': !report.payable?) %> border-t border-gray-100"> 
               <td class="whitespace-nowrap px-4 py-2 text-gray-600 capitalize">
                 <%= l report.date, format: :string  %>
               </td>
