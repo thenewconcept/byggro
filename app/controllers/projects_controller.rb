@@ -7,6 +7,8 @@ class ProjectsController < ProtectedController
 
     if params[:status]
       @projects = @projects.where(status: params[:status])
+    elsif params[:search].present?
+      @projects = @projects.search(params[:search])
     else
       @projects = @projects.status_started
     end

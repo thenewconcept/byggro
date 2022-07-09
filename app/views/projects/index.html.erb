@@ -1,5 +1,5 @@
-<div class="p-4 bg-white rounded-md mb-3">
-  <select data-controller="switcher" data-action="change->switcher#switch" id="tabs" name="tabs" class="block focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md">
+<div class="p-4 bg-white rounded-md mb-3 grid grid-cols-2 gap-2">
+  <select data-controller="switcher" data-action="change->switcher#switch" id="tabs" name="tabs" class="input" >
     <option value="<%= projects_path %>" <%= class_names(selected: params[:status].blank?) %>>Pågående</option>
     <option value="<%= projects_path(status: 'upcoming') %>" <%= class_names(selected: params[:status] == 'upcoming') %>>Kommande</option>
     <% if policy(:project).create? %>
@@ -7,6 +7,20 @@
     <% end %>
     <option value="<%= projects_path(status: 'completed') %>" <%= class_names(selected: params[:status] == 'completed') %>>Avslutade</option>
   </select>
+
+  <div class="relative rounded-md shadow-sm">
+    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <%= heroicon('search', options: { class: 'text-muted' }) %>
+    </div>
+
+    <div data-controller="search">
+
+      <%= form_tag projects_path, method: :get, data: { 'search-target': 'form' } do %>
+        <input data-search-target="input" value="<%= params[:search] %>" data-action="search#change" type="text" name="search" class="input pl-10" placeholder="Sök projekt …">
+      <% end %>
+
+    </div>
+  </div>
 </div>
 
 <div class="bg-white shadow overflow-hidden rounded-md">

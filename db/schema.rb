@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_09_161406) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_09_202150) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   # Custom types defined in this database.
@@ -172,8 +173,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_09_161406) do
     t.bigint "client_id"
     t.date "payed_on"
     t.integer "seller_id"
+    t.index ["adress"], name: "index_projects_on_adress", opclass: :gin_trgm_ops, using: :gin
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["status"], name: "index_projects_on_status"
+    t.index ["title"], name: "index_projects_on_title", opclass: :gin_trgm_ops, using: :gin
   end
 
   create_table "reports", force: :cascade do |t|

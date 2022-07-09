@@ -1,6 +1,9 @@
 class Project < ApplicationRecord
   include Bonusable
 
+  include PgSearch::Model
+  pg_search_scope :search, against: [:title, :adress], using: { tsearch: { prefix: true }, trigram: { threshold: 0.1 } }
+
   BONUS_FIXED = ENV['BONUS_FIXED']&.to_f || 0.30
   HOURLY_RATE = ENV['HOURLY_RATE']&.to_i || 500
   ROT_PERCENT = ENV['ROT_PERCENT']&.to_f || 0.3

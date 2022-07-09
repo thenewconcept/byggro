@@ -57,3 +57,5 @@ group :test do
 end
 
 gem "where_exists", "~> 2.0"
+
+gem "pg_search", "~> 2.3"
