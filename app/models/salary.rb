@@ -21,7 +21,7 @@ class Salary
   end
 
   def sales_bonus_projects
-    @sales_bonus_projects ||= Project.where(payed_on: (@from - 2.months)..(@to - 2.months))
+    @sales_bonus_projects ||= Project.where(payed_on: (@from - 2.months)..(@to - 2.months)).where.not(seller: [false, nil, ''])
   end
 
   def payable_hourly_reports
