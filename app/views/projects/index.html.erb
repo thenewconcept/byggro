@@ -1,43 +1,12 @@
-<div class="mb-3">
-  <div class="sm:hidden">
-    <label for="tabs" class="sr-only">Välj vy</label>
-    <select data-controller="switcher" data-action="change->switcher#switch" id="tabs" name="tabs" class="block w-full focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md">
-      <option value="<%= projects_path %>" <%= class_names(selected: params[:status].blank?) %>>Pågående</option>
-      <option value="<%= projects_path(status: 'upcoming') %>" <%= class_names(selected: params[:status] == 'upcoming') %>>Kommande</option>
-      <% if policy(:project).create? %>
-        <option value="<%= projects_path(status: 'draft') %>" <%= class_names(selected: params[:status] == 'draft') %>>Utkast</option>
-      <% end %>
-      <option value="<%= projects_path(status: 'completed') %>" <%= class_names(selected: params[:status] == 'completed') %>>Avslutade</option>
-    </select>
-  </div>
-
-  <div class="hidden sm:block">
-    <nav class="relative z-0 rounded-md shadow flex divide-x divide-gray-200" aria-label="Tabs">
-      <%= link_to projects_path, 
-        class: "text-gray-500" + class_names('text-gray-800': params[:status].blank?) + " rounded-l-md group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10" do %>
-        <span>Pågående</span>
-        <span class="<%= class_names('bg-red-500': params[:status].blank?) %> absolute inset-x-0 bottom-0 h-0.5"></span>
-      <% end %>
-
-      <%= link_to projects_path(status: 'upcoming'), 
-        class: "text-gray-500" + class_names('text-gray-800': params[:status] == 'upcoming') + " group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10" do %>
-        <span>Kommande</span>
-        <span class="<%= class_names('bg-red-500': params[:status]=='upcoming') %> absolute inset-x-0 bottom-0 h-0.5"></span>
-      <% end %>
-
-      <%= link_to projects_path(status: 'draft'), 
-        class: "text-gray-500" + class_names('text-gray-800': params[:status] == 'draft') + " group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10" do %>
-        <span>Utkast</span>
-        <span class="<%= class_names('bg-red-500': params[:status]=='draft') %> absolute inset-x-0 bottom-0 h-0.5"></span>
-      <% end if policy(:project).create? %>
-
-      <%= link_to projects_path(status: 'completed'), 
-        class: "text-gray-500" + class_names('text-gray-800': params[:status] == 'completed') + " rounded-r-md group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10" do %>
-        <span>Avslutade</span>
-        <span class="<%= class_names('bg-red-500': params[:status]=='completed') %> absolute inset-x-0 bottom-0 h-0.5"></span>
-      <% end %>
-    </nav>
-  </div>
+<div class="p-4 bg-white rounded-md mb-3">
+  <select data-controller="switcher" data-action="change->switcher#switch" id="tabs" name="tabs" class="block focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md">
+    <option value="<%= projects_path %>" <%= class_names(selected: params[:status].blank?) %>>Pågående</option>
+    <option value="<%= projects_path(status: 'upcoming') %>" <%= class_names(selected: params[:status] == 'upcoming') %>>Kommande</option>
+    <% if policy(:project).create? %>
+      <option value="<%= projects_path(status: 'draft') %>" <%= class_names(selected: params[:status] == 'draft') %>>Utkast</option>
+    <% end %>
+    <option value="<%= projects_path(status: 'completed') %>" <%= class_names(selected: params[:status] == 'completed') %>>Avslutade</option>
+  </select>
 </div>
 
 <div class="bg-white shadow overflow-hidden rounded-md">
