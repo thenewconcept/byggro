@@ -1,5 +1,7 @@
 class ExpensesController < ProtectedController
-  before_action :set_project
+  before_action :set_project 
+  before_action :set_refferer, only: [:new, :edit]
+
   def index
     authorize(:expense)
 
@@ -10,43 +12,44 @@ class ExpensesController < ProtectedController
   end
 
   def new
-    @expense = @project.expenses.new(spent_on: Date.today)
+    @expense = Expense.new(spent_on: Date.today, project: @project)
+    @expense.user_id = Current.user.id
     authorize(@expense)
   end
 
   def edit
-    @expense = @project.expenses.find(params[:id])
+    @expense = Expense.find(params[:id])
     authorize(@expense)
   end
 
   def create
-    @expense = @project.expenses.new(expense_params)
+    @expense = Expense.new(expense_params)
     @expense.user_id = params[:expense][:user_id].presence || Current.user.id
     authorize(@expense)
 
     if @expense.save!
-      redirect_to project_url(@project, tab: 'expenses')
+      redirect_to_refferer_or(expenses_url, status: 303) 
     else
       render :new
     end
   end
 
   def update
-    @expense = @project.expenses.find(params[:id])
+    @expense = Expense.find(params[:id])
     authorize(@expense)
 
     if @expense.update!(expense_params)
-      redirect_to project_url(@project, tab: 'expenses'), status: 303
+      redirect_to_refferer_or(expenses_url, status: 303) 
     else
       render :edit
     end
   end
 
   def destroy
-    @expense = @project.expenses.find(params[:id])
+    @expense = Expense.find(params[:id])
     authorize(@expense)
     @expense.destroy!
-    redirect_to project_url(@project, tab: 'expenses', status: 303)
+    redirect_to redirect_path, status: 303
   end
 
   private
@@ -55,7 +58,11 @@ class ExpensesController < ProtectedController
       @project = policy_scope(Project).find(params[:project_id]) if params[:project_id]
     end
 
+    def set_refferer
+      super http_referrer
+    end
+
     def expense_params
-      params.require(:expense).permit(:user_id, :spent_on, :amount, :description, :category)
+      params.require(:expense).permit(:user_id, :project_id, :spent_on, :amount, :description, :category)
     end
 end

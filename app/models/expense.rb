@@ -10,4 +10,5 @@ class Expense < ApplicationRecord
 
   validates_associated :user
   validates_presence_of :category, :amount, :spent_on
+  default_scope { order(spent_on: :desc) }
 end

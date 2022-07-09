@@ -1,7 +1,7 @@
 <div class="bg-white overflow-hidden shadow rounded-md divide-y divide-gray-20 ">
   <div class="py-2 px-4">
-    <h1 class="font-bold text-2xl">Ny utgift</h1>
-    <h2 class="font-bold text-1xl"><%= @project.title %></h2>
+    <h1 class="font-bold text-2xl my-2">Ny utgift</h1>
+    <h2 class="font-bold text-1xl my-2"><%= @project.title if @project %></h2>
     <div class="mx-auto w-full">
       <turbo-frame id="new_expense">
         <%= render partial: "form", locals: { expense: @expense } %>

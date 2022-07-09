@@ -2,10 +2,13 @@
   <%= form_with(model: [expense.project, expense], class: "contents", data: { 'turbo-frame': '_top' }) do |f| %>
 
     <div class="grid grid-cols-3 gap-2">
+      <div class="col-span-3 sm:col-span-3 mb-0">
+        <%= f.select(:project_id, Project.all.collect { |p| [ p.title, p.id ] }, { prompt: 'Välj projekt' }, { class: 'input' }) %>
+      </div>
+
       <% if policy(:expense).administer? %>
       <div class="col-span-3 sm:col-span-3 mb-0">
-        <%= f.label :user_id, 'Inköpare', class: 'label' %>
-        <%= f.select(:user_id, User.where_not_exists(:client).collect { |u| [ u.display_name, u.id ] }, {}, { class: 'input' }) %>
+        <%= f.select(:user_id, User.where_not_exists(:client).collect { |u| [ u.display_name, u.id ] }, { prompt: 'Välj inköpare'}, { class: 'input' }) %>
       </div>
       <% end %>
 

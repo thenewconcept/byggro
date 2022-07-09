@@ -30,7 +30,7 @@
             <%= number_to_currency expense.amount %>
           </td>
           <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right font-medium sm:pr-6">
-            <%= link_to 'Ändra', edit_project_expense_path(@project, expense), class: "text-xs text-indigo-700 hover:underline hover:text-indigo-900" if policy(expense).edit? %>
+            <%= link_to 'Ändra', edit_expense_path(expense), class: "text-xs text-indigo-700 hover:underline hover:text-indigo-900" if policy(expense).edit? %>
           </td>
         </tr>
         <% if expense.description.present? %>

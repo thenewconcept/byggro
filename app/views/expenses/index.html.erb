@@ -8,6 +8,9 @@
       <%= link_to 'Förra månaden', url_for(last_month), class: 'mr-4' %>
       <%= link_to 'Nästa månad', url_for(next_month) %>
     </div>
+
+    <%= link_to 'Ny utgift', new_expense_path, class: 'btn-primary btn-sm my-2' if policy(:expense).create? %>
+
   <div class="mb-4 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
     <table class="table-auto min-w-full divide-y divide-gray-300 text-sm">
       <thead class="bg-gray-50">
@@ -42,7 +45,7 @@
             </td>
             <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right font-medium sm:pr-6">
               <turbo-frame target="_top">
-                <%= link_to 'Ändra', edit_project_expense_path(expense.project, expense), class: "text-xs text-indigo-700 hover:underline hover:text-indigo-900" if policy(expense).edit? %>
+                <%= link_to 'Ändra', edit_expense_path(expense), class: "text-xs text-indigo-700 hover:underline hover:text-indigo-900" if policy(expense).edit? %>
               </turbo-frame>
             </td>
           </tr>
