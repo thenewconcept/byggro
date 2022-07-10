@@ -67,28 +67,28 @@
         <% @salaries.payable_bonus_projects.each do |project| %>
           <% project.reportees.each do |reportee| %>
             <% if (Current.user.is_admin? or Current.user.profile == reportee) %>
-            <% @bonus = Bonus::Calculator.new(project).bonus_for(reportee) %>
-            <% unless @bonus.zero? %>
-
-            <tr class="border-t-2 border-gray-400 text-md text-gray-900"> 
-              <td class="whitespace-nowrap px-4 py-2 text-gray-600 bg-slate-50">
-                <%= reportee.display_name %> <small><%= reportee.primary_role %></small> <br/>
-                <span class="font-medium text-md">
-                  Bonus <%= number_to_currency @bonus %><br/>
-                </span>
-              </td>
-              <td class="whitespace-nowrap px-2 py-2 text-gray-600 bg-slate-50">
-                <%= link_to project.title, project %>
-                <small class="capitalize"><%= project.bonus %></small>
-              </td>
-            <tr>
-            <% end %>
-            <% end %>
+              <% @bonus = Bonus::Calculator.new(project).bonus_for(reportee) %>
+                <% unless @bonus.zero? %>
+                  <tr class="border-t-2 border-gray-400 text-md text-gray-900"> 
+                    <td class="whitespace-nowrap px-4 py-2 text-gray-600 bg-slate-50">
+                      <%= reportee.display_name %> <small><%= reportee.primary_role %></small> <br/>
+                      <span class="font-medium text-md">
+                        Bonus <%= number_to_currency @bonus %><br/>
+                      </span>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 text-gray-600 bg-slate-50">
+                      <%= link_to project.title, project %>
+                      <small class="capitalize"><%= project.bonus %></small>
+                    </td>
+                  <tr>
+                <% end %>
+              <% end %>
           <% end %>
         <% end %>
       </tbody>
     </table>
 
+    <% if (Current.user.is_admin? or Current.user.is_seller?) %>
     <h2 class="text-1xl font-bold my-4"> Säljrapporter </h2>
 
     <table class="table-auto min-w-full divide-y divide-gray-300 text-sm border-2 border-slate-100 ring-offset-slate-100 ">
@@ -100,6 +100,7 @@
       </thead>
       <tbody class=" align-top">
         <% @salaries.sales_bonus_projects.each do |project| %>
+        <% if (Current.user.is_admin? or Current.user == project.seller) %>
         <tr class="border-t-2 border-gray-400 text-md text-gray-900"> 
           <td class="whitespace-nowrap px-4 py-2 text-gray-600 bg-slate-50">
             <%= project.seller.display_name %><br/>
@@ -115,10 +116,11 @@
             </small>
           </td>
         <tr>
-        <tr>
-        </tr>
+        <% end %>
         <% end %>
       </tbody>
     </table>
+
+    <% end %>
   </div>
 </div>
