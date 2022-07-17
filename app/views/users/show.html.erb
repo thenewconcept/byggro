@@ -10,13 +10,12 @@
         <div class="-mt-12 sm:-mt-16">
           <div class="flex justify-between">
             <%= avatar_for @user %>
-            <div class="mt-16 sm:mt-20">
-              <%= link_to edit_user_path(@user), class: 'btn btn-silver' do %>
-                <%= icon_text 'Uppdatera', 'pencil' %>
-              <% end if policy(@user).update? %>
+
+            <div class="inline-flex mt-16 sm:mt-20">
+              <%= link_to icon_text('Switch', 'refresh'), switch_path(id: @user.id), class: "btn btn-silver mr-2" if policy(@user).switch? %>
+              <%= link_to icon_text('Uppdatera', 'pencil'), edit_user_path(@user), class: "btn btn-silver" if policy(@user).update? %>
             </div>
           </div>
-
         </div>
 
         <div class="sm:block 2xl:hidden mt-6 min-w-0 flex-1">

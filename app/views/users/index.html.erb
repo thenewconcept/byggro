@@ -20,7 +20,6 @@
               <dt class="sr-only">Role</dt>
             </dl>
           <% end %>
-          <%= button_to 'Switch', switch_path(id: user.id), class: "mt-2 text-sm inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-100" if policy(user).switch? %>
         </div>
       </li>
       <% end %>
