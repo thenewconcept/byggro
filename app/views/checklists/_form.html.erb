@@ -14,5 +14,3 @@
   <%= f.submit 'Spara', class: "text-sm mt-2 inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
   <%= link_to 'Avbryt', :back, class: "text-sm mt-2 inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-300 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200" %>
 <% end %>
-
-<%= button_to icon_text('Ta bort', 'trash'), [@project, @checklist], method: :delete, class: "my-3 text-xs text-gray-400 hover:text-gray-500" unless @checklist.new_record? %>
