@@ -18,11 +18,11 @@ class ExpensePolicy < ApplicationPolicy
   end
 
   def create?
-    user.is_employee? or user.is_manager?
+    true
   end
 
   def update?
-    record.user == user or user.is_manager?
+    record.user == user or user.is_admin?
   end
 
   def destroy?
