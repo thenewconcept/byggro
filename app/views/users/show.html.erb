@@ -11,7 +11,7 @@
           <div class="flex justify-between">
             <%= avatar_for @user %>
             <div class="mt-16 sm:mt-20">
-              <%= link_to edit_user_path(@user), class: 'btn-silver' do %>
+              <%= link_to edit_user_path(@user), class: 'btn btn-silver' do %>
                 <%= icon_text 'Uppdatera', 'pencil' %>
               <% end if policy(@user).update? %>
             </div>

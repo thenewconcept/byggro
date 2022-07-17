@@ -1,7 +1,7 @@
 class Report < ApplicationRecord
-  attr_accessor :time_in_hours, :time_formated
+  attr_accessor :time_in_hours, :time_formated, :project_id, :checklist_id
 
-  before_validation :set_fee
+  before_validation :set_fee, :set_type
 
   belongs_to :reportee, polymorphic: true
   belongs_to :reportable, polymorphic: true
@@ -38,7 +38,19 @@ class Report < ApplicationRecord
     write_attribute(:time_in_minutes, value.to_f * 60.0)
   end
 
+  def checklist_id
+    reportable_type == 'Checklist' ? reportable_id : nil
+  end
+
   private
+
+  def set_type
+    if self.checklist_id
+      self.reportable = Checklist.find(self.checklist_id)
+    elsif self.project_id
+      self.reportable = Project.find(self.project_id)
+    end
+  end
 
   def set_fee
     unless self.fee = reportee.fees.at_date(self.date)&.amount

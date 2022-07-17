@@ -81,7 +81,7 @@
 
   <div class="px-2 py-3 sm:px-6 flex justify-between">
     <h3 class="leading-6 font-medium text-gray-900">Inbetalningar</h3>
-    <%= link_to "Ny inbetalning", new_project_payment_path(project), class: 'btn-primary' if policy(:payment).create? %>
+    <%= link_to "Ny inbetalning", new_project_payment_path(project), class: 'btn btn-primary' if policy(:payment).create? %>
   </div>
 
   <div class="border-t border-gray-200 px-4 py-5 sm:p-0">

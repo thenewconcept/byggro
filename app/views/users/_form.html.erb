@@ -17,7 +17,7 @@
     <div class="col-span-8 sm:col-span-8">
       <%= form.label :avatar, 'Profilbild', class: 'label' %>
       <%= image_tag user.avatar.variant(:thumb), class: 'inline-block h-20 w-20 rounded-full' if user.avatar.attached? %>
-      <%= form.file_field :avatar, class: 'my-4 w-11/12 md:w-3/4 btn-silver' %>
+      <%= form.file_field :avatar, class: 'my-4 w-11/12 md:w-3/4 btn btn-silver' %>
     </div>
 
     <div class="col-span-4 sm:col-span-2">

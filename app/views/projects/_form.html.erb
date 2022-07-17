@@ -131,11 +131,11 @@
     </div>
   <% end %>
 
-  <%= form.submit class: "btn-primary" %>
+  <%= form.submit class: "btn btn-primary" %>
 <% end %>
 
 <% if !project.new_record? and policy(project).destroy? %>
-  <%= button_to project_path([project]), method: :delete, class: "btn-red mt-4" do %>
+  <%= button_to project_path([project]), method: :delete, class: "btn btn-red mt-4" do %>
     <%= heroicon('trash', options: { class: '-ml-1 mr-1 h-5 w-5'}) %> Ta bort
   <% end %>
 <% end %>

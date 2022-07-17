@@ -1,5 +1,5 @@
 <div class="bg-white overflow-hidden shadow rounded-md divide-y divide-gray-200 p-5">
-  <%= link_to 'Ny kund', new_client_path, class: "btn-primary my-2" if policy(:client).new? %>
+  <%= link_to 'Ny kund', new_client_path, class: "btn btn-primary my-2" if policy(:client).new? %>
   <div class="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
     <table class="table-auto min-w-full divide-y divide-gray-300 text-sm">
       <thead class="bg-gray-50">

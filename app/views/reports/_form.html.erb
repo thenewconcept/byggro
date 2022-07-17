@@ -1,21 +1,24 @@
 <%= form_with(model: [report], class: "contents", data: { 'turbo-frame': '_top' }) do |f| %>
-  <%= f.hidden_field :reportable_type %>
-  <%= f.hidden_field :reportable_id %>
-  <%= f.date_field :date, required: true, class: 'text-sm mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
+  <%= f.hidden_field :project_id, value: params[:project_id] %>
+  <%= f.date_field :date, required: true, class: 'input my-1' %>
+
+  <div>
+    <%= f.select(:checklist_id, report.project.checklists.collect { |c| [ c.title, c.id ] }, { prompt: 'Välj arbetsorder …' }, { class: 'input my-1' }) unless report.reportable_type == 'Checklist' %>
+  </div>
 
   <div data-controller="time">
-    <%= f.text_field :time_formated, placeholder: '0:00', required: true, data: { action: 'blur->time#format keyup->time#update', 'time-target': 'source' }, class: 'text-sm mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
+    <%= f.text_field :time_formated, placeholder: '0:00', required: true, data: { action: 'blur->time#format keyup->time#update', 'time-target': 'source' }, class: 'input my-1' %>
     <%= f.hidden_field :time_in_hours, required: true, data: { 'time-target': 'holder' } %>
   </div>
 
-  <%= f.text_field :note, placeholder: 'Notering', class: 'text-sm mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
+  <%= f.text_field :note, placeholder: 'Notering', class: 'input my-1' %>
 
   <% if Current.user.is_admin? %>
     <%= f.check_box :payable, class: "checkbox" %> <%= f.label :payable, 'Arvoderad?', class: 'text-sm my-1' %><br/>
   <% end %>
 
   <%= f.submit 'Spara', class: "text-sm mt-2 inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
-  <%= link_to 'Avbryt', project_path(report.project), target: '_top', class: "text-sm mt-2 inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200" if report.project %>
+  <%= link_to 'Avbryt', project_path(report.project, tab: 'time'), target: '_top', class: "text-sm mt-2 inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200" if report.project %>
 <% end %>
 
 <div class="float-right">

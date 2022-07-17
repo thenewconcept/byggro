@@ -10,11 +10,11 @@
       </h1>
 
       <div>
-        <%= link_to new_project_path(client_id: @client), class: 'btn-silver' do %>
+        <%= link_to new_project_path(client_id: @client), class: 'btn btn-silver' do %>
           <%= icon_text 'Nytt projekt', 'plus' %>
         <% end if policy(:project).create? %>
 
-        <%= link_to edit_user_path(@client.user), class: 'btn-silver' do %>
+        <%= link_to edit_user_path(@client.user), class: 'btn btn-silver' do %>
           <%= icon_text 'Uppdatera', 'pencil' %>
         <% end if policy(@client).update? %>
       </div>

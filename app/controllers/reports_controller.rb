@@ -9,21 +9,19 @@ class ReportsController < ProtectedController
   end
 
   def new
-    @report = Report.new(
-      date: Date.today,
-      reportable_type: params[:reportable_type],
-      reportable_id: params[:reportable_id]
-    )
+    reportable = params[:project_id] ? Project.find_by(id: params[:project_id]) : Checklist.find_by(id: params[:checklist_id])
+    @report = Report.new(date: Date.today, reportable: reportable)
     authorize(@report)
   end
 
   def create
     @report = Report.new(report_params.merge(reportee: Current.user.profile))
+
     authorize(@report)
 
     if @report.save!
       flash.now[:now] = 'Tidrapporten har sparats.'
-      redirect_to project_url(@report.project)
+      redirect_to project_url(@report.project, tab: 'time')
     else
       render :new
     end
@@ -57,6 +55,6 @@ class ReportsController < ProtectedController
 
   private
     def report_params
-      params.require(:report).permit(:date, :time_in_hours, :time_formated, :note, :payable, :reportable_type, :reportable_id) 
+      params.require(:report).permit(:date, :time_in_hours, :time_formated, :note, :payable, :project_id, :checklist_id) 
     end
 end

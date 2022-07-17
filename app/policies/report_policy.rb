@@ -18,7 +18,7 @@ class ReportPolicy < ApplicationPolicy
   end
 
   def create?
-    user.is_worker? && !record.reportable.status_completed?
+    user.is_worker? && !record&.reportable&.status_completed?
   end
 
   def update?
@@ -26,6 +26,6 @@ class ReportPolicy < ApplicationPolicy
   end
 
   def destroy?
-    (record.reportee == user.profile && record.date > 5.days.ago) || user.is_manager?
+    !record.new_record? and (record.reportee == user.profile && record.date > 5.days.ago) || user.is_manager?
   end
 end

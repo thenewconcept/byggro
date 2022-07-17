@@ -75,7 +75,7 @@
   </div>
 
   <div class="bg-white rounded-md py-2 px-2 my-4 border-2 border-slate-200">
-    <%= form.submit 'Spara', class: "btn-primary" %>
-    <%= link_to "Nytt projekt", new_project_path(client_id: @client), class: 'btn-primary' if policy(:project).create? %>
+    <%= form.submit 'Spara', class: "btn btn-primary" %>
+    <%= link_to "Nytt projekt", new_project_path(client_id: @client), class: 'btn btn-primary' if policy(:project).create? %>
   </div>
 <% end %>

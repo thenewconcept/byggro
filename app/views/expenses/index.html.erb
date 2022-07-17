@@ -9,7 +9,7 @@
       <%= link_to 'Nästa månad', url_for(request.query_parameters.merge(next_month)) %>
     </div>
 
-    <%= link_to 'Ny utgift', new_expense_path, class: 'btn-primary btn-sm my-2' if policy(:expense).create? %>
+    <%= link_to 'Ny utgift', new_expense_path, class: 'btn btn-primary btn-sm my-2' if policy(:expense).create? %>
 
   <div class="mb-4 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
     <table class="table-auto min-w-full divide-y divide-gray-300 text-sm">
