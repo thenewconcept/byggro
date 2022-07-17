@@ -12,7 +12,7 @@
             <%= avatar_for @user %>
 
             <div class="inline-flex mt-16 sm:mt-20">
-              <%= link_to icon_text('Switch', 'refresh'), switch_path(id: @user.id), class: "btn btn-silver mr-2" if policy(@user).switch? %>
+              <%= button_to icon_text('Switch', 'refresh'), switch_path(id: @user.id), class: "btn btn-silver mr-2" if policy(@user).switch? %>
               <%= link_to icon_text('Uppdatera', 'pencil'), edit_user_path(@user), class: "btn btn-silver" if policy(@user).update? %>
             </div>
           </div>
