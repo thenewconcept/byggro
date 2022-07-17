@@ -4,10 +4,9 @@
     <%= render project.checklists.order(position: :asc) %>
 
     <div class="inline-flex">
-      <%= link_to icon_text("Sortera", 'switch-vertical'), project_checklists_path(@project), class: 'btn btn-silver btn-sm mr-2' %>
-
       <%= button_to project_checklists_path(@project, method: :post), class: 'btn btn-admin btn-sm' do %>
         <%= icon_text('Ny arbetsorder', 'plus-circle') %>
       <% end if policy(@project).checklist?  %>
+      <%= link_to icon_text("Sortera", 'switch-vertical'), project_checklists_path(@project), class: 'btn btn-silver btn-sm ml-2' if policy(@project).update? %>
     </div>
   </turbo-frame>

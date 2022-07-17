@@ -78,6 +78,10 @@ class User < ApplicationRecord
     contractor.present?
   end
 
+  def is_employed?
+    employee.present? || intern.present?
+  end
+
   def is_employee?
     employee.present?
   end

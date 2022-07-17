@@ -18,7 +18,7 @@ class ChecklistPolicy < ApplicationPolicy
   end
 
   def meta?
-    !user.is_contractor? and !record.project.bonus_fixed?
+    user.is_employee? and !record.project.bonus_fixed?
   end
   
   def salary?

@@ -29,9 +29,14 @@
       </div>
 
       <div>
-        <%= render "projects/meta/#{@project.bonus}", reportable: checklist if policy(checklist).meta? %>
-        <%= icon_badge("#{number_to_currency(checklist.amount)}", 'eye-off', class: 'silver') if policy(:checklist).create? %>
-        <%= icon_badge "ROT", 'check', class: 'gray' if checklist.is_rot? %>
+
+        <% if policy(checklist).meta? %>
+          <%= render "projects/meta/#{@project.bonus}", reportable: checklist %>
+          <%= icon_badge "ROT", 'check', class: 'gray' if checklist.is_rot? %>
+        <% end %>
+
+        <%= icon_badge("#{number_to_currency(checklist.amount)}", 'shield-check', class: 'silver') if policy(:checklist).create? %>
+
       </div>
     </turbo-frame>
 
