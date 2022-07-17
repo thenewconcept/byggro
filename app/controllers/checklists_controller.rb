@@ -1,4 +1,9 @@
 class ChecklistsController < ProtectedController
+  def index
+    @project = Project.find(params[:project_id])
+    @checklists = @project.checklists.order(:position)
+  end
+
   def edit
     @project = Project.find(params[:project_id])
     @checklist = @project.checklists.find(params[:id])
@@ -43,6 +48,6 @@ class ChecklistsController < ProtectedController
 
   private
     def checklist_params
-      params.require(:checklist).permit(:title, :amount, :is_rot)
+      params.require(:checklist).permit(:title, :amount, :is_rot, :position)
     end
 end

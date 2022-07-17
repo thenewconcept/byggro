@@ -21,7 +21,7 @@ class Project < ApplicationRecord
   has_rich_text :description
   has_many :payments, dependent: :destroy
   has_many :expenses, dependent: :destroy
-  has_many :checklists, dependent: :destroy
+  has_many :checklists, -> { order(position: :asc) }, dependent: :destroy
   has_many :todos, through: :checklists
 
   has_many :assignments

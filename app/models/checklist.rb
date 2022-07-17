@@ -1,5 +1,6 @@
 class Checklist < ApplicationRecord
   include Bonusable
+  acts_as_list scope: :project
   before_destroy :destroyable?
 
   belongs_to :project
