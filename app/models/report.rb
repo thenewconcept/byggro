@@ -2,7 +2,7 @@ class Report < ApplicationRecord
   attr_accessor :time_in_hours, :time_formated, :project_id, :checklist_id
 
   before_validation :set_fee
-  before_create :set_type
+  before_validation :set_type, on: :create
 
   belongs_to :reportee, polymorphic: true
   belongs_to :reportable, polymorphic: true
