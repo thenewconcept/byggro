@@ -21,7 +21,10 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: 'Invalid email' }
 
+  scope :active, -> { where(active: true) }
   scope :sellers, -> { where(is_seller: true) }
+  scope :contractors, -> { where_exists(:contractor) }
+  scope :employees, -> { where_not_exists(:employee) }
 
   def roles
     roles = []
