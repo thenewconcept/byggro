@@ -24,7 +24,7 @@ class User < ApplicationRecord
   scope :active, -> { where(active: true) }
   scope :sellers, -> { where(is_seller: true) }
   scope :contractors, -> { where_exists(:contractor) }
-  scope :employees, -> { where_not_exists(:employee) }
+  scope :employees, -> { where_not_exists(:contractor) }
 
   def roles
     roles = []
