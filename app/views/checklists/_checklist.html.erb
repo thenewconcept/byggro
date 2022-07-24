@@ -1,61 +1,58 @@
-  <turbo-frame id="<%= dom_id checklist %>">
-<div data-controller="toggle" class="bg-gray-200 ring-2 ring-gray-100 rounded-md py-2 px-3 mb-5">
+<turbo-frame id="<%= dom_id checklist %>">
+  <div data-controller="toggle" class="bg-gray-200 ring-2 ring-gray-100 rounded-md py-2 px-3 mb-5">
     
-    <turbo-frame id="<%= dom_id checklist, :title %>">
-      <div class="flex justify-between">
-        <h6 class="font-bold mb-1"> <%= checklist.title %> </h6>
+      <turbo-frame id="<%= dom_id checklist, :title %>">
+        <div class="flex justify-between">
+          <h6 class="font-bold mb-1"> <%= checklist.title %> </h6>
+          <div class="relative inline-block text-left">
 
-        <div class="relative inline-block text-left">
+              <button 
+                data-action="click->toggle#switch" 
+                data-toggle-id-param="<%= dom_id checklist, 'tasks' %>"
+                class="inline rounded-full items-center text-gray-400 hover:text-gray-600"> <%= heroicon 'eye' %> </button>
 
-            <button 
-              data-action="click->toggle#switch" 
-              data-toggle-id-param="<%= dom_id checklist, 'tasks' %>"
-              class="inline rounded-full items-center text-gray-400 hover:text-gray-600"> <%= heroicon 'eye' %> </button>
+            <% if policy(:checklist).create? %>
+              <button type="button" 
+                data-action="toggle#switch" 
+                data-toggle-id-param="<%= dom_id(checklist, 'edit-menu') %>" 
+                class="inline rounded-full items-center text-gray-400 hover:text-gray-600 " id="menu-button"> <%= heroicon 'dots-vertical' %> </button>
 
-          <% if policy(:checklist).create? %>
-            <button type="button" 
-              data-action="toggle#switch" 
-              data-toggle-id-param="<%= dom_id(checklist, 'edit-menu') %>" 
-              class="inline rounded-full items-center text-gray-400 hover:text-gray-600 " id="menu-button"> <%= heroicon 'dots-vertical' %> </button>
-
-            <div id="<%= dom_id(checklist, 'edit-menu') %>" class="hidden origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-              <div class="py-1">
-                <%= link_to 'Uppdatera', edit_project_checklist_path(checklist.project, checklist), class: 'text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100' %>
-                <%= link_to 'Radera', [@project, checklist], data: { turbo_method: :delete, turbo_confirm: 'Är du säker?' }, class: 'text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100' %>
+              <div id="<%= dom_id(checklist, 'edit-menu') %>" class="hidden origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div class="py-1">
+                  <%= link_to 'Uppdatera', edit_project_checklist_path(checklist.project, checklist), class: 'text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100' %>
+                  <%= link_to 'Radera', [@project, checklist], data: { turbo_method: :delete, turbo_confirm: 'Är du säker?' }, class: 'text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100' %>
+                </div>
               </div>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
         </div>
+
+        <div>
+          <% if policy(checklist).meta? %>
+            <%= render "projects/meta/#{@project.bonus}", reportable: checklist %>
+            <%= icon_badge "ROT", 'check', class: 'gray' if checklist.is_rot? %>
+          <% end %>
+          <%= icon_badge("#{number_to_currency(checklist.amount)}", 'shield-check', class: 'silver') if policy(:checklist).create? %>
+        </div>
+      </turbo-frame>
+
+      <div id="<%= dom_id checklist, 'tasks' %>">
+        <div class="my-2">
+          <ul
+            class="list-none"
+            data-controller="sortable"
+            data-sortable-animation-value="250"
+            data-sortable-param-name-value="todo[position]"
+            data-sortable-handle-value=".handle"
+            >
+            <%= render(checklist.todos) %>
+          </ul>
+        </div>
+
+        <%= turbo_frame_tag "new_todo", class: "block p-2 bg-gray-100 rounded-md" do %>
+          <%= link_to icon_text('Ny uppgift', 'plus-circle'), new_project_checklist_todo_path(checklist.project, checklist), class: "btn btn-admin btn-sm" %>
+        <% end if policy(checklist.project).todo? %>
       </div>
 
-      <div>
-
-        <% if policy(checklist).meta? %>
-          <%= render "projects/meta/#{@project.bonus}", reportable: checklist %>
-          <%= icon_badge "ROT", 'check', class: 'gray' if checklist.is_rot? %>
-        <% end %>
-
-        <%= icon_badge("#{number_to_currency(checklist.amount)}", 'shield-check', class: 'silver') if policy(:checklist).create? %>
-
-      </div>
-    </turbo-frame>
-
-    <div id="<%= dom_id checklist, 'tasks' %>">
-      <div class="my-2">
-        <ul
-          class="list-none"
-          data-controller="sortable"
-          data-sortable-animation-value="250"
-          data-sortable-param-name-value="todo[position]"
-          data-sortable-handle-value=".handle"
-          >
-          <%= render(checklist.todos) %>
-        </ul>
-      </div>
-
-      <%= turbo_frame_tag "new_todo", class: "block p-2 bg-gray-100 rounded-md" do %>
-        <%= link_to icon_text('Ny uppgift', 'plus-circle'), new_project_checklist_todo_path(checklist.project, checklist), class: "btn btn-admin btn-sm" %>
-      <% end if policy(checklist.project).todo? %>
-    </div>
-</div>
-  </turbo-frame>
+  </div>
+</turbo-frame>
