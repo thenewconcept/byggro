@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_18_050512) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_03_163714) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,8 +59,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_18_050512) do
   create_table "assignments", force: :cascade do |t|
     t.bigint "project_id", null: false
     t.bigint "user_id", null: false
-    t.datetime "updated_at"
-    t.datetime "created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["project_id"], name: "index_assignments_on_project_id"
     t.index ["user_id"], name: "index_assignments_on_user_id"
   end
@@ -137,6 +137,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_18_050512) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_interns_on_user_id"
+  end
+
+  create_table "notes", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "user_id", null: false
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_notes_on_project_id"
+    t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
   create_table "pages", force: :cascade do |t|
@@ -230,6 +240,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_18_050512) do
   add_foreign_key "expenses", "projects"
   add_foreign_key "expenses", "users"
   add_foreign_key "interns", "users"
+  add_foreign_key "notes", "projects"
+  add_foreign_key "notes", "users"
   add_foreign_key "payments", "projects"
   add_foreign_key "projects", "clients"
   add_foreign_key "todos", "checklists"

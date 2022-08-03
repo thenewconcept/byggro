@@ -23,6 +23,7 @@ class Project < ApplicationRecord
   has_many :expenses, dependent: :destroy
   has_many :checklists, -> { order(position: :asc) }, dependent: :destroy
   has_many :todos, through: :checklists
+  has_many :notes
 
   has_many :assignments
   has_many :users, through: :assignments
