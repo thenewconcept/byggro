@@ -1,0 +1,9 @@
+<div class="w-full">
+  <%= turbo_frame_tag "new_note" do %>
+    <%= link_to icon_text('Ny notering', 'plus-circle'), new_project_note_path(project), class: "btn btn-green btn-sm" %>
+  <% end %>
+
+  <div id="notes" class="min-w-full">
+    <%= render project.notes %>
+  </div>
+</div>

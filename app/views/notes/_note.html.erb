@@ -1,0 +1,12 @@
+<div id="<%= dom_id note %>" class="text-gray-800 bg-amber-50 rounded-sm px-3 py-2 my-2 text-sm">
+
+<%= turbo_frame_tag dom_id(note), :edit do %>
+  <small>
+    <%= l note.created_at, format: :short %> <span class="text-gray-500">av</span> <%= note.user.display_name %>
+    <%= link_to 'Edit', edit_project_note_path(@project, note), class: 'ml-2' if policy(note).edit? %>
+  </small>
+
+  <%= simple_format note.content, class: 'my-2' %>
+<% end %>
+
+</div>
