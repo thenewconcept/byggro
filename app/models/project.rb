@@ -9,6 +9,7 @@ class Project < ApplicationRecord
   enum bonus: [ :none, :hourly, :fixed ], _prefix: true
   enum status: { draft: 'draft', upcoming: 'upcoming', started: 'started', completed: 'completed' }, _prefix: true
 
+  scope :by_contractor, -> (contractor) { joins(:contractors).where(contractors: {id: contractor}) }
   scope :status_ongoing, -> { where(status: ['draft', 'upcoming', 'started']) }
 
   validates :material_amount, :misc_amount, numericality: true
@@ -19,6 +20,7 @@ class Project < ApplicationRecord
   before_validation :check_completion, if: -> { status_changed?(to: 'completed') }
 
   has_rich_text :description
+  has_and_belongs_to_many :contractors
   has_many :payments, dependent: :destroy
   has_many :expenses, dependent: :destroy
   has_many :checklists, -> { order(position: :asc) }, dependent: :destroy

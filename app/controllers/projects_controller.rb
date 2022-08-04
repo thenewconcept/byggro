@@ -96,6 +96,8 @@ class ProjectsController < ProtectedController
         :status, 
         :hourly_rate,
         :client_id,
-        :seller_id)
+        :seller_id,
+        contractor_ids: [],
+      )
     end
 end

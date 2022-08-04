@@ -3,6 +3,8 @@ class ProjectPolicy < ApplicationPolicy
     def resolve
       if user.is_manager?
         scope.all
+      elsif user.is_contractor?
+        scope.by_contractor(user.contractor)
       else
         scope.not_status_draft
       end

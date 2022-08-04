@@ -1,4 +1,4 @@
-<%= form_with(model: project, class: "contents") do |form| %>
+<%= form_with(model: project, class: "contents") do |f| %>
   <% if project.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
       <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
@@ -19,8 +19,8 @@
       <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
         <div class="flex items-center">
         <% Project.statuses.keys.each do |status| %>
-          <%= form.radio_button :status, status, class: 'ml-2 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300' %>
-          <%= form.label t("project.status.#{status}"), for: "project_status_#{status}", class: 'ml-2 block text-sm font-medium text-gray-700' %>
+          <%= f.radio_button :status, status, class: 'ml-2 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300' %>
+          <%= f.label t("project.status.#{status}"), for: "project_status_#{status}", class: 'ml-2 block text-sm font-medium text-gray-700' %>
         <% end %>
         </div>
       </div>
@@ -35,8 +35,8 @@
       <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
         <div class="flex items-center">
         <% Project.bonus.keys.each do |bonus| %>
-          <%= form.radio_button :bonus, bonus, class: 'ml-2 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300' %>
-          <%= form.label t("project.bonus.#{bonus}"), for: "project_bonus_#{bonus}", class: 'ml-2 block text-sm font-medium text-gray-700' %>
+          <%= f.radio_button :bonus, bonus, class: 'ml-2 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300' %>
+          <%= f.label t("project.bonus.#{bonus}"), for: "project_bonus_#{bonus}", class: 'ml-2 block text-sm font-medium text-gray-700' %>
         <% end %>
         </div>
       </div>
@@ -46,9 +46,9 @@
   <div class="grid grid-cols-3 gap-2">
     <div class="my-2">
       <div class="flex justify-between">
-        <%= form.label :client_id, 'Kund', class: 'label' %>
+        <%= f.label :client_id, 'Kund', class: 'label' %>
       </div>
-      <%= form.collection_select(:client_id, 
+      <%= f.collection_select(:client_id, 
         Client.all, :id, :display_name, 
         { prompt: "Välj kund ...", selected: project.client&.id }, 
         class: "input") %>
@@ -59,79 +59,92 @@
     </div>
 
     <div class="my-2">
-      <%= form.label :title, 'Projektnamn', class: 'label' %>
-      <%= form.text_field :title, class: 'input' %>
+      <%= f.label :title, 'Projektnamn', class: 'label' %>
+      <%= f.text_field :title, class: 'input' %>
     </div>
 
     <div class="my-2">
-      <%= form.label :adress, 'Objektadress', class: 'label' %>
-      <%= form.text_field :adress, class: 'input' %>
+      <%= f.label :adress, 'Objektadress', class: 'label' %>
+      <%= f.text_field :adress, class: 'input' %>
     </div>
   </div>
 
   <div class="my-5">
-    <%= form.label :description, 'Information', class: 'label' %>
-    <%= form.rich_text_area :description, class: 'input' %>
+    <%= f.label :description, 'Information', class: 'label' %>
+    <%= f.rich_text_area :description, class: 'input' %>
   </div>
 
   <div class="grid sm:grid-cols-4 grid-cols-2 gap-2">
     <div class="my-2">
-      <%= form.label :starts_on, 'Startdatum', class: 'label' %>
-      <%= form.date_field :starts_on, class: 'input' %>
+      <%= f.label :starts_on, 'Startdatum', class: 'label' %>
+      <%= f.date_field :starts_on, class: 'input' %>
     </div>
 
     <div class="my-2">
-      <%= form.label :due_on, 'Deadline', class: 'label' %>
-      <%= form.date_field :due_on, class: 'input' %>
+      <%= f.label :due_on, 'Deadline', class: 'label' %>
+      <%= f.date_field :due_on, class: 'input' %>
     </div>
 
     <% if policy(project).administer? %>
       <div class="my-2">
-        <%= form.label :completed_on, 'Avslutat', class: 'label' %>
-        <%= form.date_field :completed_on, class: 'input' %>
+        <%= f.label :completed_on, 'Avslutat', class: 'label' %>
+        <%= f.date_field :completed_on, class: 'input' %>
       </div>
 
       <div class="my-2">
-        <%= form.label :payed_on, 'Betald', class: 'label' %>
-        <%= form.date_field :payed_on, class: 'input' %>
+        <%= f.label :payed_on, 'Betald', class: 'label' %>
+        <%= f.date_field :payed_on, class: 'input' %>
       </div>
     <% end %>
   </div>
 
   <div class="grid grid-cols-2 gap-2">
     <div class="my-2">
-      <%= form.label :material_amount, 'Materialkostnader', class: 'label' %>
-      <%= form.text_field :material_amount, class: 'input' %>
+      <%= f.label :material_amount, 'Materialkostnader', class: 'label' %>
+      <%= f.text_field :material_amount, class: 'input' %>
     </div>
 
     <div class="my-2">
-      <%= form.label :misc_amount, 'Övriga kostnader', class: 'label' %>
-      <%= form.text_field :misc_amount, class: 'input' %>
+      <%= f.label :misc_amount, 'Övriga kostnader', class: 'label' %>
+      <%= f.text_field :misc_amount, class: 'input' %>
     </div>
   </div>
 
   <% if policy(project).administer? %>
     <div class="grid grid-cols-3 gap-2">
       <div class="my-2">
-        <%= form.label :hourly_rate, 'Timarvode', class: 'label' %>
-        <%= form.number_field :hourly_rate, class: 'input' %>
+        <%= f.label :hourly_rate, 'Timarvode', class: 'label' %>
+        <%= f.number_field :hourly_rate, class: 'input' %>
       </div>
 
       <div class="my-2">
-        <%= form.label :fixed_fee, 'Projektlön', class: 'label' %>
-        <%= form.text_field :fixed_fee, class: 'input' %>
+        <%= f.label :fixed_fee, 'Projektlön', class: 'label' %>
+        <%= f.text_field :fixed_fee, class: 'input' %>
       </div>
 
       <div class="my-2">
         <div class="flex justify-between">
-          <%= form.label :seller_id, 'Säljare', class: 'label' %>
+          <%= f.label :seller_id, 'Säljare', class: 'label' %>
         </div>
-        <%= form.collection_select(:seller_id, User.sellers, :id, :display_name, { include_blank: true, selected: project.seller_id }, class: "input") %>
+        <%= f.collection_select(:seller_id, User.sellers, :id, :display_name, { include_blank: true, selected: project.seller_id }, class: "input") %>
       </div>
     </div>
   <% end %>
 
-  <%= form.submit class: "btn btn-primary" %>
+<div class="my-2">
+    <div class="flex justify-between">
+      <%= f.label :contractor_ids, 'Underentrepenörer', class: 'label' %>
+    </div>
+
+      <%= f.collection_check_boxes(:contractor_ids, Contractor.all, :id, :display_name) do |cb| %>
+       <%= cb.label do %>
+        <%= cb.check_box class: 'focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded ml-2' %> 
+        <span class="text-sm"><%= cb.text %></span>
+       <% end %>
+      <% end %>
+</div>
+
+  <%= f.submit class: "btn btn-primary" %>
 <% end %>
 
 <% if !project.new_record? and policy(project).destroy? %>
