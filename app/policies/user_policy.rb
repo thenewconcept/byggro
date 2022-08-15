@@ -34,6 +34,6 @@ class UserPolicy < ApplicationPolicy
   end
 
   def employment?
-   (user.is_employee? and (record == user and user.profile_complete?)) or user.is_admin? 
+   record.is_employee? and (record == user and record.profile_complete? or user.is_admin?)
   end
 end
