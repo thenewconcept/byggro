@@ -31,7 +31,7 @@
             <%= report.reportable.title %>
           </td>
           <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right font-medium sm:pr-6">
-            <%= link_to 'Ändra', edit_report_path(report), class: "btn btn-silver btn-sm" if policy(report).edit? %>
+            <%= link_to 'Ändra', edit_project_report_path(@project, report), class: "btn btn-silver btn-sm" if policy(report).edit? %>
           </td>
         </tr>
           <% if report.note.present? %>

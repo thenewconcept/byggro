@@ -1,4 +1,6 @@
 class ReportsController < ProtectedController
+  before_action :set_refferer, only: [:new, :edit]
+
   def index
     authorize(:report)
 
@@ -21,7 +23,7 @@ class ReportsController < ProtectedController
 
     if @report.save!
       flash.now[:now] = 'Tidrapporten har sparats.'
-      redirect_to project_url(@report.project, tab: 'time')
+      redirect_to_refferer_or project_url(@report.project, tab: 'time')
     else
       render :new
     end
@@ -36,8 +38,9 @@ class ReportsController < ProtectedController
     @report    = Report.find(params[:id])
     authorize(@report)
 
+
     if @report.update!(report_params)
-      redirect_to project_url(@report.project, tab: 'time')
+      redirect_to_refferer_or project_url(@report.project, tab: 'time')
     else
       render :edit
     end
@@ -54,7 +57,11 @@ class ReportsController < ProtectedController
   end
 
   private
+    def set_refferer
+      super http_referrer
+    end
+
     def report_params
-      params.require(:report).permit(:date, :time_in_hours, :time_formated, :note, :payable, :project_id, :checklist_id) 
+      params.require(:report).permit(:date, :time_in_hours, :time_formated, :note, :payable, :reportable_id, :reportable_type)
     end
 end

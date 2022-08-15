@@ -1,9 +1,10 @@
 <%= form_with(model: [report], class: "contents", data: { 'turbo-frame': '_top' }) do |f| %>
-  <%= f.hidden_field :project_id, value: params[:project_id] %>
+  <%= f.hidden_field :reportable_type, value: 'Checklist' %>
+  <%= f.hidden_field :reportable_id, value: params[:reportable_id] if params[:reportable_id] %>
   <%= f.date_field :date, required: true, class: 'input my-1' %>
 
   <div>
-    <%= f.select(:checklist_id, report.project.checklists.collect { |c| [ c.title, c.id ] }, { prompt: 'Välj arbetsorder …' }, { class: 'input my-1' }) unless report.reportable_type == 'Checklist' %>
+    <%= f.select(:reportable_id, report.project.checklists.collect { |c| [ c.title, c.id ] }, { prompt: 'Välj arbetsorder …' }, { class: 'input my-1' }) unless params[:reportable_id] %>
   </div>
 
   <div data-controller="time">
