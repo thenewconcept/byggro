@@ -59,8 +59,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_04_111847) do
   create_table "assignments", force: :cascade do |t|
     t.bigint "project_id", null: false
     t.bigint "user_id", null: false
-    t.datetime "updated_at"
-    t.datetime "created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["project_id"], name: "index_assignments_on_project_id"
     t.index ["user_id"], name: "index_assignments_on_user_id"
   end
@@ -173,6 +173,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_04_111847) do
   end
 
   create_table "projects", force: :cascade do |t|
+    t.bigint "client_id"
     t.string "title"
     t.string "adress"
     t.string "description"
@@ -182,15 +183,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_04_111847) do
     t.datetime "updated_at", null: false
     t.integer "bonus", default: 0
     t.float "hourly_rate", default: 0.0, null: false
+    t.float "fixed_fee"
     t.enum "status", default: "draft", null: false, enum_type: "project_status"
     t.date "starts_on"
     t.date "due_on"
-    t.float "fixed_fee"
     t.date "completed_on"
-    t.bigint "client_id"
     t.date "payed_on"
     t.integer "seller_id"
-    t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["status"], name: "index_projects_on_status"
   end
 
@@ -241,7 +240,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_04_111847) do
   add_foreign_key "assignments", "projects"
   add_foreign_key "assignments", "users"
   add_foreign_key "checklists", "projects"
-  add_foreign_key "clients", "users"
   add_foreign_key "contractors", "users"
   add_foreign_key "employees", "users"
   add_foreign_key "expenses", "projects"
@@ -250,6 +248,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_04_111847) do
   add_foreign_key "notes", "projects"
   add_foreign_key "notes", "users"
   add_foreign_key "payments", "projects"
-  add_foreign_key "projects", "clients"
   add_foreign_key "todos", "checklists"
 end
