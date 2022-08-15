@@ -1,6 +1,7 @@
 class Expense < ApplicationRecord
   CATEGORIES = [
     ['Materialinköp', 'material'],
+    ['Ställning', 'scaffolding'],
     ['Bilkostnad', 'car'],
     ['Övrigt', 'other']
   ]
@@ -13,6 +14,11 @@ class Expense < ApplicationRecord
 
   default_scope { order(spent_on: :desc) }
 
+  def initialize(params)
+    super
+    self.amount = params[:amount].delete(' ').sub(',', '.').to_f if params.present? and params[:amount]
+  end
+
   def self.search(filters)
     scope = all
 
@@ -24,4 +30,5 @@ class Expense < ApplicationRecord
     scope = scope.where(user_id: by) if by.present?
     scope
   end
+
 end

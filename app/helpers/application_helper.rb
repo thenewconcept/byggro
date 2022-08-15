@@ -1,4 +1,7 @@
 module ApplicationHelper
+  def to_float(value)
+    value.delete(' ').sub(',', '.').to_f
+  end
 
   def format_hours(_hours)
     total_seconds = (_hours*60*60).round # to avoid fractional seconds potentially compounding and messing up seconds, minutes and hours
