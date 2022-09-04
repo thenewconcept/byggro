@@ -4,6 +4,12 @@
   <% end if policy(@project).report? %>
 </div>
 
+<% if params[:on] %>
+<div class="text-sm my-4">
+<b>Filter</b> <%= @reports.first.reportable.title %><%= link_to heroicon('x', options: {class: 'h-4'}), project_path(tab: 'time') %>
+</div>
+<% end %>
+
 <div class="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
   <table class="table-auto min-w-full divide-y divide-gray-300 text-sm">
     <thead class="bg-gray-50">
@@ -22,7 +28,7 @@
             <%= l report.date  %>
           </td>
           <td class="whitespace-nowrap px-2 py-2 text-gray-600">
-            <%= link_to report.reportee.user.display_name, project_path(tab: 'time', by: report.reportee.user.id)  %>
+            <%= report.reportee.user.display_name %>
           </td>
           <td class="whitespace-nowrap px-2 py-2 text-gray-600">
             <p> <%= format_hours(report.time_in_hours) %> </p>
@@ -47,7 +53,7 @@
       <tr class="font-medium text-md text-gray-900"> 
           <td class="whitespace-nowrap px-4 py-3.5">Summa</td>
           <td class="whitespace-nowrap px-2 py-3.5"></td>
-          <td class="whitespace-nowrap px-2 py-3.5"> <%= format_hours(project.hours_reported) %> tim </td>
+          <td class="whitespace-nowrap px-2 py-3.5"> <%= format_hours(@reports.sum(&:time_in_hours)) %> tim </td>
           <td class="whitespace-nowrap px-2 py-3.5"></td>
           <td class="whitespace-nowrap px-2 py-3.5"></td>
         </tr>
