@@ -22,7 +22,7 @@ class ExpensePolicy < ApplicationPolicy
   end
 
   def update?
-    record.user == user or user.is_admin?
+    record.user == user or user.is_manager?
   end
 
   def destroy?

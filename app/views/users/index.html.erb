@@ -13,10 +13,12 @@
               <%= user.display_name %>
             </h3>
 
+
             <dl class="mt-1 flex-grow flex flex-col justify-between overflow-hidden">
               <dt class="sr-only">Title</dt>
               <dd class="text-gray-500 text-sm"><%= user.title %></dd>
               <dt class="sr-only">Role</dt>
+              <dd> <div class="text-xs"><%= user.roles if policy(user).create? %></div> </dd>
             </dl>
           <% end %>
         </div>
