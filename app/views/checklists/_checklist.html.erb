@@ -49,13 +49,16 @@
           </ul>
         </div>
 
+      <div class="block p-2 bg-gray-100 rounded-md">
         <%= turbo_frame_tag "new_report" do %>
           <%= link_to icon_text('Ny rapport', 'plus-circle'), new_project_report_path(@project, reportable_id: checklist), class: "btn btn-green btn-sm" %>
         <% end if policy(@project).report? %>
 
-        <%= turbo_frame_tag "new_todo", class: "block p-2 bg-gray-100 rounded-md" do %>
+        <%= turbo_frame_tag "new_todo" "" do %>
           <%= link_to icon_text('Ny uppgift', 'plus-circle'), new_project_checklist_todo_path(checklist.project, checklist), class: "btn btn-admin btn-sm" %>
         <% end if policy(checklist.project).todo? %>
+      </div>
+
       </div>
 
   </div>
