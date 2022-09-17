@@ -2,7 +2,7 @@ class Salary
   attr_accessor :from, :to
   attr_reader :reports
 
-  BONUS_SALES = ENV['BONUS_SALES']&.to_f || 0.05
+  BONUS_SALES = ENV['BONUS_SALES']&.to_f || 0.02
 
   def initialize(from: Time.zone.now.beginning_of_month, to: Time.zone.now.end_of_month)
     @from = from; @to = to;
