@@ -15,6 +15,8 @@ class ProjectsController < ProtectedController
   # GET /projects/1 or /projects/1.json
   def show
     @reports    = Report.by_project(@project)
+    @reports    = @reports.where(reportable_id: params[:on]) if params[:on]
+
     @calculator = Bonus::Calculator.for(@project)
     @costs      = Project::Cost.new(@project)
     authorize(@project, :salary?) if params[:tab] == 'employee'

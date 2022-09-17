@@ -1,10 +1,10 @@
 class ExpensePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user.is_worker?
-        scope.where(user: user)
-      elsif user.is_manager?
+      if user.is_manager?
         scope.all
+      elsif user.is_worker?
+        scope.where(user: user)
       end
     end
   end
@@ -22,7 +22,7 @@ class ExpensePolicy < ApplicationPolicy
   end
 
   def update?
-    record.user == user or user.is_admin?
+    record.user == user or user.is_manager?
   end
 
   def destroy?

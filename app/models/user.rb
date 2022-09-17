@@ -33,7 +33,7 @@ class User < ApplicationRecord
     roles << 'Praktikant' if intern.present?
 
     roles << 'Underentrepenör' if contractor.present?
-    roles << 'Arbetsledare' if is_manager?
+    roles << 'Koordinator' if is_manager?
 
     roles << 'Admin' if is_admin?
     return roles.join(', ')
