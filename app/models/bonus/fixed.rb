@@ -41,7 +41,7 @@ class Bonus::Fixed
   end
 
   def bonus_percent
-    return 0 if reportee.is_a?(Intern)
+    return 0 if reportee.is_a?(Intern) or (employee_hours.zero?)
     return worker_hours / (total_hours - intern_hours) if reportee
     employee_hours / worker_hours
   end

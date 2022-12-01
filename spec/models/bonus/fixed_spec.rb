@@ -36,6 +36,11 @@ RSpec.describe Bonus::Fixed, type: :model do
       it 'returns the project payable bonus percent' do
         expect(Bonus::Fixed.for(project, nil).bonus_percent).to eq(0.75)
       end
+
+      it 'handles zero division' do
+        unreported_project = create(:project) # Implies zero reported hours
+        expect(Bonus::Fixed.for(unreported_project, nil).bonus_percent).to eq(0.0)
+      end
     end
 
     describe '#bonus_total' do
