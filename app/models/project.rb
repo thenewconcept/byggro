@@ -1,7 +1,7 @@
 class Project < ApplicationRecord
   include Bonusable
 
-  BONUS_FIXED = ENV['BONUS_FIXED']&.to_f || 0.30
+  BONUS_FIXED = ENV['BONUS_FIXED']&.to_f || 0.25
   HOURLY_RATE = ENV['HOURLY_RATE']&.to_i || 500
   ROT_PERCENT = ENV['ROT_PERCENT']&.to_f || 0.3
   TARGET_MARGIN = ENV['TARGET_MARGIN']&.to_f || 0.2
