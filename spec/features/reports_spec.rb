@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'reports', :js do
   let(:employee)  { create(:employee) }
   let(:contractor) { create(:contractor)}
-  let(:project) { create(:project, :started) }
+  let(:project) { create(:project, :started, contractors: [contractor]) }
   let(:todo1)   { create(:todo, description: 'Måla köket.', checklist: project.checklists.first ) }
   let(:todo2)   { create(:todo, description: 'Måla vardagsrum.', checklist: project.checklists.first ) }
 
@@ -24,7 +24,7 @@ RSpec.describe 'reports', :js do
         click_link project.title
 
         within "#checklist_#{project.checklists.first.id}" do
-          click_link 'Tidrapport'
+          click_link 'Ny rapport'
         end
 
         fill_in :report_time_formated, with: '2:30'
@@ -52,7 +52,7 @@ RSpec.describe 'reports', :js do
       click_link project.title
 
       within "#checklist_#{project.checklists.first.id}" do
-        click_link 'Tidrapport'
+        click_link 'Ny rapport'
       end
 
       fill_in :report_time_formated, with: '2:30'

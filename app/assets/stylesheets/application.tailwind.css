@@ -49,7 +49,9 @@
   ul { @apply list-disc}
   a { @apply text-sky-800 hover:text-sky-900 }
 
-  .active { @apply bg-red-700 text-white !important }
+  
+  #desktop-nav .active { @apply bg-red-700 text-white !important }
+  #project-nav .active { @apply bg-indigo-100 text-indigo-700 px-3 py-2 font-medium text-sm rounded-md }
 
   .silver { @apply bg-gray-100 border-gray-300 text-gray-500 }
   .gray   { @apply bg-gray-100 border-gray-300 text-gray-800 }

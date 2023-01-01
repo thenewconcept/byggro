@@ -35,6 +35,7 @@ hourly_project = Project.create!(
   bonus: 'hourly',
   material_amount: 10000, 
   misc_amount: 1000, 
+  contractors: [contractor]
 )
 
 # Creates two checklists after save.
@@ -48,6 +49,7 @@ fixed_project = Project.create!(
   bonus: 'fixed',
   material_amount: 8000, 
   misc_amount: 500, 
+  contractors: [contractor]
 )
 
 hourly_project.checklists.first.update(amount: 20000, is_rot: true) 
