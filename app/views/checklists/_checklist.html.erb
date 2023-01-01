@@ -6,16 +6,19 @@
           <h6 class="font-bold mb-1"> <%= checklist.title %> </h6>
           <div class="relative inline-block text-left">
 
-              <button 
-                data-action="click->toggle#switch" 
-                data-toggle-id-param="<%= dom_id checklist, 'tasks' %>"
-                class="inline rounded-full items-center text-gray-400 hover:text-gray-600"> <%= heroicon 'eye' %> </button>
-
+            <button 
+              data-action="click->toggle#switch" 
+              data-toggle-id-param="<%= dom_id checklist, 'tasks' %>"
+              class="inline rounded-full items-center text-gray-400 hover:text-gray-600"> 
+              <%= heroicon 'eye' %> 
+            </button>
             <% if policy(:checklist).create? %>
               <button type="button" 
                 data-action="toggle#switch" 
                 data-toggle-id-param="<%= dom_id(checklist, 'edit-menu') %>" 
-                class="inline rounded-full items-center text-gray-400 hover:text-gray-600 " id="menu-button"> <%= heroicon 'dots-vertical' %> </button>
+                class="inline rounded-full items-center text-gray-400 hover:text-gray-600 " id="menu-button"> 
+                  <%= heroicon 'ellipsis-horizontal' %> 
+              </button>
 
               <div id="<%= dom_id(checklist, 'edit-menu') %>" class="hidden origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div class="py-1">

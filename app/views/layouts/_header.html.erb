@@ -42,7 +42,7 @@
         <div class="flex items-center">
           <div class="flex-shrink-0">
             <%= link_to new_project_path, class: 'btn btn-primary' do %>
-              <%= heroicon('plus-sm', options: { class: '-ml-1 mr-1 h-5 w-5' }) %>
+              <%= heroicon('plus-small', options: { class: '-ml-1 mr-1 h-5 w-5' }) %>
               <span>Nytt projekt</span>
             <% end if Current.user && policy(:project).create? %>
           </div>
