@@ -54,6 +54,49 @@
       </tfoot>
     </table>
 
+    <h2 class="text-1xl font-bold mt-4 mb-4"> Underentrepenörer </h2>
+
+    <table class="table-auto min-w-full divide-y divide-gray-300 text-sm border-2 border-slate-100 ring-offset-slate-100 ">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left font-semibold text-gray-900">Datum</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Person</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Timmar</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Projekt</th>
+          <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-6"> <span class="sr-only">Edit</span> </th>
+        </tr>
+      </thead>
+      <tbody class=" align-top">
+        <% policy_scope(@contractors.payable_reports).group_by(&:reportee).each do |reportee, reports| %>
+          <tr class="border-t-2 border-gray-400 text-md text-gray-900"> 
+            <td class="whitespace-nowrap px-4 py-2 text-gray-600 bg-slate-50">
+              <%= reportee.display_name %>
+              <small><%= reportee.primary_role %></small> <br/>
+              <span class="font-medium">
+                <%= t("salary.#{reportee.class.name.downcase}") %>: <%= number_to_currency reports.sum(&:total) %>
+              </span>
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 text-gray-600 bg-slate-50">
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 text-gray-600 bg-slate-50">
+              <%= format_hours reports.sum(&:time_in_hours) %>
+            </td>
+            <td colspan="2" class="whitespace-nowrap px-2 py-2 text-gray-600 bg-slate-50">
+            </td>
+          <tr>
+        <% end %>
+      </tbody>
+      <tfoot class="bg-gray-50">
+        <tr class="font-medium text-md text-gray-900"> 
+            <td class="whitespace-nowrap px-4 py-3.5">Summa</td>
+            <td class="whitespace-nowrap px-2 py-3.5"></td>
+            <td class="whitespace-nowrap px-2 py-3.5"></td>
+            <td class="whitespace-nowrap px-2 py-3.5"></td>
+            <td class="whitespace-nowrap px-2 py-3.5"></td>
+          </tr>
+      </tfoot>
+    </table>
+
     <h2 class="text-1xl font-bold my-4"> Bonusrapporter </h2>
 
     <table class="table-auto min-w-full divide-y divide-gray-300 text-sm border-2 border-slate-100 ring-offset-slate-100 ">

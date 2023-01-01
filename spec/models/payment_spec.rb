@@ -1,11 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe Salary, type: :model do
+RSpec.describe 'Payments' do
   before do
     travel_to(Time.parse('2019-10-01'))
-      @employee = create(:employee)
-      @intern   = create(:intern)
-      @contractor = create(:contractor)
+
+    @employee = create(:employee)
+    @intern   = create(:intern)
+    @contractor = create(:contractor)
+
     travel_back
   end
   
@@ -30,12 +32,12 @@ RSpec.describe Salary, type: :model do
   # Reports for fixed projects
   let!(:non_payable_fixed_report) { create(:report, reportable: ongoing_fixed, reportee: @employee, date: '2020-01-03', time_in_hours: 5) } 
 
-  describe 'for january' do
-    subject { Salary.new(from: '2020-01-01', to: '2020-01-31') }
+  describe 'salaries for january' do
+    subject { Payment::Salary.new(from: '2020-01-01', to: '2020-01-31') }
 
     it 'returns payable hourly reports a period' do
-      expect(subject.payable_hourly_reports).to include(contractor_report, employee_report, employee_report_bonus, contractor_report_bonus)
-      expect(subject.payable_hourly_reports).to_not include(non_payable_fixed_report, february_report, intern_report)
+      expect(subject.payable_hourly_reports).to include(employee_report, employee_report_bonus)
+      expect(subject.payable_hourly_reports).to_not include(non_payable_fixed_report, february_report, intern_report, contractor_report, contractor_report_bonus)
     end
 
     it 'returns payable projects' do
@@ -44,17 +46,30 @@ RSpec.describe Salary, type: :model do
     end
 
     it 'returns the payable hours' do
-      expect(subject.payable_hours).to eq(20)
+      expect(subject.payable_hours).to eq(10)
     end
 
     it 'returns reportees to pay for a period' do
-      expect(subject.reportees).to include(@employee, @contractor)
-      expect(subject.reportees).to_not include(@intern)
+      expect(subject.reportees).to include(@employee)
+      expect(subject.reportees).to_not include(@intern, @contractor)
     end
   end
 
-  describe 'for february' do
-    subject { Salary.new(from: '2020-02-01', to: '2020-02-28') }
+  describe 'contractors for january' do
+    subject { Payment::Contractor.new(from: '2020-01-01', to: '2020-01-31') }
+
+    it 'returns the payable hours' do
+      expect(subject.payable_hours).to eq(10)
+    end
+
+    it 'returns contractors to pay for a period' do
+      expect(subject.reportees).to include(@contractor)
+      expect(subject.reportees).to_not include(@intern, @employee)
+    end
+  end
+
+  describe 'salary for february' do
+    subject { Payment::Salary.new(from: '2020-02-01', to: '2020-02-28') }
     it 'scopes appropiatly' do
       expect(subject.reportees).to eq([@employee])
       expect(subject.payable_hours).to eq(5)
@@ -65,7 +80,7 @@ RSpec.describe Salary, type: :model do
 
     it 'catches new completed projects' do
       ongoing_bonus.update(status: 'completed', completed_on: '2020-02-28')
-      payment = Salary.new(from: '2020-02-01', to: '2020-02-28')
+      payment = Payment::Salary.new(from: '2020-02-01', to: '2020-02-28')
       expect(payment.payable_bonus_projects).to eq([finished_fixed, ongoing_bonus])
     end
   end
