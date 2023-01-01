@@ -1,12 +1,24 @@
 <div class="p-4 bg-white rounded-md mb-3">
-  <select data-controller="switcher" data-action="change->switcher#switch" id="tabs" name="tabs" class="block focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md">
-    <option value="<%= projects_path %>" <%= class_names(selected: params[:status].blank?) %>>Pågående</option>
-    <option value="<%= projects_path(status: 'upcoming') %>" <%= class_names(selected: params[:status] == 'upcoming') %>>Kommande</option>
-    <% if policy(:project).create? %>
-      <option value="<%= projects_path(status: 'draft') %>" <%= class_names(selected: params[:status] == 'draft') %>>Utkast</option>
-    <% end %>
-    <option value="<%= projects_path(status: 'completed') %>" <%= class_names(selected: params[:status] == 'completed') %>>Avslutade</option>
-  </select>
+
+  <div class="sm:hidden">
+    <select data-controller="switcher" data-action="change->switcher#switch" id="tabs" name="tabs" class="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
+      <option value="<%= projects_path %>" <%= class_names(selected: params[:status].blank?) %>>Pågående</option>
+      <option value="<%= projects_path(status: 'upcoming') %>" <%= class_names(selected: params[:status] == 'upcoming') %>>Kommande</option>
+      <% if policy(:project).create? %>
+        <option value="<%= projects_path(status: 'draft') %>" <%= class_names(selected: params[:status] == 'draft') %>>Utkast</option>
+      <% end %>
+      <option value="<%= projects_path(status: 'completed') %>" <%= class_names(selected: params[:status] == 'completed') %>>Avslutade</option>
+    </select>
+  </div>
+
+  <div class="hidden sm:block">
+    <nav id="project-nav" class="flex space-x-4" aria-label="Tabs">
+      <%= active_link_to icon_text('Pågående', 'bolt', icon_options: { variant: :outline }), projects_path, class: 'text-gray-500 hover:text-gray-700 px-3 py-2 font-medium text-sm rounded-md', active: :exact %>
+      <%= active_link_to icon_text('Kommande', 'arrow-uturn-right', icon_options: { variant: :outline }), projects_path(status: 'upcoming'), class: 'text-gray-500 hover:text-gray-700 px-3 py-2 font-medium text-sm rounded-md', active: { status: 'upcoming' } %>
+      <%= active_link_to icon_text('Utkast', 'pencil', icon_options: { variant: :outline }), projects_path(status: 'draft'), class: 'text-gray-500 hover:text-gray-700 px-3 py-2 font-medium text-sm rounded-md', active: { status: 'draft' } if policy(:project).create? %>
+      <%= active_link_to icon_text('Avslutade', 'check', icon_options: { variant: :outline }), projects_path(status: 'completed'), class: 'text-gray-500 hover:text-gray-700 px-3 py-2 font-medium text-sm rounded-md', active: { status: 'completed' } %>
+    </nav>
+  </div>
 </div>
 
 <div class="bg-white shadow overflow-hidden rounded-md">
