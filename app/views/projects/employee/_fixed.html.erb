@@ -51,7 +51,7 @@
         <%= heroicon('banknotes', variant: :outline) %> Din lön för detta projekt
       </dt>
       <dd class="mt-1 text-3xl font-semibold text-white">
-        <%= number_to_currency @calculator.salary_for(Current.user.employee) %>
+        <%= number_to_currency @calculator.bonus_for(Current.user.employee) %>
       </dd>
     </div>
 
