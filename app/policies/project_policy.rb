@@ -48,7 +48,7 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def meta?
-    !user.is_contractor? && !user.is_intern?
+    user.is_employee? or user.is_manager?
   end
 
   def salary?
