@@ -14,7 +14,7 @@ class Project::Cost
   end
 
   def bonuses
-    Bonus::Calculator.for(project).bonus_total
+    Calculator::Base.for(project).bonus_total
   end
 
   def salaries_including_bonuses

@@ -11,6 +11,14 @@ class Checklist < ApplicationRecord
 
   delegate :status_completed?, :fixed_fee, :hourly_rate, to: :project
 
+  def employee_reports
+    reports.where(reportee_type: ['Employee'])
+  end
+
+  def worker_reports
+    reports.where(reportee_type: ['Employee', 'Contractor'])
+  end
+
   def completed?
     todos.all?(&:completed?)
   end

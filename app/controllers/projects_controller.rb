@@ -17,7 +17,7 @@ class ProjectsController < ProtectedController
     @reports    = Report.by_project(@project)
     @reports    = @reports.where(reportable_id: params[:on]) if params[:on]
 
-    @calculator = Bonus::Calculator.for(@project)
+    @calculator = Calculator::Base.for(@project)
     @costs      = Project::Cost.new(@project)
     authorize(@project, :salary?) if params[:tab] == 'employee'
   end

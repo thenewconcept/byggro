@@ -1,4 +1,4 @@
-class Bonus::None
+class Calculator::None
   attr_reader :project, :reportee
 
   def initialize(project, reportee)

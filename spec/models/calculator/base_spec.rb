@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Bonus::Calculator do
+RSpec.describe Calculator::Base do
 
   let(:normal_project)  { create(:project, hourly_rate: 500, bonus: :none) }
   let(:hourly_project)  { create(:project, hourly_rate: 500, bonus: :hourly) }
@@ -15,13 +15,13 @@ RSpec.describe Bonus::Calculator do
   let(:jill)      { create(:intern) } # No bonus, no salary.
   let(:jake)       { create(:contractor, fee: 400) } # No bonus, fixed fee.
 
-  let(:calc_normal) { Bonus::Calculator.for(normal_project) }
-  let(:calc_hourly) { Bonus::Calculator.for(hourly_project) }
-  let(:calc_fixed)  { Bonus::Calculator.for(fixed_project) }
+  let(:calc_normal) { Calculator::Base.for(normal_project) }
+  let(:calc_hourly) { Calculator::Base.for(hourly_project) }
+  let(:calc_fixed)  { Calculator::Base.for(fixed_project) }
 
   before do
     # Used to calculate bonus base for workers. 
-    stub_const('Bonus::Hourly::BONUS_INDEX', 300)
+    stub_const('Calculator::Hourly::BONUS_INDEX', 300)
 
     # Hourly project has an hourly target of 20 hours.
     # I.e. Checklists amount total / hourly rate.

@@ -1,9 +1,9 @@
-class Bonus::Calculator
+class Calculator::Base
   attr_reader :project
 
   def initialize(project)
     @project = project
-    @klass = eval("Bonus::#{project.bonus.capitalize}")
+    @klass = eval("Calculator::#{project.bonus.capitalize}")
   end
 
   def self.for(project)

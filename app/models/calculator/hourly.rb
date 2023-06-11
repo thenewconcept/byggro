@@ -1,4 +1,4 @@
-class Bonus::Hourly
+class Calculator::Hourly
   BONUS_INDEX = ENV['BONUS_INDEX']&.to_i || 300
   attr_reader :project, :reportee, :hours
 
@@ -27,7 +27,7 @@ class Bonus::Hourly
   end
 
   def bonus_total
-    project.workers.sum { |worker| Bonus::Hourly.for(project, worker).bonus }
+    project.workers.sum { |worker| Calculator::Hourly.for(project, worker).bonus }
   end
 
   def bonus_percent

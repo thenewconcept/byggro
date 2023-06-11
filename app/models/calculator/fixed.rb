@@ -1,4 +1,4 @@
-class Bonus::Fixed
+class Calculator::Fixed
   attr_reader :project, :reportee, :total_bonus, :total_hours
 
   def initialize(project, reportee)

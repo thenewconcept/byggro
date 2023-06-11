@@ -110,7 +110,7 @@
         <% @salaries.payable_bonus_projects.each do |project| %>
           <% project.reportees.each do |reportee| %>
             <% if (Current.user.is_admin? or Current.user.profile == reportee) %>
-              <% @bonus = Bonus::Calculator.new(project).bonus_for(reportee) %>
+              <% @bonus = Calculator::Base.new(project).bonus_for(reportee) %>
                 <% unless @bonus.zero? %>
                   <tr class="border-t-2 border-gray-400 text-md text-gray-900"> 
                     <td class="whitespace-nowrap px-4 py-2 text-gray-600 bg-slate-50">

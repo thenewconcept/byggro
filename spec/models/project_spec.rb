@@ -47,7 +47,7 @@ RSpec.describe Project, type: :model do
       create(:report, time_in_hours: 5, reportable: checklist)
       expect(project.hours_reported).to eq(5.0)
 
-      create(:report, time_in_hours: 5, reportable: checklist)
+      create(:report, time_in_hours: 5, reportable: project)
       expect(project.hours_reported).to eq(10.0)
     end
   end

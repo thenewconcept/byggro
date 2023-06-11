@@ -11,7 +11,7 @@
       <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-2 sm:px-4">
         <dt class=" font-medium text-gray-500">Summa</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          <%= number_to_currency(Bonus::Hourly.for(project, nil).bonus_total +  @reports.sum(&:total)) %>
+          <%= number_to_currency(Calculator::Hourly.for(project, nil).bonus_total +  @reports.sum(&:total)) %>
         </dd>
       </div>
       <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-2 sm:px-4">
@@ -56,16 +56,16 @@
                     <span class="text-xs text-gray-400"><%= reportee.title %></span>
                   </td>
                   <td class="whitespace-nowrap px-2 py-2.5 text-gray-600">
-                    <%= format_hours Bonus::Hourly.for(project, reportee).hours %> tim
+                    <%= format_hours Calculator::Hourly.for(project, reportee).hours %> tim
                   </td>
                   <td class="whitespace-nowrap text-sm px-2 py-2.5 text-gray-600">
-                    <%= number_to_currency Bonus::Hourly.for(project, reportee).bonus %>
+                    <%= number_to_currency Calculator::Hourly.for(project, reportee).bonus %>
                   </td>
                   <td class="whitespace-nowrap text-sm px-2 py-2.5 text-gray-600">
-                    <%= number_to_currency Bonus::Hourly.for(project, reportee).salary %>
+                    <%= number_to_currency Calculator::Hourly.for(project, reportee).salary %>
                   </td>
                   <td class="whitespace-nowrap text-sm px-2 py-2.5 text-gray-600">
-                    <%= number_to_currency Bonus::Hourly.for(project, reportee).total %>
+                    <%= number_to_currency Calculator::Hourly.for(project, reportee).total %>
                   </td>
                 </tr>
                 <% end %>
@@ -74,7 +74,7 @@
               <tr class="font-medium text-md text-gray-900"> 
                   <td class="whitespace-nowrap px-4 py-3.5">Summa</td>
                   <td class="whitespace-nowrap px-2 py-3.5"> <%= format_hours(project.hours_reported) %> tim </td>
-                  <td class="whitespace-nowrap px-4 py-3.5"> <%= number_to_currency(Bonus::Hourly.for(project, nil).bonus_total) %> </td>
+                  <td class="whitespace-nowrap px-4 py-3.5"> <%= number_to_currency(Calculator::Hourly.for(project, nil).bonus_total) %> </td>
                   <td class="whitespace-nowrap px-2 py-3.5"> <%= number_to_currency(@costs.salaries) %> </td>
                   <td class="whitespace-nowrap px-2 py-3.5"> <%= number_to_currency(@costs.salaries + @costs.bonuses) %></td>
                 </tr>
@@ -109,7 +109,7 @@
                     <td class="whitespace-nowrap px-2 py-2 text-gray-600 text-right"> <%= format_hours(report.time_in_hours) %> tim </td>
                     <td class="whitespace-nowrap px-2 py-2 text-gray-600 text-right"> <%= number_to_currency(report.fee) %> </td>
                     <td class="whitespace-nowrap px-4 py-2 text-gray-600 text-right"> <%= number_to_currency(report.total) %> </td>
-                    <td class="whitespace-nowrap px-2 py-2 text-gray-600 text-right"> <%= number_to_currency Bonus::Hourly.for(project, report.reportee).bonus_for_report(report).round(2) %> </td>
+                    <td class="whitespace-nowrap px-2 py-2 text-gray-600 text-right"> <%= number_to_currency Calculator::Hourly.for(project, report.reportee).bonus_for_report(report).round(2) %> </td>
                   </tr>
                   <% end %>
               </tbody>
@@ -120,7 +120,7 @@
                   <td class="whitespace-nowrap px-2 py-3.5"> <%= format_hours(@reports.by_reportees(['Employee', 'Intern']).sum(&:time_in_hours)) %> tim </td>
                   <td class="whitespace-nowrap px-2 py-3.5"></td>
                   <td class="whitespace-nowrap px-2 py-3.5"> <%= number_to_currency(@reports.by_reportees(['Employee', 'Intern']).sum(&:total)) %> </td>
-                  <td class="whitespace-nowrap px-4 py-3.5"> <%= number_to_currency(Bonus::Hourly.for(project, nil).bonus_total) %> </td>
+                  <td class="whitespace-nowrap px-4 py-3.5"> <%= number_to_currency(Calculator::Hourly.for(project, nil).bonus_total) %> </td>
                 </tr>
               </tfoot>
             </table>
