@@ -1,17 +1,30 @@
 <div class="px-4">
   <div class="flex justify-between pb-1 pt-3 text-gray-500 text-sm">
     <div>
-      <%= t("project.bonus." + project.bonus) %> > <%= t("project.status." + project.status) %> <%= l(project.completed_on) if project.status_completed? %>
+      <%= t("project.bonus." + project.bonus) %> > 
+      <%= t("project.status." + project.status) %> <%= l(project.completed_on) if project.status_completed? %>
+
+
+      <% if project.payed_on and policy(project).administer? %>
+        > <%= heroicon('banknotes', variant: :outline, options: { class: 'h-4 -mt-1 -mr-0.5' }) %> 
+        <%= project.payed_on %>
+      <% end %>
+
     </div>
     <div class="capitalize">
-      <%= heroicon('calendar', variant: :outline, options: { class: 'h-4 -mt-1 -mr-0.5' }) %> 
-      <%= l project.starts_on, format: :short if project.starts_on %> 
-      <%= " — " + l(project.due_on, format: :short) if project.due_on %>
+      <% if project.starts_on %>
+        <%= heroicon('calendar', variant: :outline, options: { class: 'h-4 -mt-1 -mr-0.5' }) %> 
+        <%= l project.starts_on %> 
+        <%= " — " + l(project.due_on) if project.due_on %>
+      <% end %>
     </div>
   </div>
 
     <h2 class="text-2xl font-medium text-gray-900">
       <%= project.title %>
+      <span class="text-sm font-normal text-gray-700"> 
+        <%= project.client.display_name %>
+      </span>
     </h2>
 
   <div class="mt-2">
