@@ -1,0 +1,49 @@
+  <div class="border-t border-gray-200 px-4 py-2 sm:p-0 bg-white">
+    <dl class="text-sm sm:divide-y sm:divide-gray-200">
+      <div class="p-5">
+        <div class="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+          <table class="table-auto min-w-full divide-y divide-gray-300 text-sm">
+            <caption class="whitespace-nowrap px-4 py-2 text-left font-semibold text-gray-50 bg-slate-600">
+              <%= checklist.title %> · <%= number_to_currency checklist.project.fixed_fee * checklist.amount %>
+            </caption>
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="whitespace-nowrap px-4 py-1 text-left font-semibold text-gray-900">Person</th>
+                <th scope="col" class="whitespace-nowrap px-2 py-1 text-left font-semibold text-gray-900">Tid</th>
+                <th scope="col" class="whitespace-nowrap px-2 py-1 text-left font-semibold text-gray-900">Andel</th>
+                <th scope="col" class="whitespace-nowrap px-2 py-1 text-left font-semibold text-gray-900">Lön</th>
+              </tr>
+            </thead>
+            <tbody class=" align-top">
+                <% checklist.worker_reports.where(reportee_user: Current.user).each do |reportee| %>
+                <% calc = Calculator::Checklist::Reportee.new(checklist: checklist, reportee: reportee) %>
+                <tr class="border-t border-gray-100"> 
+                  <td class="whitespace-nowrap px-4 py-1 text-gray-600">
+                    <%= reportee.user.display_name  %>
+                    <span class="text-xs text-gray-400"><%= reportee.title %></span>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-1 text-gray-600">
+                    <%= format_hours calc.reportee_hours %> tim
+                  </td>
+                  <td class="whitespace-nowrap text-sm px-2 py-1 text-gray-600">
+                    <%= number_to_percentage calc.payable_bonus_percentage * 100 %>
+                  </td>
+                  <td class="whitespace-nowrap text-sm px-2 py-1 text-gray-600">
+                    <%= number_to_currency calc.payable_bonus_amount.round(0) %>
+                  </td>
+                </tr>
+                <% end %>
+            </tbody>
+            <tfoot class="bg-gray-50">
+              <tr class="font-medium text-md text-gray-900"> 
+                  <td class="whitespace-nowrap px-4 py-1">Summa</td>
+                  <td class="whitespace-nowrap px-2 py-1"> <%= format_hours(Calculator::Checklist::Base.new(checklist).accountable_hours)%> tim </td>
+                  <td class="whitespace-nowrap px-2 py-1"></td>
+                  <td class="whitespace-nowrap px-2 py-1"> <%= number_to_currency(Calculator::Checklist::Base.new(checklist).payable_bonus_amount) %> </td>
+                </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </dl>
+  </div>

@@ -19,11 +19,12 @@ module Calculator
       end
 
       def payable_bonus_percentage
+        return 0 if reportee.is_a?(Contractor) or reportee.is_a?(Intern) or total_hours == 0
         @payable_bonus_percent ||= reportee_hours / @base.accountable_hours
       end
 
       def payable_bonus_amount
-        return 0 if reportee.is_a?(Contractor)
+        return 0 if reportee.is_a?(Contractor) or reportee.is_a?(Intern)
         total_bonus * payable_bonus_percentage
       end
     end

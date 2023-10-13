@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Calculator::Project::Base, type: :model do
-  describe 'a checklist with 10000' do
+  describe 'a project with total with 20000' do
     let(:project)   { create(:project, hourly_rate: 500, fixed_fee: 0.40) }
     let(:paintjob)  { create(:checklist, amount: 10000, project: project) }
     let(:carpentry)  { create(:checklist, amount: 10000, project: project) }

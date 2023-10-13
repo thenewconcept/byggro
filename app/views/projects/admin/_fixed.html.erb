@@ -6,22 +6,18 @@
     </h3>
   </div>
 
-  <div class="border-t border-gray-200 px-4 py-5 sm:p-0 bg-white">
-    <dl class="text-sm sm:divide-y sm:divide-gray-200">
-      <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-        <dt class=" font-medium text-gray-500">Summa</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency project.bonus_fixed %></dd>
-      </div>
-    </dl>
-  </div>
-
   <% project.checklists.each do |checklist| %>
-  <div class="border-t border-gray-200 px-4 py-5 sm:p-0 bg-white">
+    <%= render 'projects/admin/fixed_checklist_table', checklist: checklist %> 
+  <% end %>
+
+  <div class="border-t border-gray-200 bg-gray-100 px-4 py-5 sm:p-0 ">
     <dl class="text-sm sm:divide-y sm:divide-gray-200">
       <div class="p-5">
         <div class="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
           <table class="table-auto min-w-full divide-y divide-gray-300 text-sm">
-            <caption class="whitespace-nowrap px-4 py-3.5 text-center font-semibold text-gray-900"><%= checklist.title %></caption>
+            <caption class="whitespace-nowrap px-4 py-3.5 text-center font-semibold text-gray-50 bg-slate-800">
+              Sammanfattning
+            </caption>
             <thead class="bg-gray-50">
               <tr>
                 <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left font-semibold text-gray-900">Person</th>
@@ -30,9 +26,9 @@
                 <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Lön</th>
               </tr>
             </thead>
-            <tbody class=" align-top">
-                <% checklist.worker_reports.map(&:reportee).uniq.each do |reportee| %>
-                <% calc = Calculator::Checklist::Reportee.new(checklist: checklist, reportee: reportee) %>
+            <tbody class=" align-top bg-white">
+                <% project.worker_reports.map(&:reportee).uniq.each do |reportee| %>
+                <% calc = Calculator::Project::Reportee.new(project: project, reportee: reportee) %>
                 <tr class="border-t border-gray-100"> 
                   <td class="whitespace-nowrap px-4 py-2.5 text-gray-600">
                     <%= reportee.user.display_name  %>
@@ -42,58 +38,10 @@
                     <%= format_hours calc.reportee_hours %> tim
                   </td>
                   <td class="whitespace-nowrap text-sm px-2 py-2.5 text-gray-600">
-                    <%= number_to_percentage calc.payable_bonus_percentage * 100 %>
+                    <%#= number_to_percentage calc.bonus_percent * 100 %>
                   </td>
                   <td class="whitespace-nowrap text-sm px-2 py-2.5 text-gray-600">
                     <%= number_to_currency calc.payable_bonus_amount.round(0) %>
-                  </td>
-                </tr>
-                <% end %>
-            </tbody>
-            <tfoot class="bg-gray-50">
-              <tr class="font-medium text-md text-gray-900"> 
-                  <td class="whitespace-nowrap px-4 py-3.5">Summa</td>
-                  <td class="whitespace-nowrap px-2 py-3.5"> <%= format_hours(Calculator::Checklist::Base.new(checklist).accountable_hours)%> tim </td>
-                  <td class="whitespace-nowrap px-2 py-3.5"></td>
-                  <td class="whitespace-nowrap px-2 py-3.5"> <%= number_to_currency(Calculator::Checklist::Base.new(checklist).payable_bonus_amount) %> </td>
-                </tr>
-            </tfoot>
-          </table>
-        </div>
-      </div>
-    </dl>
-  </div>
-  <% end %>
-
-  <div class="border-t border-gray-200 px-4 py-5 sm:p-0 bg-white">
-    <dl class="text-sm sm:divide-y sm:divide-gray-200">
-      <div class="p-5">
-        <div class="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-          <table class="table-auto min-w-full divide-y divide-gray-300 text-sm">
-            <thead class="bg-gray-50">
-              <tr>
-                <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left font-semibold text-gray-900">Person</th>
-                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Tid</th>
-                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Andel</th>
-                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Lön</th>
-              </tr>
-            </thead>
-            <tbody class=" align-top">
-                <% project.reports.map(&:reportee).uniq.each do |reportee| %>
-                <% calc = Calculator::Fixed.for(project, reportee) %>
-                <tr class="border-t border-gray-100"> 
-                  <td class="whitespace-nowrap px-4 py-2.5 text-gray-600">
-                    <%= reportee.user.display_name  %>
-                    <span class="text-xs text-gray-400"><%= reportee.title %></span>
-                  </td>
-                  <td class="whitespace-nowrap px-2 py-2.5 text-gray-600">
-                    <%= format_hours calc.hours %> tim
-                  </td>
-                  <td class="whitespace-nowrap text-sm px-2 py-2.5 text-gray-600">
-                    <%= number_to_percentage calc.bonus_percent * 100 %>
-                  </td>
-                  <td class="whitespace-nowrap text-sm px-2 py-2.5 text-gray-600">
-                    <%= number_to_currency calc.total.round(0) %>
                   </td>
                 </tr>
                 <% end %>

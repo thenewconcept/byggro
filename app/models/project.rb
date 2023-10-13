@@ -46,6 +46,10 @@ class Project < ApplicationRecord
     @reports ||= Report.by_project(self)
   end
 
+  def worker_reports
+    reports.where(reportee_type: ['Employee', 'Contractor'])
+  end
+
   def workers
     reports.where.not(reportee_type: 'Contractor').map(&:reportee).uniq
   end
