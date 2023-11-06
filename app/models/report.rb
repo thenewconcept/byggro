@@ -17,7 +17,7 @@ class Report < ApplicationRecord
   scope :by_reportees, -> (type) { where(reportee_type: type) } 
   scope :by_checklist, -> (checklist) { where(reportable: checklist) }
   scope :by_project,   -> (project) { where(reportable: project).or(self.where(reportable: project.checklists)).order(id: :asc, date: :asc) }
-  scope :by_workers,     -> (project) { where.not(reportee_type: 'Contractor') }
+  scope :by_workers,   -> (project) { where(reportable: project).or(self.where(reportable: project.checklists)).where.not(reportee_type: 'Contractor').order(id: :asc, date: :asc) }
 
   scope :by_contractors, -> { where(reportee_type: 'Contractor') }
   scope :by_employees,   -> { where(reportee_type: 'Employee') }
