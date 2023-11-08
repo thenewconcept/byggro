@@ -63,8 +63,8 @@ RSpec.describe Bonus::Calculator do
     end
 
     it 'returns the fee for hours worked' do
-      expect(calc_fixed.bonus_for(jim)).to eq(1680)
-      expect(calc_fixed.bonus_for(john)).to eq(1120)
+      expect(calc_fixed.bonus_for(jim)).to eq(1575)
+      expect(calc_fixed.bonus_for(john)).to eq(1050)
 
       expect(calc_hourly.bonus_for(jill)).to eq(0)
       expect(calc_hourly.bonus_for(jake)).to eq(0)
@@ -77,7 +77,10 @@ RSpec.describe Bonus::Calculator do
     end
 
     it 'fixed returns total bonus for the project' do
-      expect(calc_fixed.bonus_total).to eq(2800) # Employee's bonus.
+      # Employee's bonus percentage is calculated from the amount (work fees) 
+      # of the project minus the contractor hours.
+
+      expect(calc_fixed.bonus_total).to eq(2625)
     end
   end
 
@@ -87,14 +90,14 @@ RSpec.describe Bonus::Calculator do
     expect(calc_hourly.total_for(jill)).to eq(0) # No salary or bonus.
     expect(calc_hourly.total_for(jake)).to eq(1600) # Fixed fee 400 x 4 = 1600
 
-    expect(calc_fixed.total_for(jim)).to eq(1680)
-    expect(calc_fixed.total_for(john)).to eq(1120)
+    expect(calc_fixed.total_for(jim)).to eq(1575)
+    expect(calc_fixed.total_for(john)).to eq(1050)
     expect(calc_fixed.total_for(jill)).to eq(0)
     expect(calc_fixed.total_for(jake)).to eq(0)
   end
 
   it '#total' do
     expect(calc_hourly.total).to eq(2860) # 600 + 660 + 1600 = 2860
-    expect(calc_fixed.total).to eq(2800) # Employee's bonus.
+    expect(calc_fixed.total).to eq(2625) # Employee's bonus.
   end
 end

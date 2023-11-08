@@ -74,8 +74,12 @@ class Project < ApplicationRecord
     reports.where.not(reportee_type: 'Contractor').sum(&:time_in_hours)
   end
 
+  def hours_by_contractors
+    reports.where(reportee_type: 'Contractor').sum(&:time_in_hours)
+  end
+
   def costs_by_contractors
-    reports.where(reportee_type: 'Contractor').sum(&:total)
+    hours_by_contractors * hourly_rate
   end
 
   def hours_for(reportee)
