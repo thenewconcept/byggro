@@ -1,16 +1,16 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.1.3"
+ruby "3.2.3"
 
-gem "rails", "~> 7.0.1"
+gem "rails", "~> 7.1"
 
 gem "acts_as_list", "~> 1.0"
 gem "active_link_to", "~> 1.0"
 gem "sprockets-rails"
 gem "google-cloud-storage"
 gem "pg", "~> 1.1"
-gem "puma", "~> 5.0"
+gem "puma", "~> 6.0"
 gem "pundit", "~> 2.1"
 gem "importmap-rails"
 gem "turbo-rails"
