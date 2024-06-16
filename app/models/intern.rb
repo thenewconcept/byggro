@@ -1,19 +1,15 @@
 class Intern < ApplicationRecord
   include Reportee
 
-  alias_attribute :fee, :salary
-
   def complete?
     true
   end
 
-  def salary_changed?
-    false
-  end
+  def salary; 0; end
+  def salary_changed?; false; end
 
-  def salary
-    0
-  end
+  def fee; 0; end
+  def fee_changed?; false; end
 
   def title
     'Praktikant'
