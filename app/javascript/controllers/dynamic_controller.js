@@ -1,16 +1,16 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["bonus", "field"];
+  static targets = ["payout", "field"];
 
-  initialize() { 
-    this.toggle(); 
+  initialize() {
+    this.toggle();
   }
 
   toggle() {
-    const bonus = this.bonusTarget.value;
+    const payout = this.payoutTarget.value;
     this.fieldTargets.forEach((field) => {
-      if (field.dataset.for === bonus) {
+      if (field.dataset.for === payout) {
         console.log('Show');
         field.classList.remove("hidden");
       } else {

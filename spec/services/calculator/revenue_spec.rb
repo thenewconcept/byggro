@@ -4,8 +4,8 @@ RSpec.describe Calculator::Revenue, type: :model do
   describe "#amount" do
     it "returns revenue amount for fixed work orders" do
       project = create(:project)
-      create(:checklist, project:, bonus: :fixed, amount: 1000)
-      create(:checklist, project:, bonus: :fixed, amount: 200)
+      create(:checklist, project:, payout: :fixed, amount: 1000)
+      create(:checklist, project:, payout: :fixed, amount: 200)
 
       calculator = Calculator::Revenue.new(project)
 
@@ -14,8 +14,8 @@ RSpec.describe Calculator::Revenue, type: :model do
 
     it "returns revenue amount for hourly work orders" do
       project = create(:project)
-      per_hour = create(:checklist, project:, bonus: :none, hourly_rate: 500)
-      per_item = create(:checklist, project:, bonus: :none, hourly_rate: 500)
+      per_hour = create(:checklist, project:, payout: :hourly, hourly_rate: 500)
+      per_item = create(:checklist, project:, payout: :hourly, hourly_rate: 500)
       create(:report, reportable: per_hour, time_in_hours: 10)
       create(:report, reportable: per_item, time_in_hours: 2)
 
@@ -28,7 +28,7 @@ RSpec.describe Calculator::Revenue, type: :model do
 
     it "returns zero when no reports are present" do
       project = create(:project)
-      per_hour = create(:checklist, project:, bonus: :none, hourly_rate: 500)
+      per_hour = create(:checklist, project:, payout: :hourly, hourly_rate: 500)
 
       calculator = Calculator::Revenue.new(per_hour).amount
 
@@ -75,8 +75,8 @@ RSpec.describe Calculator::Revenue, type: :model do
   describe "#total" do
     it "returns total revenue for project" do
       project = create(:project, material_amount: 1200, misc_amount: 800)
-      create(:checklist, project:, bonus: :fixed, amount: 1000)
-      create(:checklist, project:, bonus: :fixed, amount: 500)
+      create(:checklist, project:, payout: :fixed, amount: 1000)
+      create(:checklist, project:, payout: :fixed, amount: 500)
 
       calculator = Calculator::Revenue.new(project)
 
@@ -84,8 +84,8 @@ RSpec.describe Calculator::Revenue, type: :model do
     end
 
     it "returns total revenue for checklists" do
-      per_hour = create(:checklist, bonus: :none, hourly_rate: 500)
-      per_item = create(:checklist, bonus: :fixed, amount: 500)
+      per_hour = create(:checklist, payout: :hourly, hourly_rate: 500)
+      per_item = create(:checklist, payout: :fixed, amount: 500)
       create(:report, reportable: per_hour, time_in_hours: 10)
 
       per_hour_revenue = Calculator::Revenue.new(per_hour).total

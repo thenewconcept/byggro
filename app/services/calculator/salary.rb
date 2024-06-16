@@ -2,12 +2,12 @@ module Calculator
   class Salary
     include Taxes
 
-    def initialize(reportable)
+    def initialize(reportable, employee: nil)
       @reportable = reportable
     end
 
     def excluding_taxes
-      @excluding_taxes ||= @reportable.checklists.bonus_none.sum(&:salary)
+      @excluding_taxes ||= @reportable.checklists.payout_hourly.sum(&:salary)
     end
 
     def taxes

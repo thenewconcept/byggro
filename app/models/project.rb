@@ -2,7 +2,7 @@ class Project < ApplicationRecord
   include Reportable
   include Taxes
 
-  BONUS_FIXED = ENV['BONUS_FIXED']&.to_f || 0.35
+  payout_fixed = ENV['payout_fixed']&.to_f || 0.35
   BONUS_SALES = ENV['BONUS_SALES']&.to_f || 0.02
   ROT_PERCENT = ENV['ROT_PERCENT']&.to_f || 0.3
 

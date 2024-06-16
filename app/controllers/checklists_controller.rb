@@ -48,6 +48,6 @@ class ChecklistsController < ProtectedController
 
   private
     def checklist_params
-      params.require(:checklist).permit(:title, :amount, :hourly_rate, :is_rot, :position, :bonus)
+      params.require(:checklist).permit(:title, :amount, :hourly_rate, :is_rot, :position, :payout)
     end
 end

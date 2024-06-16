@@ -34,7 +34,7 @@
 
         <div>
           <% if policy(checklist).meta? %>
-            <%= render "checklists/meta/#{checklist.bonus}", reportable: checklist %>
+            <%= render "checklists/meta/#{checklist.payout}", reportable: checklist %>
             <%= icon_badge "ROT", 'check', class: 'silver' if checklist.is_rot? %>
           <% end %>
         </div>

@@ -15,7 +15,7 @@
            <%= number_to_currency reportable.amount.round(0) %> AK - 
            <%= number_to_currency reportable.costs_by_contractors.round(0) %> UE
           ) * <%= number_to_percentage (reportable.fixed_fee * 100).round(0) %> 
-          <b>= <%= number_to_currency reportable.bonus_fixed %></b>
+          <b>= <%= number_to_currency reportable.payout_fixed %></b>
         </dd>
       </div>
     </dl>

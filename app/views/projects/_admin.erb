@@ -1,7 +1,5 @@
-<%#= render partial: "projects/admin/#{project.bonus}", locals: { project: project } %>
-
 <% project.checklists.each do |checklist| %>
-  <%= render partial: "checklists/admin/#{checklist.bonus}", locals: { reportable: checklist } %>
+  <%= render partial: "checklists/admin/#{checklist.payout}", locals: { reportable: checklist } %>
 <% end %>
   
 <hr/>

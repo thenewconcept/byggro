@@ -23,8 +23,8 @@ RSpec.describe Calculator::Base, type: :model do
     it 'returns the salary and bonus taxes for a project' do
       project = create(:project)
       create(:employee, salary: 100)
-      hourly_workorder = create(:checklist, bonus: :none, project:)
-      bonus_workorder = create(:checklist, bonus: :fixed, project:, amount: 1000)
+      hourly_workorder = create(:checklist, payout: :hourly, project:)
+      bonus_workorder = create(:checklist, payout: :fixed, project:, amount: 1000)
       create(:report, reportable: hourly_workorder, time_in_hours: 10)
       create(:report, reportable: bonus_workorder, time_in_hours: 10)
 
@@ -40,8 +40,8 @@ RSpec.describe Calculator::Base, type: :model do
       create(:expense, project:, amount: 100)
       create(:expense, project:, amount: 500)
       employee = create(:employee, salary: 100)
-      workorder_hourly = create(:checklist, bonus: :none, project:)
-      _workorder_bonus = create(:checklist, bonus: :fixed, project:, amount: 1000)
+      workorder_hourly = create(:checklist, payout: :hourly, project:)
+      _workorder_bonus = create(:checklist, payout: :fixed, project:, amount: 1000)
 
       create(:report, reportable: workorder_hourly, reportee: employee, time_in_hours: 10)
 
@@ -56,8 +56,8 @@ RSpec.describe Calculator::Base, type: :model do
     it "returns total revenue for a specific project" do
       project = create(:project, misc_amount: 1000, material_amount: 1000)
       create(:employee, salary: 100)
-      hourly_workorder = create(:checklist, bonus: :none, project:, hourly_rate: 500)
-      bonus_workorder = create(:checklist, bonus: :fixed, project:, amount: 1000)
+      hourly_workorder = create(:checklist, payout: :hourly, project:, hourly_rate: 500)
+      bonus_workorder = create(:checklist, payout: :fixed, project:, amount: 1000)
       create(:report, reportable: hourly_workorder, time_in_hours: 10)
       create(:report, reportable: bonus_workorder, time_in_hours: 10)
 
@@ -70,7 +70,7 @@ RSpec.describe Calculator::Base, type: :model do
     it "returns total revenue for a hourly checklist" do
       project = create(:project, misc_amount: 0, material_amount: 0)
       create(:employee, salary: 100)
-      hourly_workorder = create(:checklist, bonus: :none, project:, hourly_rate: 500)
+      hourly_workorder = create(:checklist, payout: :hourly, project:, hourly_rate: 500)
       create(:report, reportable: hourly_workorder, time_in_hours: 10)
 
       calculator = Calculator::Base.new(project)
@@ -81,7 +81,7 @@ RSpec.describe Calculator::Base, type: :model do
     it "returns total revenue for a bonus checklist" do
       project = create(:project, misc_amount: 0, material_amount: 0)
       create(:employee, salary: 100)
-      bonus_workorder = create(:checklist, bonus: :fixed, project:, amount: 1000)
+      bonus_workorder = create(:checklist, payout: :fixed, project:, amount: 1000)
       create(:report, reportable: bonus_workorder, time_in_hours: 5)
 
       calculator = Calculator::Base.new(bonus_workorder)
@@ -94,7 +94,7 @@ RSpec.describe Calculator::Base, type: :model do
     it "returns the profit for a bonus project" do
       employee = create(:employee)
       project = create(:project, misc_amount: 0, material_amount: 1000)
-      bonus_workorder = create(:checklist, bonus: :fixed, project:, amount: 1000)
+      bonus_workorder = create(:checklist, payout: :fixed, project:, amount: 1000)
 
       calculator = Calculator::Base.new(project)
 

@@ -24,6 +24,6 @@ class ChecklistPolicy < ApplicationPolicy
   def salary?
     user.is_employee? and 
       record.project.try(:status_completed?) and
-      record.project.try(:bonus_fixed?)
+      record.try(:payout_hourly?)
   end
 end

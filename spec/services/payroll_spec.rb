@@ -15,12 +15,12 @@ RSpec.describe Payroll, type: :model do
     @completed_project  = create(:project, :completed, fixed_fee: 0.5)
     @unreported_project = create(:project, :completed)
 
-    @ongoing_time_checklist    = create(:checklist, title: 'Ongoing Time', project: @ongoing_project, bonus: :none)
-    @ongoing_time_checklist    = create(:checklist, title: 'Ongoing Time', project: @ongoing_project, bonus: :none)
-    @ongoing_bonus_checklist   = create(:checklist, title: 'Ongoing Fixed', project: @ongoing_project, bonus: :fixed, amount: 2000)
-    @completed_time_checklist  = create(:checklist, title: 'Completed Time', project: @completed_project, bonus: :none)
-    @completed_bonus_checklist = create(:checklist, title: 'Completed Fixed', project: @completed_project, bonus: :fixed, amount: 2000)
-    @completed_bonus_checklist = create(:checklist, title: 'Completed Fixed', project: @completed_project, bonus: :fixed, amount: 2000)
+    @ongoing_time_checklist    = create(:checklist, title: 'Ongoing Time', project: @ongoing_project, payout: :hourly)
+    @ongoing_time_checklist    = create(:checklist, title: 'Ongoing Time', project: @ongoing_project, payout: :hourly)
+    @ongoing_bonus_checklist   = create(:checklist, title: 'Ongoing Fixed', project: @ongoing_project, payout: :fixed, amount: 2000)
+    @completed_time_checklist  = create(:checklist, title: 'Completed Time', project: @completed_project, payout: :hourly)
+    @completed_bonus_checklist = create(:checklist, title: 'Completed Fixed', project: @completed_project, payout: :fixed, amount: 2000)
+    @completed_bonus_checklist = create(:checklist, title: 'Completed Fixed', project: @completed_project, payout: :fixed, amount: 2000)
 
     # Old, range over 1 month.
     travel_to 1.month.ago do

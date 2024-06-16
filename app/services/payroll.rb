@@ -7,7 +7,7 @@ class Payroll
     range    ||= Date.today.beginning_of_month..Date.today.end_of_month
 
     @reports = scope
-      .where(reportable_type: 'Checklist', reportable_id: Checklist.where(bonus: :none).pluck(:id))
+      .where(reportable_type: 'Checklist', reportable_id: Checklist.where(payout: :hourly).pluck(:id))
       .where.not(reportee_type: ['Contractor', 'Intern'])
       .where(date: range, payable: true)
       .or(
@@ -16,7 +16,7 @@ class Payroll
           .where(payable: true)
           .where(reportable_type: 'Checklist', reportable_id: Checklist
             .joins(:project)
-            .where(bonus: :fixed, projects: { status: :completed, completed_on: range })
+            .where(payout: :fixed, projects: { status: :completed, completed_on: range })
             .pluck(:id)
           )
       )
@@ -25,11 +25,11 @@ class Payroll
   def payments
     reportables.flat_map do |reportable, reports|
       reports.group_by(&:reportee).map do |reportee, reports|
-        if reportable.bonus == 'none'
+        if reportable.payout == 'hourly'
           Hourly.new(reportee, reports)
-        elsif reportable.bonus == 'fixed' and reportee.user.is_contractor?
+        elsif reportable.payout == 'fixed' and reportee.user.is_contractor?
           Hourly.new(reportee, reports)
-        elsif reportable.bonus == 'fixed'
+        elsif reportable.payout == 'fixed'
           Fixed.new(reportee, reportable)
         end
       end
@@ -37,7 +37,7 @@ class Payroll
   end
 
   def by_type(type)
-    payments.select { |payment| payment.reportable.bonus == type.to_s }
+    payments.select { |payment| payment.reportable.payout == type.to_s }
   end
 
   def reportables

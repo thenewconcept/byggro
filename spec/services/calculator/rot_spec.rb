@@ -8,7 +8,7 @@ RSpec.describe Calculator::Rot, type: :model do
 
   describe "#hours" do
     it "for fixed workorders, returns fixed amount divided by Project::HOURLY_RATE hourly rate" do
-      workorder = create(:checklist, bonus: :fixed, amount: '5000')
+      workorder = create(:checklist, payout: :fixed, amount: '5000')
 
       calculator = Calculator::Rot.new(workorder)
 
@@ -16,7 +16,7 @@ RSpec.describe Calculator::Rot, type: :model do
     end
 
     it "for hourly workorders, returns the hours reported" do
-      workorder = create(:checklist, bonus: :none)
+      workorder = create(:checklist, payout: :hourly)
       create(:report, reportable: workorder, time_in_hours: 8)
       create(:report, reportable: workorder, time_in_hours: 8)
 
@@ -27,8 +27,8 @@ RSpec.describe Calculator::Rot, type: :model do
 
     it "for project it sums the hours from each workorder" do
       project = create(:project)
-      create(:checklist, project:, bonus: :fixed, amount: 5000) # Fixed: 10 hours
-      hourly_workorder = create(:checklist, project:, bonus: :none) # Will total to 16 hours
+      create(:checklist, project:, payout: :fixed, amount: 5000) # Fixed: 10 hours
+      hourly_workorder = create(:checklist, project:, payout: :hourly) # Will total to 16 hours
       create(:report, reportable: hourly_workorder, time_in_hours: 8)
       create(:report, reportable: hourly_workorder, time_in_hours: 8)
 

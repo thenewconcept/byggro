@@ -35,7 +35,7 @@
           </td>
           <td class="whitespace-nowrap text-sm px-2 py-2 text-gray-600">
             <%= link_to report.reportable.title, project_path(tab: 'time', on: report.reportable.id)  %>
-            <small><%= t('checklist.bonus.' + report.reportable.bonus) %></small>
+            <small><%= t('checklist.payout.' + report.reportable.payout) %></small>
           </td>
           <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right font-medium sm:pr-6">
             <%= link_to 'Ändra', edit_project_report_path(@project, report), class: "btn btn-silver btn-sm" if policy(report).edit? %>

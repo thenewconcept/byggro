@@ -9,9 +9,9 @@ module Calculator
     end
 
     def hours
-      if reportable.is_a?(Checklist) and reportable.bonus_fixed?
+      if reportable.is_a?(Checklist) and reportable.payout_fixed?
         hours_for_fixed
-      elsif reportable.is_a?(Checklist) and reportable.bonus_none?
+      elsif reportable.is_a?(Checklist) and reportable.payout_hourly?
         hours_for_hourly
       else
         reportable.checklists.sum(&:hours_reported)

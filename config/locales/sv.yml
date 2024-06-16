@@ -23,8 +23,8 @@ sv:
         hourly: Timbonus
         fixed: Projektlön
   checklist:
-    bonus:
-      none: Löpande
+    payout:
+      hourly: Löpande
       fixed: Fastpris
     
   activerecord:

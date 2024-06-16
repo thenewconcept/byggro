@@ -39,7 +39,7 @@ RSpec.describe 'Projects' do
       click_button 'Logga in'
     end
 
-    it 'can see ALL assignments' do
+    it 'can see all assignments' do
       click_link 'Kommande'
       expect(page).to have_content('Assigned Project')
       expect(page).to have_content('Unassigned Project')
@@ -54,6 +54,16 @@ RSpec.describe 'Projects' do
 
       expect(page).to have_content('Ongoing Project')
       expect(page).to have_content('Kostnader')
+    end
+
+    it 'can see the admin tab of a project' do
+      project = create(:project, :started, title: 'Ongoing Project')
+      checklist = project.checklists.create(title: 'Checklist 1', payout: :hourly)
+      report = checklist.reports.create(time_in_hours: 10, reportee: build(:employee)) 
+
+      visit project_path(project, tab: 'admin')
+
+      expect(page).to have_content('Ongoing Project')
     end
   end
 end

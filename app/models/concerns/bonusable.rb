@@ -7,7 +7,7 @@ module Bonusable
     amount / hourly_rate
   end
 
-  def bonus_fixed
+  def payout_fixed
     ((amount - costs_by_contractors) * fixed_fee).round(0)
   end
 

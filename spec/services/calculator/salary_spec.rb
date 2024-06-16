@@ -10,7 +10,7 @@ RSpec.describe Calculator::Salary, type: :model do
     it do
       employee = create(:employee, salary: 100)
       project = create(:project)
-      workorder = create(:checklist, bonus: :none, project:)
+      workorder = create(:checklist, payout: :hourly, project:)
 
       create(:report, reportable: workorder, reportee: employee, time_in_hours: 9)
 
@@ -22,8 +22,8 @@ RSpec.describe Calculator::Salary, type: :model do
     it "only includes non-bonus work orders, which are in Calculator::Bonus" do
       employee = create(:employee, salary: 100)
       project = create(:project)
-      workorder_hourly = create(:checklist, bonus: :none, project:)
-      _workorder_bonus = create(:checklist, bonus: :fixed, project:, amount: 1000)
+      workorder_hourly = create(:checklist, payout: :hourly, project:)
+      _workorder_bonus = create(:checklist, payout: :fixed, project:, amount: 1000)
 
       create(:report, reportable: workorder_hourly, reportee: employee, time_in_hours: 9)
 
@@ -37,7 +37,7 @@ RSpec.describe Calculator::Salary, type: :model do
     it do
       employee = create(:employee, salary: 100)
       project = create(:project)
-      workorder = create(:checklist, bonus: :none, project:)
+      workorder = create(:checklist, payout: :hourly, project:)
 
       create(:report, reportable: workorder, reportee: employee, time_in_hours: 10)
 
@@ -51,7 +51,7 @@ RSpec.describe Calculator::Salary, type: :model do
     it do
       employee = create(:employee, salary: 100)
       project = create(:project)
-      workorder = create(:checklist, bonus: :none, project:)
+      workorder = create(:checklist, payout: :hourly, project:)
 
       create(:report, reportable: workorder, reportee: employee, time_in_hours: 10)
 

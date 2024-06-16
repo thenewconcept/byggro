@@ -1,13 +1,13 @@
 FactoryBot.define do
   factory :checklist do
     project
-    bonus { 'none' }
+    payout { 'hourly' }
     title { Faker::Construction.trade }
     hourly_rate { 500 }
   end
 
   trait :fixed do
-    bonus { 'fixed' }
+    payout { 'fixed' }
     amount { 10000 }
   end
 end

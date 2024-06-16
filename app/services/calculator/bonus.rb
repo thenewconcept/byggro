@@ -8,7 +8,7 @@ module Calculator
 
     def excluding_taxes
       if @reportable.is_a?(Project)
-        @reportable.checklists.bonus_fixed.sum(&:amount)
+        @reportable.checklists.payout_fixed.sum(&:amount)
       elsif @reportable.is_a?(Checklist)
         @reportable.amount
       end
