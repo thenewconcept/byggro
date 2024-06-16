@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Assignments' do
+RSpec.describe 'Projects' do
   let!(:admin)  { create(:user, :admin) }
   let!(:user)  { create(:user, first_name: 'John', last_name: 'Doe', email: 'john@doe.com', employee: create(:employee)) }
 
@@ -16,7 +16,7 @@ RSpec.describe 'Assignments' do
       click_button 'Logga in'
     end
 
-    it 'can see non-draft assignments' do
+    it 'can see non-draft projects' do
       click_link 'Kommande'
       expect(page).to have_content('Assigned Project')
       expect(page).to have_content('Unassigned Project')
@@ -45,6 +45,15 @@ RSpec.describe 'Assignments' do
       expect(page).to have_content('Unassigned Project')
       click_link 'Utkast'
       expect(page).to have_content('Draft Project')
+    end
+
+    it 'can see the internal tab of a project' do
+      project = create(:project, :started, title: 'Ongoing Project')
+
+      visit project_path(project, tab: 'internal')
+
+      expect(page).to have_content('Ongoing Project')
+      expect(page).to have_content('Kostnader')
     end
   end
 end

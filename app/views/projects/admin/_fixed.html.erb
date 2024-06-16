@@ -2,7 +2,7 @@
 
   <div class="bg-slate-50 px-2 py-3 sm:px-4">
     <h3 class="text-lg leading-6 font-medium text-gray-900">
-      Projektlön
+      <%= project.title %>
     </h3>
   </div>
 
@@ -12,7 +12,7 @@
         <dt class=" font-medium text-gray-500">Summa</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
           (
-           <%= number_to_currency project.amount.round(0) %> AK - 
+           <%= number_to_currency project.revenue.round(0) %> AK - 
            <%= number_to_currency project.costs_by_contractors.round(0) %> UE
           ) * <%= number_to_percentage (project.fixed_fee * 100).round(0) %> 
           <b>= <%= number_to_currency project.bonus_fixed %></b>
@@ -28,27 +28,27 @@
           <table class="table-auto min-w-full divide-y divide-gray-300 text-sm">
             <thead class="bg-gray-50">
               <tr>
-                <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left font-semibold text-gray-900">Person</th>
-                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Tid</th>
-                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Andel</th>
-                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Avräkning</th>
+                <th scope="col" class="whitespace-nowrap px-4 p-2 text-left font-semibold text-gray-900">Person</th>
+                <th scope="col" class="whitespace-nowrap p-2 text-left font-semibold text-gray-900">Tid</th>
+                <th scope="col" class="whitespace-nowrap p-2 text-left font-semibold text-gray-900">Andel</th>
+                <th scope="col" class="whitespace-nowrap p-2 text-left font-semibold text-gray-900">Avräkning</th>
               </tr>
             </thead>
             <tbody class=" align-top">
                 <% Report.by_workers(project).map(&:reportee).uniq.each do |reportee| %>
                 <% calc = Bonus::Fixed.for(project, reportee) %>
                 <tr class="border-t border-gray-100"> 
-                  <td class="whitespace-nowrap px-4 py-2.5 text-gray-600">
+                  <td class="whitespace-nowrap px-4 py-2 text-gray-600">
                     <%= reportee.user.display_name  %>
                     <span class="text-xs text-gray-400"><%= reportee.title %></span>
                   </td>
-                  <td class="whitespace-nowrap px-2 py-2.5 text-gray-600">
+                  <td class="whitespace-nowrap p-2 text-gray-600">
                     <%= format_hours calc.hours %> tim
                   </td>
-                  <td class="whitespace-nowrap text-sm px-2 py-2.5 text-gray-600">
+                  <td class="whitespace-nowrap text-sm p-2 text-gray-600">
                     <%= number_to_percentage calc.bonus_percent * 100 %>
                   </td>
-                  <td class="whitespace-nowrap text-sm px-2 py-2.5 text-gray-600">
+                  <td class="whitespace-nowrap text-sm p-2 text-gray-600">
                     <%= number_to_currency calc.total.round(0) %>
                   </td>
                 </tr>
@@ -56,10 +56,10 @@
             </tbody>
             <tfoot class="bg-gray-50">
               <tr class="font-medium text-md text-gray-900"> 
-                  <td class="whitespace-nowrap px-4 py-3.5">Summa</td>
-                  <td class="whitespace-nowrap px-2 py-3.5"> <%= format_hours(Bonus::Fixed.for(project, nil).worker_hours)%> tim </td>
-                  <td class="whitespace-nowrap px-2 py-3.5"></td>
-                  <td class="whitespace-nowrap px-2 py-3.5"> <%= number_to_currency(Bonus::Fixed.for(project, nil).total) %> </td>
+                  <td class="whitespace-nowrap px-4">Summa</td>
+                  <td class="whitespace-nowrap p-2"> <%= format_hours(Bonus::Fixed.for(project, nil).worker_hours)%> tim </td>
+                  <td class="whitespace-nowrap p-2"></td>
+                  <td class="whitespace-nowrap p-2"> <%= number_to_currency(Bonus::Fixed.for(project, nil).total) %> </td>
                 </tr>
             </tfoot>
           </table>

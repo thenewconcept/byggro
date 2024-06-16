@@ -12,6 +12,7 @@
               class="inline rounded-full items-center text-gray-400 hover:text-gray-600"> 
               <%= heroicon 'eye' %> 
             </button>
+
             <% if policy(:checklist).create? %>
               <button type="button" 
                 data-action="toggle#switch" 
@@ -27,15 +28,15 @@
                 </div>
               </div>
             <% end %>
+
           </div>
         </div>
 
         <div>
           <% if policy(checklist).meta? %>
-            <%= render "projects/meta/#{@project.bonus}", reportable: checklist %>
-            <%= icon_badge "ROT", 'check', class: 'gray' if checklist.is_rot? %>
+            <%= render "checklists/meta/#{checklist.bonus}", reportable: checklist %>
+            <%= icon_badge "ROT", 'check', class: 'silver' if checklist.is_rot? %>
           <% end %>
-          <%= icon_badge("#{number_to_currency(checklist.amount)}", 'shield-check', class: 'silver') if policy(:checklist).create? %>
         </div>
       </turbo-frame>
 

@@ -31,8 +31,8 @@ hourly_project = Project.create!(
   title: "Timbonus Projekt", 
   adress: "Viktoriagatan 8",
   description: "En beskrivning av projektet.",
-  hourly_rate: 500,
-  bonus: 'hourly',
+  # hourly_rate: 500,
+  # bonus: 'hourly',
   material_amount: 10000, 
   misc_amount: 1000, 
   contractors: [contractor]

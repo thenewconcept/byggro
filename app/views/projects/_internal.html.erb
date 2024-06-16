@@ -4,35 +4,35 @@
     <h3 class="leading-6 font-medium text-gray-900">Order</h3>
   </div>
 
-  <div class="border-t border-gray-200 px-2 py-3 sm:p-0">
+  <div id="revenue" class="border-t border-gray-200 px-2 py-3 sm:p-0">
     <dl class="text-sm sm:divide-y sm:divide-gray-200">
       <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
         <dt class=" font-medium text-gray-500">Arbete</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          <%= render partial: 'shared/clipboard_value', locals: { amount: project.amount.round(0) } %>
+          <%= render partial: 'shared/clipboard_value', locals: { amount: @calculator.revenue.amount } %>
         </dd>
       </div>
       <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
         <dt class=" font-medium text-gray-500">Material</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          <%= render partial: 'shared/clipboard_value', locals: { amount: project.material_amount.round(0) } %>
+          <%= render partial: 'shared/clipboard_value', locals: { amount: @calculator.revenue.material } %>
         </dd>
       </div>
       <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
         <dt class=" font-medium text-gray-500">Övrigt</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          <%= render partial: 'shared/clipboard_value', locals: { amount: project.misc_amount.round(0) } %>
+          <%= render partial: 'shared/clipboard_value', locals: { amount: @calculator.revenue.other } %>
         </dd>
       </div>
       <div class="text-gray-800 font-bold py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class="leading-4">Summa</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency project.total %></dd>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= number_to_currency @calculator.revenue.total %></dd>
       </div>
     </dl>
   </div>
 </div>
 
-<div class="bg-slate-50 ring-1 ring-gray-200 shadow overflow-hidden rounded-lg my-4">
+<div id="costs" class="bg-slate-50 ring-1 ring-gray-200 shadow overflow-hidden rounded-lg my-4">
   <div class="px-2 py-3 sm:px-6">
     <h3 class="leading-6 font-medium text-gray-900">Kostnader</h3>
   </div>
@@ -41,24 +41,24 @@
       <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
         <dt class=" font-medium text-gray-500">Utgifter</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-        - <%= number_to_currency @costs.expenses %></dd>
+        - <%= number_to_currency @calculator.expenses.total %></dd>
       </div>
       <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
         <dt class=" font-medium text-gray-500">Underentrepenörer</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-        -  <%= number_to_currency @costs.fees %>
+        - <%= number_to_currency @calculator.contractor.total %>
         </dd>
       </div>
       <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
         <dt class=" font-medium text-gray-500">Löner</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          -  <%= number_to_currency @costs.salaries %>
+          -  <%= number_to_currency @calculator.salary.excluding_taxes %>
         </dd>
       </div>
       <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
         <dt class=" font-medium text-gray-500">Bonusar</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          -  <%= number_to_currency @costs.bonuses %>
+          -  <%= number_to_currency @calculator.bonus.excluding_taxes %>
         </dd>
       </div>
       <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
@@ -66,15 +66,15 @@
         Skatter
         </dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          -  <%= number_to_currency @costs.taxes %>
+          -  <%= number_to_currency @calculator.total_taxes %>
           <small class="ml-6">Arbetsgivaravgifter och semesterersättning.</small>
         </dd>
       </div>
       <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
         <dt class=" font-medium text-gray-500">Resultat</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          <%= number_to_currency project.result %>
-          <small class="ml-6"> <%= number_to_percentage (project.result.to_f/project.total.to_f) * 100 %> marginal</small>
+          <%= number_to_currency @calculator.total_profit %>
+          <small class="ml-6"> <%= number_to_percentage @calculator.total_margin %> marginal</small>
         </dd>
       </div>
       
@@ -82,7 +82,7 @@
   </div>
 </div>
 
-<% if true or project.is_rot? %>
+<% if project.is_rot? %>
   <div class="bg-slate-200 ring-1 ring-gray-200 shadow overflow-hidden rounded-lg">
     <div class="px-2 py-3 sm:px-6">
       <h3 class="leading-6 font-medium text-gray-900">ROT</h3>
@@ -93,7 +93,7 @@
           <dt class=" font-medium text-gray-500">Timmar</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
             <div data-controller="clipboard">
-              <span data-clipboard-target="source" data-value="<%= project.hours_target.round(0) %>"> ca <%= project.hours_target.round(0) %> timmar </span>
+              <span data-clipboard-target="source" data-value="<%= @calculator.rot.hours %>"> ca <%= @calculator.rot.hours %> timmar </span>
               <button data-action="clipboard#copy">
                 <%= heroicon('document-duplicate', variant: :outline, options: {class: 'text-gray-400 hover:text-gray-600 h-4 w-4'}) %>
               </button>
@@ -103,13 +103,13 @@
         <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
           <dt class=" font-medium text-gray-500">Material inkl. moms</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            <%= render partial: 'shared/clipboard_value', locals: { amount: project.inc_vat(project.material_amount).round(0) } %>
+            <%= render partial: 'shared/clipboard_value', locals: { amount: @calculator.add_taxes(@calculator.revenue.material, :vat) } %>
           </dd>
         </div>
         <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">
           <dt class=" font-medium text-gray-500">Övrigt inkl. moms</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            <%= render partial: 'shared/clipboard_value', locals: { amount: project.inc_vat(project.misc_amount).round(0) } %>
+            <%= render partial: 'shared/clipboard_value', locals: { amount: @calculator.add_taxes(@calculator.revenue.other, :vat) } %>
           </dd>
         </div>
         <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-white">

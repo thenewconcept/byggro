@@ -1,6 +1,0 @@
-<% if reportable.is_a?(Project) %>
-  <%= icon_badge "#{number_to_currency(reportable.bonus_fixed)}", 'banknotes', class: 'indigo' if policy(reportable).meta? %>
-<% end %>
-
-<%= icon_badge "#{reportable.hours_reported} tim", 'clock', class: 'green' %>
-<%= icon_badge "#{reportable.hours_estimated} tim", 'flag', class: 'indigo' unless reportable.hours_estimated.zero? if policy(reportable).edit?%>

@@ -4,6 +4,7 @@ class ProjectsController < ProtectedController
   # GET /projects or /projects.json
   def index
     @projects  = policy_scope(Project).order(completed_on: :desc, starts_on: :asc)
+    @calculator = Calculator::Base.new(@projects)
 
     if params[:status]
       @projects = @projects.where(status: params[:status])
@@ -16,9 +17,7 @@ class ProjectsController < ProtectedController
   def show
     @reports    = Report.by_project(@project)
     @reports    = @reports.where(reportable_id: params[:on]) if params[:on]
-
-    @calculator = Bonus::Calculator.for(@project)
-    @costs      = Project::Cost.new(@project)
+    @calculator = Calculator::Base.new(@project)
     authorize(@project, :salary?) if params[:tab] == 'employee'
   end
 
@@ -94,7 +93,6 @@ class ProjectsController < ProtectedController
         :material_amount, 
         :fixed_fee, 
         :misc_amount, 
-        :bonus, 
         :status, 
         :hourly_rate,
         :client_id,

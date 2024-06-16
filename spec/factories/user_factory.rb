@@ -9,4 +9,8 @@ FactoryBot.define do
   trait :admin do
     is_admin { true }
   end
+
+  trait :sales do
+    is_sales { true }
+  end
 end

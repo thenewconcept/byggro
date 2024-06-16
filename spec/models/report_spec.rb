@@ -46,12 +46,14 @@ RSpec.describe Report, type: :model do
     it 'returns reports by project' do
       project   = create(:project)
       checklist = create(:checklist, project: project)
-      p_report  = create(:report, reportable: checklist)
-      c_report  = create(:report, reportable: project)
+
+      report1  = create(:report, reportable: checklist)
+      report2  = create(:report, reportable: checklist)
+
       create(:report)
 
       expect(project.reports.count).to be(2)
-      expect(project.reports).to include(p_report, c_report)
+      expect(project.reports).to include(report1, report2)
     end
   end
 end

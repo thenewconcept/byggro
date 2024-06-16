@@ -11,129 +11,60 @@
       <%= link_to 'Nästa månad', url_for(next_month) %>
     </div>
 
+    <hr class="my-2 h-0.5 border-t-1 bg-neutral-100 dark:bg-white/10" />
+
+    <% @payroll.by_type(:none).group_by(&:class).each do |klass, payments| %>
     <h2 class="text-1xl font-bold mb-4"> Tidrapporter </h2>
-
-    <table class="table-auto min-w-full divide-y divide-gray-300 text-sm border-2 border-slate-100 ring-offset-slate-100 ">
-      <thead class="bg-gray-50">
-        <tr>
-          <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left font-semibold text-gray-900">Datum</th>
-          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Person</th>
-          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Timmar</th>
-          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Projekt</th>
-          <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-6"> <span class="sr-only">Edit</span> </th>
+    <table class="mb-4 table-auto min-w-full">
+      <thead>
+        <tr class="text-sm text-left">
+          <th>Person</th>
+          <th>Timmar</th>
+          <th>Lön</th>
         </tr>
       </thead>
-      <tbody class=" align-top">
-        <% policy_scope(@salaries.payable_hourly_reports).group_by(&:reportee).each do |reportee, reports| %>
-          <tr class="border-t-2 border-gray-400 text-md text-gray-900"> 
-            <td class="whitespace-nowrap px-4 py-2 text-gray-600 bg-slate-50">
-              <%= reportee.display_name %>
-              <small><%= reportee.primary_role %></small> <br/>
-              <span class="font-medium">
-                <%= t("salary.#{reportee.class.name.downcase}") %>: <%= number_to_currency reports.sum(&:total) %>
-              </span>
-            </td>
-            <td class="whitespace-nowrap px-2 py-2 text-gray-600 bg-slate-50">
-            </td>
-            <td class="whitespace-nowrap px-2 py-2 text-gray-600 bg-slate-50">
-              <%= format_hours reports.sum(&:time_in_hours) %>
-            </td>
-            <td colspan="2" class="whitespace-nowrap px-2 py-2 text-gray-600 bg-slate-50">
-            </td>
-          <tr>
-        <% end %>
-      </tbody>
-      <tfoot class="bg-gray-50">
-        <tr class="font-medium text-md text-gray-900"> 
-            <td class="whitespace-nowrap px-4 py-3.5">Summa</td>
-            <td class="whitespace-nowrap px-2 py-3.5"></td>
-            <td class="whitespace-nowrap px-2 py-3.5"></td>
-            <td class="whitespace-nowrap px-2 py-3.5"></td>
-            <td class="whitespace-nowrap px-2 py-3.5"></td>
-          </tr>
-      </tfoot>
-    </table>
 
-    <h2 class="text-1xl font-bold mt-4 mb-4"> Underentrepenörer </h2>
-
-    <table class="table-auto min-w-full divide-y divide-gray-300 text-sm border-2 border-slate-100 ring-offset-slate-100 ">
-      <thead class="bg-gray-50">
-        <tr>
-          <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left font-semibold text-gray-900">Datum</th>
-          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Person</th>
-          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Timmar</th>
-          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Projekt</th>
-          <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-6"> <span class="sr-only">Edit</span> </th>
+      <tbody>
+        <% payments.group_by(&:reportee).each do |reportee, payments| %>
+        <tr class="text-sm">
+          <td> <%= link_to reportee.display_name, user_path(reportee.user_id) %> </td>
+          <td> <%= format_hours payments.sum(&:time_in_hours) %> tim </td>
+          <td> <%= number_to_currency payments.sum(&:total) %> </td>
         </tr>
-      </thead>
-      <tbody class=" align-top">
-        <% policy_scope(@contractors.payable_reports).group_by(&:reportee).each do |reportee, reports| %>
-          <tr class="border-t-2 border-gray-400 text-md text-gray-900"> 
-            <td class="whitespace-nowrap px-4 py-2 text-gray-600 bg-slate-50">
-              <%= reportee.display_name %>
-              <small><%= reportee.primary_role %></small> <br/>
-              <span class="font-medium">
-                <%= t("salary.#{reportee.class.name.downcase}") %>: <%= number_to_currency reports.sum(&:total) %>
-              </span>
-            </td>
-            <td class="whitespace-nowrap px-2 py-2 text-gray-600 bg-slate-50">
-            </td>
-            <td class="whitespace-nowrap px-2 py-2 text-gray-600 bg-slate-50">
-              <%= format_hours reports.sum(&:time_in_hours) %>
-            </td>
-            <td colspan="2" class="whitespace-nowrap px-2 py-2 text-gray-600 bg-slate-50">
-            </td>
-          <tr>
         <% end %>
       </tbody>
-      <tfoot class="bg-gray-50">
-        <tr class="font-medium text-md text-gray-900"> 
-            <td class="whitespace-nowrap px-4 py-3.5">Summa</td>
-            <td class="whitespace-nowrap px-2 py-3.5"></td>
-            <td class="whitespace-nowrap px-2 py-3.5"></td>
-            <td class="whitespace-nowrap px-2 py-3.5"></td>
-            <td class="whitespace-nowrap px-2 py-3.5"></td>
-          </tr>
-      </tfoot>
     </table>
+    <% end %>
 
+    <hr class="my-2 h-0.5 border-t-1 bg-neutral-100 dark:bg-white/10" />
+
+    <% @payroll.by_type(:fixed).group_by(&:class).each do |klass, payments| %>
     <h2 class="text-1xl font-bold my-4"> Bonusrapporter </h2>
-
-    <table class="table-auto min-w-full divide-y divide-gray-300 text-sm border-2 border-slate-100 ring-offset-slate-100 ">
-      <thead class="bg-gray-50">
-        <tr>
-          <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left font-semibold text-gray-900">Bonus</th>
-          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left font-semibold text-gray-900">Projekt</th>
+    <table class="mb-4 table-auto min-w-full">
+      <thead>
+        <tr class="text-sm text-left">
+          <th>Person</th>
+          <th>Meta</th>
+          <th>Summer</th>
         </tr>
       </thead>
-      <tbody class=" align-top">
-        <% @salaries.payable_bonus_projects.each do |project| %>
-          <% project.reportees.each do |reportee| %>
-            <% if (Current.user.is_admin? or Current.user.profile == reportee) %>
-              <% @bonus = Bonus::Calculator.new(project).bonus_for(reportee) %>
-                <% unless @bonus.zero? %>
-                  <tr class="border-t-2 border-gray-400 text-md text-gray-900"> 
-                    <td class="whitespace-nowrap px-4 py-2 text-gray-600 bg-slate-50">
-                      <%= reportee.display_name %> <small><%= reportee.primary_role %></small> <br/>
-                      <span class="font-medium text-md">
-                        Bonus <%= number_to_currency @bonus %><br/>
-                      </span>
-                    </td>
-                    <td class="whitespace-nowrap px-2 py-2 text-gray-600 bg-slate-50">
-                      <%= link_to project.title, project %>
-                      <small class="capitalize"><%= project.bonus %></small>
-                    </td>
-                  <tr>
-                <% end %>
-              <% end %>
-          <% end %>
+
+      <tbody>
+        <% payments.group_by(&:reportable).each do |reportable, payments| %>
+        <tr class="text-sm">
+          <td> <%= reportable.project.title %> <small><%= reportable.title %></small></td>
+        </tr>
         <% end %>
       </tbody>
     </table>
+    <% end %>
+
+    <hr class="my-2 h-0.5 border-t-1 bg-neutral-100 dark:bg-white/10" />
+
+
 
     <% if (Current.user.is_admin? or Current.user.is_seller?) %>
     <h2 class="text-1xl font-bold my-4"> Säljrapporter </h2>
-
     <table class="table-auto min-w-full divide-y divide-gray-300 text-sm border-2 border-slate-100 ring-offset-slate-100 ">
       <thead class="bg-gray-50">
         <tr>
@@ -142,13 +73,13 @@
         </tr>
       </thead>
       <tbody class=" align-top">
-        <% @salaries.sales_bonus_projects.each do |project| %>
-        <% if (Current.user.is_admin? or Current.user == project.seller) %>
+        <% Project.up_for_bonus.each do |project| %>
+        <% if policy(project).seller? %>
         <tr class="border-t-2 border-gray-400 text-md text-gray-900"> 
           <td class="whitespace-nowrap px-4 py-2 text-gray-600 bg-slate-50">
             <%= project.seller.display_name %><br/>
             <span class="font-medium text-md">
-              Bonus <%= number_to_currency project.result * Payment::Salary::BONUS_SALES %>
+              Bonus <%= number_to_currency Project::Cost.new(project).bonuses %>
             </span>
           </td>
           <td class="whitespace-nowrap px-2 py-2 text-gray-600 bg-slate-50">
@@ -163,7 +94,8 @@
         <% end %>
       </tbody>
     </table>
-
     <% end %>
+    <h2 class="text-1xl font-bold mt-4 mb-4"> Underentrepenörer </h2>
+
   </div>
 </div>

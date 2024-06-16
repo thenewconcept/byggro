@@ -71,7 +71,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_16_173953) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "amount", default: 0, null: false
-    t.boolean "is_rot"
+    t.boolean "is_rot", default: false
     t.integer "position"
     t.integer "payout", default: 0
     t.integer "hourly_rate", default: 0
@@ -122,10 +122,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_16_173953) do
   create_table "expenses", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "project_id"
-    t.date "spent_on"
-    t.string "category"
+    t.date "spent_on", null: false
+    t.string "category", null: false
     t.string "description"
-    t.float "amount", default: 0.0
+    t.float "amount", default: 0.0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["project_id"], name: "index_expenses_on_project_id"
@@ -175,23 +175,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_16_173953) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.bigint "client_id"
     t.string "title"
     t.string "adress"
-    t.string "description"
-    t.integer "material_amount", default: 0, null: false
-    t.integer "misc_amount", default: 0, null: false
+    t.text "description"
+    t.integer "material_amount", default: 0
+    t.integer "misc_amount", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "bonus", default: 0
-    t.float "hourly_rate", default: 0.0, null: false
-    t.float "fixed_fee"
     t.enum "status", default: "draft", null: false, enum_type: "project_status"
     t.date "starts_on"
     t.date "due_on"
+    t.float "fixed_fee"
     t.date "completed_on"
+    t.bigint "client_id"
     t.date "payed_on"
     t.integer "seller_id"
+    t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["status"], name: "index_projects_on_status"
   end
 
@@ -213,7 +212,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_16_173953) do
 
   create_table "todos", force: :cascade do |t|
     t.bigint "checklist_id", null: false
-    t.boolean "completed"
+    t.boolean "completed", default: false, null: false
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -242,6 +241,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_16_173953) do
   add_foreign_key "assignments", "projects"
   add_foreign_key "assignments", "users"
   add_foreign_key "checklists", "projects"
+  add_foreign_key "clients", "users"
   add_foreign_key "contractors", "users"
   add_foreign_key "employees", "users"
   add_foreign_key "expenses", "projects"
@@ -250,5 +250,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_16_173953) do
   add_foreign_key "notes", "projects"
   add_foreign_key "notes", "users"
   add_foreign_key "payments", "projects"
+  add_foreign_key "projects", "clients"
   add_foreign_key "todos", "checklists"
 end

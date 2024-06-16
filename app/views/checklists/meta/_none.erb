@@ -1,0 +1,2 @@
+<%= icon_badge "#{reportable.hours_reported} tim", 'clock', class: 'green' %>
+<%= icon_badge("#{number_to_currency(reportable.hours_reported * reportable.hourly_rate)}", 'shield-check', class: 'silver') if policy(reportable).create? %>

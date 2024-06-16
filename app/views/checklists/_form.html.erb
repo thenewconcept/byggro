@@ -1,15 +1,43 @@
-<%= form_with(model: [checklist.project, checklist], class: "contents", data: { 'turbo-frame': '_top' }) do |f| %>
-  <div class="grid grid-cols-4 sm:gap-1">
+<%= form_with( model: [checklist.project, checklist], class: "contents", data: { 'turbo-frame': '_top' }) do |f| %>
+  <div data-controller="dynamic">
+    <div class="flex items-center">
+      <%= f.text_field :title, required: true, class: 'my-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
 
-  <div class="col-span-4 sm:col-span-3">
-    <%= f.text_field :title, required: true, class: 'my-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
-  </div>
-  <div class="col-span-4 sm:col-span-1">
-    <%= f.number_field :amount, required: true, class: 'my-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
-  </div>
+      <%= f.check_box :is_rot, class: "checkbox mr-1 ml-6" %> 
+      <%= f.label :is_rot, 'ROT?', class: 'text-sm' %>
+    </div>
 
+
+    <div class="flex items-center">
+      <div class="w-2/3">
+        <%= f.select :bonus, 
+          options_for_select(Checklist.bonus.keys.map { |bonus| [t("checklist.bonus.#{bonus}"), bonus] }, checklist.bonus), 
+          { selected: checklist.bonus }, 
+          { 
+            data: { action: 'change->dynamic#toggle', 'dynamic-target': 'bonus' },
+            class: 'block text-sm mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500',
+          } %>
+      </div>
+
+      <div class="flex items-center flex-grow" data-dynamic-target='field' data-for='fixed'>
+        <div class="relative mt-1 ml-1 rounded-md shadow-sm">
+          <%= f.number_field :amount, class: 'block w-full rounded-md border-0 py-1.5 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' %>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+            <span class="text-gray-500 sm:text-sm" id="price-currency">kr</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center flex-grow" data-dynamic-target='field' data-for='none'>
+        <div class="relative mt-1 ml-1 rounded-md shadow-sm">
+          <%= f.number_field :hourly_rate, class: 'block w-full rounded-md border-0 py-1.5 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' %>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+            <span class="text-gray-500 sm:text-sm" id="price-currency">kr/tim</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <%= f.check_box :is_rot, class: "checkbox" %> <%= f.label :is_rot, 'ROT?', class: 'text-sm' %><br/>
 
   <%= f.submit 'Spara', class: "text-sm mt-2 inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
   <%= link_to 'Avbryt', :back, class: "text-sm mt-2 inline-flex items-center px-2 py-1 border border-transparent shadow-sm text-xs leading-4 font-medium rounded-md text-gray-500 bg-gray-300 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200" %>

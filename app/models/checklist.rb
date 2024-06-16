@@ -1,17 +1,19 @@
 class Checklist < ApplicationRecord
   include Bonusable
+  include Reportable
+
   acts_as_list scope: :project
-  before_destroy :destroyable?
+
+  enum bonus: [ :none, :fixed ], _prefix: true
 
   belongs_to :project
-  validates :title, presence: true
-
   has_many :reports, as: :reportable, dependent: :destroy
   has_many :todos, -> { order(position: :asc) }, dependent: :destroy 
 
-  delegate :status_completed?, :fixed_fee, :hourly_rate, to: :project
+  before_destroy :destroyable?
+  validates :title, presence: true
 
-  enum payout: [ :hourly, :fixed ], _prefix: true
+  delegate :status_completed?, :fixed_fee, to: :project
 
   def completed?
     todos.all?(&:completed?)
@@ -25,7 +27,41 @@ class Checklist < ApplicationRecord
     hours_target.round(0)
   end
 
+  def hours_reported
+    case bonus
+    when "none" then reports.sum(&:time_in_hours)&.round(2)
+    when "fixed" then amount / HOURLY_RATE
+    end
+  end
+
+  def revenue
+    case self.bonus
+      when 'none'
+        reports.sum(&:time_in_hours) * hourly_rate
+      when 'fixed'
+        amount
+      else
+        raise 'Unknown bonus type'
+    end
+  end
+
+  def salary
+    case self.bonus
+      when 'none'
+        reports.where.not( reportee_type: 'Contractor' ).sum(&:total)
+      when 'fixed'
+        amount * project.fixed_fee
+      else
+        raise 'Unknown bonus type'
+    end
+  end
+
+  def completed?
+    todos.all?(&:completed?)
+  end
+
   private
+
   def destroyable?
     if self.reports.present?
       self.errors.add(:base, "Kan inte ta bort lista med rapporter.")

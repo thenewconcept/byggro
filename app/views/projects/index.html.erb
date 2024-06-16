@@ -29,6 +29,6 @@
 
 <% if Current.user.is_admin? %>
 <div class="bg-white shadow overflow-hidden rounded-md mt-4 py-2 px-4 text-sm text-gray-700 text-right">
-  Total <%= number_to_currency @projects.sum(&:amount) %>
+  Total <%= number_to_currency @calculator.total_revenue %>
 </div>
 <% end %>

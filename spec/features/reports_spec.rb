@@ -4,12 +4,9 @@ RSpec.describe 'reports', :js do
   let(:employee)  { create(:employee) }
   let(:contractor) { create(:contractor)}
   let(:project) { create(:project, :started, contractors: [contractor]) }
-  let(:todo1)   { create(:todo, description: 'Måla köket.', checklist: project.checklists.first ) }
-  let(:todo2)   { create(:todo, description: 'Måla vardagsrum.', checklist: project.checklists.first ) }
-
-  before :each do
-    project.checklists.first.update_attribute(:amount, 10000)
-  end
+  let(:checklist) { create(:checklist, project:) }
+  let(:todo1) { create(:todo, description: 'Måla köket.', checklist:) }
+  let(:todo2) { create(:todo, description: 'Måla vardagsrum.', checklist:) }
 
   context 'as a employee' do
     before do
@@ -23,7 +20,7 @@ RSpec.describe 'reports', :js do
       it 'for checklist' do
         click_link project.title
 
-        within "#checklist_#{project.checklists.first.id}" do
+        within "#checklist_#{checklist.id}" do
           click_link 'Ny rapport'
         end
 
@@ -51,7 +48,7 @@ RSpec.describe 'reports', :js do
     it 'can be created' do
       click_link project.title
 
-      within "#checklist_#{project.checklists.first.id}" do
+      within "#checklist_#{checklist.id}" do
         click_link 'Ny rapport'
       end
 

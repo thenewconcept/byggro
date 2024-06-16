@@ -22,6 +22,10 @@ sv:
         none: Ingen
         hourly: Timbonus
         fixed: Projektlön
+  checklist:
+    bonus:
+      none: Löpande
+      fixed: Fastpris
     
   activerecord:
     models:

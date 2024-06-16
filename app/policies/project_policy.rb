@@ -31,6 +31,10 @@ class ProjectPolicy < ApplicationPolicy
     user.is_admin?
   end
 
+  def seller?
+    record.seller.present? and (user.is_admin? or user == record.seller)
+  end
+
   def complete?
     user.is_admin? or !record.status_completed?
   end
