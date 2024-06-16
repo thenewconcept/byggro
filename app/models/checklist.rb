@@ -11,6 +11,8 @@ class Checklist < ApplicationRecord
 
   delegate :status_completed?, :fixed_fee, :hourly_rate, to: :project
 
+  enum payout: [ :hourly, :fixed ], _prefix: true
+
   def completed?
     todos.all?(&:completed?)
   end
