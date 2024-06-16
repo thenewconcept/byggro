@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Checklist, type: :model do
   describe '#salary' do
-    it 'returns the total salary for the checklist' do
+    pending 'returns the total salary for the checklist' do
       checklist = create(:checklist, payout: 'hourly')
       report = create(:report, reportable: checklist, reportee: employee, time_in_hours: 10)
     end

@@ -4,7 +4,7 @@ class Checklist < ApplicationRecord
 
   acts_as_list scope: :project
 
-  enum bonus: [ :none, :fixed ], _prefix: true
+  enum payout: [ :hourly, :fixed ], _prefix: true
 
   belongs_to :project
   has_many :reports, as: :reportable, dependent: :destroy
@@ -28,15 +28,15 @@ class Checklist < ApplicationRecord
   end
 
   def hours_reported
-    case bonus
-    when "none" then reports.sum(&:time_in_hours)&.round(2)
+    case payout
+    when "hourly" then reports.sum(&:time_in_hours)&.round(2)
     when "fixed" then amount / HOURLY_RATE
     end
   end
 
   def revenue
-    case self.bonus
-      when 'none'
+    case self.payout
+      when 'hourly'
         reports.sum(&:time_in_hours) * hourly_rate
       when 'fixed'
         amount
@@ -46,8 +46,8 @@ class Checklist < ApplicationRecord
   end
 
   def salary
-    case self.bonus
-      when 'none'
+    case self.payout
+      when 'hourly'
         reports.where.not( reportee_type: 'Contractor' ).sum(&:total)
       when 'fixed'
         amount * project.fixed_fee
