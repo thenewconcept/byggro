@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_04_111847) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_16_162810) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -73,6 +73,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_04_111847) do
     t.integer "amount", default: 0, null: false
     t.boolean "is_rot"
     t.integer "position"
+    t.integer "payout", default: 0
+    t.integer "hourly_rate", default: 0
     t.index ["project_id"], name: "index_checklists_on_project_id"
   end
 
